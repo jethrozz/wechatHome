@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wechat.dao.ChatRecordMapper">
+  <resultMap id="BaseResultMap" type="com.wechat.entity.ChatRecord">
+    <id column="cr_id" jdbcType="INTEGER" property="cr_id" />
+    <result column="cr_from_user" jdbcType="INTEGER" property="cr_from_user" />
+    <result column="cr_to_user" jdbcType="INTEGER" property="cr_to_user" />
+    <result column="cr_create_time" jdbcType="TIMESTAMP" property="cr_create_time" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wechat.entity.ChatRecord">
+    <result column="cr_content" jdbcType="LONGVARCHAR" property="cr_content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cr_id, cr_from_user, cr_to_user, cr_create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    cr_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.wechat.entity.ChatRecordExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from chat_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.wechat.entity.ChatRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from chat_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from chat_record
+    where cr_id = #{cr_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from chat_record
+    where cr_id = #{cr_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wechat.entity.ChatRecordExample">
+    delete from chat_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wechat.entity.ChatRecord">
+    insert into chat_record (cr_id, cr_from_user, cr_to_user, 
+      cr_create_time, cr_content)
+    values (#{cr_id,jdbcType=INTEGER}, #{cr_from_user,jdbcType=INTEGER}, #{cr_to_user,jdbcType=INTEGER}, 
+      #{cr_create_time,jdbcType=TIMESTAMP}, #{cr_content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wechat.entity.ChatRecord">
+    insert into chat_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cr_id != null">
+        cr_id,
+      </if>
+      <if test="cr_from_user != null">
+        cr_from_user,
+      </if>
+      <if test="cr_to_user != null">
+        cr_to_user,
+      </if>
+      <if test="cr_create_time != null">
+        cr_create_time,
+      </if>
+      <if test="cr_content != null">
+        cr_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cr_id != null">
+        #{cr_id,jdbcType=INTEGER},
+      </if>
+      <if test="cr_from_user != null">
+        #{cr_from_user,jdbcType=INTEGER},
+      </if>
+      <if test="cr_to_user != null">
+        #{cr_to_user,jdbcType=INTEGER},
+      </if>
+      <if test="cr_create_time != null">
+        #{cr_create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cr_content != null">
+        #{cr_content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wechat.entity.ChatRecordExample" resultType="java.lang.Long">
+    select count(*) from chat_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update chat_record
+    <set>
+      <if test="record.cr_id != null">
+        cr_id = #{record.cr_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.cr_from_user != null">
+        cr_from_user = #{record.cr_from_user,jdbcType=INTEGER},
+      </if>
+      <if test="record.cr_to_user != null">
+        cr_to_user = #{record.cr_to_user,jdbcType=INTEGER},
+      </if>
+      <if test="record.cr_create_time != null">
+        cr_create_time = #{record.cr_create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cr_content != null">
+        cr_content = #{record.cr_content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update chat_record
+    set cr_id = #{record.cr_id,jdbcType=INTEGER},
+      cr_from_user = #{record.cr_from_user,jdbcType=INTEGER},
+      cr_to_user = #{record.cr_to_user,jdbcType=INTEGER},
+      cr_create_time = #{record.cr_create_time,jdbcType=TIMESTAMP},
+      cr_content = #{record.cr_content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update chat_record
+    set cr_id = #{record.cr_id,jdbcType=INTEGER},
+      cr_from_user = #{record.cr_from_user,jdbcType=INTEGER},
+      cr_to_user = #{record.cr_to_user,jdbcType=INTEGER},
+      cr_create_time = #{record.cr_create_time,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wechat.entity.ChatRecord">
+    update chat_record
+    <set>
+      <if test="cr_from_user != null">
+        cr_from_user = #{cr_from_user,jdbcType=INTEGER},
+      </if>
+      <if test="cr_to_user != null">
+        cr_to_user = #{cr_to_user,jdbcType=INTEGER},
+      </if>
+      <if test="cr_create_time != null">
+        cr_create_time = #{cr_create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cr_content != null">
+        cr_content = #{cr_content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where cr_id = #{cr_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wechat.entity.ChatRecord">
+    update chat_record
+    set cr_from_user = #{cr_from_user,jdbcType=INTEGER},
+      cr_to_user = #{cr_to_user,jdbcType=INTEGER},
+      cr_create_time = #{cr_create_time,jdbcType=TIMESTAMP},
+      cr_content = #{cr_content,jdbcType=LONGVARCHAR}
+    where cr_id = #{cr_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wechat.entity.ChatRecord">
+    update chat_record
+    set cr_from_user = #{cr_from_user,jdbcType=INTEGER},
+      cr_to_user = #{cr_to_user,jdbcType=INTEGER},
+      cr_create_time = #{cr_create_time,jdbcType=TIMESTAMP}
+    where cr_id = #{cr_id,jdbcType=INTEGER}
+  </update>
+</mapper>

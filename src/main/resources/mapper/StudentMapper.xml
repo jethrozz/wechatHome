@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wechat.dao.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.wechat.entity.Student">
+    <id column="s_id" jdbcType="INTEGER" property="s_id" />
+    <result column="c_id" jdbcType="INTEGER" property="c_id" />
+    <result column="p_id" jdbcType="INTEGER" property="p_id" />
+    <result column="s_name" jdbcType="VARCHAR" property="s_name" />
+    <result column="s_sex" jdbcType="INTEGER" property="s_sex" />
+    <result column="s_identity_number" jdbcType="VARCHAR" property="s_identity_number" />
+    <result column="s_student_number" jdbcType="VARCHAR" property="s_student_number" />
+    <result column="s_create_time" jdbcType="TIMESTAMP" property="s_create_time" />
+    <result column="s_update_time" jdbcType="TIMESTAMP" property="s_update_time" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    s_id, c_id, p_id, s_name, s_sex, s_identity_number, s_student_number, s_create_time, 
+    s_update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.wechat.entity.StudentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where s_id = #{s_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from student
+    where s_id = #{s_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wechat.entity.StudentExample">
+    delete from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wechat.entity.Student">
+    insert into student (s_id, c_id, p_id, 
+      s_name, s_sex, s_identity_number, 
+      s_student_number, s_create_time, s_update_time
+      )
+    values (#{s_id,jdbcType=INTEGER}, #{c_id,jdbcType=INTEGER}, #{p_id,jdbcType=INTEGER}, 
+      #{s_name,jdbcType=VARCHAR}, #{s_sex,jdbcType=INTEGER}, #{s_identity_number,jdbcType=VARCHAR}, 
+      #{s_student_number,jdbcType=VARCHAR}, #{s_create_time,jdbcType=TIMESTAMP}, #{s_update_time,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wechat.entity.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="s_id != null">
+        s_id,
+      </if>
+      <if test="c_id != null">
+        c_id,
+      </if>
+      <if test="p_id != null">
+        p_id,
+      </if>
+      <if test="s_name != null">
+        s_name,
+      </if>
+      <if test="s_sex != null">
+        s_sex,
+      </if>
+      <if test="s_identity_number != null">
+        s_identity_number,
+      </if>
+      <if test="s_student_number != null">
+        s_student_number,
+      </if>
+      <if test="s_create_time != null">
+        s_create_time,
+      </if>
+      <if test="s_update_time != null">
+        s_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="s_id != null">
+        #{s_id,jdbcType=INTEGER},
+      </if>
+      <if test="c_id != null">
+        #{c_id,jdbcType=INTEGER},
+      </if>
+      <if test="p_id != null">
+        #{p_id,jdbcType=INTEGER},
+      </if>
+      <if test="s_name != null">
+        #{s_name,jdbcType=VARCHAR},
+      </if>
+      <if test="s_sex != null">
+        #{s_sex,jdbcType=INTEGER},
+      </if>
+      <if test="s_identity_number != null">
+        #{s_identity_number,jdbcType=VARCHAR},
+      </if>
+      <if test="s_student_number != null">
+        #{s_student_number,jdbcType=VARCHAR},
+      </if>
+      <if test="s_create_time != null">
+        #{s_create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="s_update_time != null">
+        #{s_update_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wechat.entity.StudentExample" resultType="java.lang.Long">
+    select count(*) from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update student
+    <set>
+      <if test="record.s_id != null">
+        s_id = #{record.s_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.c_id != null">
+        c_id = #{record.c_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.p_id != null">
+        p_id = #{record.p_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.s_name != null">
+        s_name = #{record.s_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.s_sex != null">
+        s_sex = #{record.s_sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.s_identity_number != null">
+        s_identity_number = #{record.s_identity_number,jdbcType=VARCHAR},
+      </if>
+      <if test="record.s_student_number != null">
+        s_student_number = #{record.s_student_number,jdbcType=VARCHAR},
+      </if>
+      <if test="record.s_create_time != null">
+        s_create_time = #{record.s_create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.s_update_time != null">
+        s_update_time = #{record.s_update_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update student
+    set s_id = #{record.s_id,jdbcType=INTEGER},
+      c_id = #{record.c_id,jdbcType=INTEGER},
+      p_id = #{record.p_id,jdbcType=INTEGER},
+      s_name = #{record.s_name,jdbcType=VARCHAR},
+      s_sex = #{record.s_sex,jdbcType=INTEGER},
+      s_identity_number = #{record.s_identity_number,jdbcType=VARCHAR},
+      s_student_number = #{record.s_student_number,jdbcType=VARCHAR},
+      s_create_time = #{record.s_create_time,jdbcType=TIMESTAMP},
+      s_update_time = #{record.s_update_time,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wechat.entity.Student">
+    update student
+    <set>
+      <if test="c_id != null">
+        c_id = #{c_id,jdbcType=INTEGER},
+      </if>
+      <if test="p_id != null">
+        p_id = #{p_id,jdbcType=INTEGER},
+      </if>
+      <if test="s_name != null">
+        s_name = #{s_name,jdbcType=VARCHAR},
+      </if>
+      <if test="s_sex != null">
+        s_sex = #{s_sex,jdbcType=INTEGER},
+      </if>
+      <if test="s_identity_number != null">
+        s_identity_number = #{s_identity_number,jdbcType=VARCHAR},
+      </if>
+      <if test="s_student_number != null">
+        s_student_number = #{s_student_number,jdbcType=VARCHAR},
+      </if>
+      <if test="s_create_time != null">
+        s_create_time = #{s_create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="s_update_time != null">
+        s_update_time = #{s_update_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where s_id = #{s_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wechat.entity.Student">
+    update student
+    set c_id = #{c_id,jdbcType=INTEGER},
+      p_id = #{p_id,jdbcType=INTEGER},
+      s_name = #{s_name,jdbcType=VARCHAR},
+      s_sex = #{s_sex,jdbcType=INTEGER},
+      s_identity_number = #{s_identity_number,jdbcType=VARCHAR},
+      s_student_number = #{s_student_number,jdbcType=VARCHAR},
+      s_create_time = #{s_create_time,jdbcType=TIMESTAMP},
+      s_update_time = #{s_update_time,jdbcType=TIMESTAMP}
+    where s_id = #{s_id,jdbcType=INTEGER}
+  </update>
+</mapper>

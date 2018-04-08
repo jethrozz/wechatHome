@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -45,26 +44,7 @@ public class WechatServiceImpl implements WechatService {
 
 				}
 				else{
-					//若不是特殊关键字，则直接搜索书名
-/*					List<Book> bookList = pushService.searchBookByName(content);
-					//
-					NewsMessage newsMessage = new NewsMessage();
-					List<Article> articleList = new ArrayList<>();
-					Article head = new Article();
-					head.setTitle("共搜索到:"+articleList.size()+"本相关书籍");
-					int num = 1;
-					for (Book book: bookList ) {
-						Article article = new Article();
-						article.setTitle(book.getBookname());
-						article.setUrl("");
-						article.setDescription("");
-						articleList.add(article);
-						num++;
-						if (num>=9)
-							break;
-					}
-					newsMessage.setArticleCount(num);
-					newsMessage.setArticles(articleList);*/
+
 
 					//
 

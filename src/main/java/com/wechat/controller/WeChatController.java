@@ -22,7 +22,7 @@ import java.io.PrintWriter;
 @RequestMapping("/wechat")
 @PropertySource(value = {"classpath:wechat.properties"})
 public class WeChatController {
-	@Value("${token}")
+	@Value("${wechat.token}")
 	private String TOKEN;
 	@Resource
 	WechatService wechatService;

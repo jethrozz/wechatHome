@@ -3,7 +3,8 @@ package com.wechat.serviceImpl;
 import com.wechat.model.*;
 import com.wechat.service.WechatService;
 import com.wechat.util.MessageUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ import java.util.Map;
  */
 @Service
 public class WechatServiceImpl implements WechatService {
-
+	private static Logger log = LoggerFactory.getLogger(WechatServiceImpl.class);
 
 	@Override
 	public String weixinPost(HttpServletRequest request) {
@@ -134,4 +135,7 @@ public class WechatServiceImpl implements WechatService {
 		}
 		return respMessage;
 	}
+
+
+
 }

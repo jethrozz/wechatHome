@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -92,6 +91,22 @@ public class HttpUtil {
         }
         return jsonObject;
     }
+
+    /**
+
+     *@描述 获取AccessToken
+
+     *@参数  [appid, appsecret]
+
+     *@返回值  com.wechat.bean.AccessToken
+
+     *@创建人  jethro
+
+     *@创建时间  2018/4/9
+
+     *@修改人和其它信息
+
+     */
     public static AccessToken getAccessToken(String appid, String appsecret) throws JSONException {
         AccessToken accessToken = null;
 

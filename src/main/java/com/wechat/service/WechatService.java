@@ -1,5 +1,8 @@
 package com.wechat.service;
 
+import com.wechat.model.Menu;
+import org.json.JSONException;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -8,4 +11,5 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface WechatService {
 	String weixinPost(HttpServletRequest request);
+
 }

@@ -23,10 +23,19 @@ public class Class implements Serializable {
 
     private Integer c_teacher;
 
+    private Teacher headMaster;
     private static final long serialVersionUID = 1L;
 
     public Integer getC_id() {
         return c_id;
+    }
+
+    public Teacher getHeadMaster() {
+        return headMaster;
+    }
+
+    public void setHeadMaster(Teacher headMaster) {
+        this.headMaster = headMaster;
     }
 
     public Class withC_id(Integer c_id) {

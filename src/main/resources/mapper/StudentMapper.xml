@@ -112,7 +112,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wechat.entity.Student">
+  <insert id="insert" parameterType="com.wechat.entity.Student" useGeneratedKeys="true" keyProperty="s_id">
     insert into student (s_id, c_id, p_id, 
       s_name, s_sex, s_identity_number, 
       s_student_number, s_create_time, s_update_time
@@ -122,7 +122,7 @@
       #{s_student_number,jdbcType=VARCHAR}, #{s_create_time,jdbcType=TIMESTAMP}, #{s_update_time,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.wechat.entity.Student">
+  <insert id="insertSelective" parameterType="com.wechat.entity.Student" useGeneratedKeys="true" keyProperty="s_id">
     insert into student
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="s_id != null">

@@ -14,6 +14,16 @@ public class TeacherClassKey implements Serializable {
 
     private Integer c_id;
 
+    private Teacher teacher;
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getT_id() {

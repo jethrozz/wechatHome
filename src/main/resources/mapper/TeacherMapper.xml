@@ -109,7 +109,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wechat.entity.Teacher">
+  <insert id="insert" parameterType="com.wechat.entity.Teacher" useGeneratedKeys="true" keyProperty="t_id">
     insert into teacher (t_id, t_name, t_subject, 
       t_phone_number, t_is_headmaster, t_create_time, 
       t_update_time)
@@ -117,7 +117,7 @@
       #{t_phone_number,jdbcType=VARCHAR}, #{t_is_headmaster,jdbcType=INTEGER}, #{t_create_time,jdbcType=TIMESTAMP}, 
       #{t_update_time,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.wechat.entity.Teacher">
+  <insert id="insertSelective" parameterType="com.wechat.entity.Teacher" useGeneratedKeys="true" keyProperty="t_id">
     insert into teacher
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="t_id != null">

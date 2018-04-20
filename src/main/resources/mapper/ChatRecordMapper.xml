@@ -130,13 +130,13 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wechat.entity.ChatRecord">
+  <insert id="insert" parameterType="com.wechat.entity.ChatRecord" useGeneratedKeys="true" keyProperty="cr_id">
     insert into chat_record (cr_id, cr_from_user, cr_to_user, 
       cr_create_time, cr_content)
     values (#{cr_id,jdbcType=INTEGER}, #{cr_from_user,jdbcType=INTEGER}, #{cr_to_user,jdbcType=INTEGER}, 
       #{cr_create_time,jdbcType=TIMESTAMP}, #{cr_content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wechat.entity.ChatRecord">
+  <insert id="insertSelective" parameterType="com.wechat.entity.ChatRecord" useGeneratedKeys="true" keyProperty="cr_id">
     insert into chat_record
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="cr_id != null">

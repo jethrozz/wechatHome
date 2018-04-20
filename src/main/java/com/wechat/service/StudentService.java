@@ -1,0 +1,23 @@
+package com.wechat.service;
+
+import com.wechat.bean.MyClass;
+import com.wechat.entity.ExamResult;
+import com.wechat.entity.Homework;
+import com.wechat.entity.Student;
+
+import java.util.List;
+
+/**
+ * @时间: 2018/4/16
+ * @描述：提供有关学生的一些数据
+ */
+public interface StudentService {
+    //根据id获取学生信息
+    Student getStudentInfo(Integer sId);
+    //根据学生信息获取学生当天各科作业列表
+    List<Homework> getTodayHomeWork(Student student);
+    //获取学生成绩
+    List<ExamResult> getScoreBySid(Student student);
+    //获取班级信息
+    MyClass getClassByCid(Student student);
+}

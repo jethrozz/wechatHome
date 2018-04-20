@@ -8,6 +8,9 @@
     <result column="c_create_time" jdbcType="TIMESTAMP" property="c_create_time" />
     <result column="c_update_time" jdbcType="TIMESTAMP" property="c_update_time" />
     <result column="c_teacher" jdbcType="INTEGER" property="c_teacher" />
+    <association property="headMaster" javaType="com.wechat.entity.Teacher">
+      <id property="c_teacher" column="c_teacher"></id>
+    </association>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -108,7 +111,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wechat.entity.Class">
+  <insert id="insert" parameterType="com.wechat.entity.Class" useGeneratedKeys="true" keyProperty="c_id">
     insert into class (c_id, c_gread, c_class, 
       c_create_time, c_update_time, c_teacher
       )
@@ -116,7 +119,7 @@
       #{c_create_time,jdbcType=TIMESTAMP}, #{c_update_time,jdbcType=TIMESTAMP}, #{c_teacher,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.wechat.entity.Class">
+  <insert id="insertSelective" parameterType="com.wechat.entity.Class" useGeneratedKeys="true" keyProperty="c_id">
     insert into class
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="c_id != null">

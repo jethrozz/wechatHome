@@ -132,7 +132,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wechat.entity.NoticeBulletin">
+  <insert id="insert" parameterType="com.wechat.entity.NoticeBulletin" useGeneratedKeys="true" keyProperty="nb_id">
     insert into notice_bulletin (nb_id, t_id, nb_type, 
       nb_title, nb_create_time, nb_update_time, 
       nb_content)
@@ -140,7 +140,7 @@
       #{nb_title,jdbcType=VARCHAR}, #{nb_create_time,jdbcType=TIMESTAMP}, #{nb_update_time,jdbcType=TIMESTAMP}, 
       #{nb_content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wechat.entity.NoticeBulletin">
+  <insert id="insertSelective" parameterType="com.wechat.entity.NoticeBulletin" useGeneratedKeys="true" keyProperty="nb_id">
     insert into notice_bulletin
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="nb_id != null">

@@ -1,37 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wechat.dao.HomeworkMapper">
-  <resultMap id="BaseResultMap" type="com.wechat.entity.Homework">
-    <id column="h_id" jdbcType="INTEGER" property="h_id" />
-    <result column="h_title" jdbcType="VARCHAR" property="h_title" />
-    <result column="h_finsh_time" jdbcType="TIMESTAMP" property="h_finsh_time" />
-    <result column="h_teacher" jdbcType="INTEGER" property="h_teacher" />
-    <result column="h_class" jdbcType="INTEGER" property="h_class" />
-    <result column="h_create_time" jdbcType="TIMESTAMP" property="h_create_time" />
-    <result column="h_update_time" jdbcType="TIMESTAMP" property="h_update_time" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wechat.dao.HomeworkMapper" >
+  <resultMap id="BaseResultMap" type="com.wechat.entity.Homework" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="finsh_time" property="finshTime" jdbcType="TIMESTAMP" />
+    <result column="tea_id" property="teaId" jdbcType="INTEGER" />
+    <result column="cla_id" property="claId" jdbcType="INTEGER" />
+    <result column="h_create_time" property="hCreateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wechat.entity.Homework">
-    <result column="h_content" jdbcType="LONGVARCHAR" property="h_content" />
+  <resultMap id="ResultMapWithBLOBs" type="com.wechat.entity.Homework" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -42,25 +42,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -71,242 +71,234 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
-    h_id, h_title, h_finsh_time, h_teacher, h_class, h_create_time, h_update_time
+  <sql id="Base_Column_List" >
+    id, title, finsh_time, tea_id, cla_id, h_create_time, update_time
   </sql>
-  <sql id="Blob_Column_List">
-    h_content
+  <sql id="Blob_Column_List" >
+    content
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.wechat.entity.HomeworkExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.wechat.entity.HomeworkExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from homework
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.wechat.entity.HomeworkExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wechat.entity.HomeworkExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from homework
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
-    <if test="limit != null">
-      <if test="offset != null">
-        limit ${offset}, ${limit}
-      </if>
-      <if test="offset == null">
-        limit ${limit}
-      </if>
-    </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from homework
-    where h_id = #{h_id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from homework
-    where h_id = #{h_id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.wechat.entity.HomeworkExample">
+  <delete id="deleteByExample" parameterType="com.wechat.entity.HomeworkExample" >
     delete from homework
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wechat.entity.Homework"  useGeneratedKeys="true" keyProperty="h_id">
-    insert into homework (h_id, h_title, h_finsh_time, 
-      h_teacher, h_class, h_create_time, 
-      h_update_time, h_content)
-    values (#{h_id,jdbcType=INTEGER}, #{h_title,jdbcType=VARCHAR}, #{h_finsh_time,jdbcType=TIMESTAMP}, 
-      #{h_teacher,jdbcType=INTEGER}, #{h_class,jdbcType=INTEGER}, #{h_create_time,jdbcType=TIMESTAMP}, 
-      #{h_update_time,jdbcType=TIMESTAMP}, #{h_content,jdbcType=LONGVARCHAR})
+  <insert id="insert" parameterType="com.wechat.entity.Homework" >
+    insert into homework (id, title, finsh_time, 
+      tea_id, cla_id, h_create_time, 
+      update_time, content)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{finshTime,jdbcType=TIMESTAMP}, 
+      #{teaId,jdbcType=INTEGER}, #{claId,jdbcType=INTEGER}, #{hCreateTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wechat.entity.Homework" useGeneratedKeys="true" keyProperty="h_id">
+  <insert id="insertSelective" parameterType="com.wechat.entity.Homework" >
     insert into homework
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="h_id != null">
-        h_id,
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
       </if>
-      <if test="h_title != null">
-        h_title,
+      <if test="title != null" >
+        title,
       </if>
-      <if test="h_finsh_time != null">
-        h_finsh_time,
+      <if test="finshTime != null" >
+        finsh_time,
       </if>
-      <if test="h_teacher != null">
-        h_teacher,
+      <if test="teaId != null" >
+        tea_id,
       </if>
-      <if test="h_class != null">
-        h_class,
+      <if test="claId != null" >
+        cla_id,
       </if>
-      <if test="h_create_time != null">
+      <if test="hCreateTime != null" >
         h_create_time,
       </if>
-      <if test="h_update_time != null">
-        h_update_time,
+      <if test="updateTime != null" >
+        update_time,
       </if>
-      <if test="h_content != null">
-        h_content,
+      <if test="content != null" >
+        content,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="h_id != null">
-        #{h_id,jdbcType=INTEGER},
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="h_title != null">
-        #{h_title,jdbcType=VARCHAR},
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
       </if>
-      <if test="h_finsh_time != null">
-        #{h_finsh_time,jdbcType=TIMESTAMP},
+      <if test="finshTime != null" >
+        #{finshTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="h_teacher != null">
-        #{h_teacher,jdbcType=INTEGER},
+      <if test="teaId != null" >
+        #{teaId,jdbcType=INTEGER},
       </if>
-      <if test="h_class != null">
-        #{h_class,jdbcType=INTEGER},
+      <if test="claId != null" >
+        #{claId,jdbcType=INTEGER},
       </if>
-      <if test="h_create_time != null">
-        #{h_create_time,jdbcType=TIMESTAMP},
+      <if test="hCreateTime != null" >
+        #{hCreateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="h_update_time != null">
-        #{h_update_time,jdbcType=TIMESTAMP},
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="h_content != null">
-        #{h_content,jdbcType=LONGVARCHAR},
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.wechat.entity.HomeworkExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.wechat.entity.HomeworkExample" resultType="java.lang.Integer" >
     select count(*) from homework
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update homework
-    <set>
-      <if test="record.h_id != null">
-        h_id = #{record.h_id,jdbcType=INTEGER},
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.h_title != null">
-        h_title = #{record.h_title,jdbcType=VARCHAR},
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
       </if>
-      <if test="record.h_finsh_time != null">
-        h_finsh_time = #{record.h_finsh_time,jdbcType=TIMESTAMP},
+      <if test="record.finshTime != null" >
+        finsh_time = #{record.finshTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.h_teacher != null">
-        h_teacher = #{record.h_teacher,jdbcType=INTEGER},
+      <if test="record.teaId != null" >
+        tea_id = #{record.teaId,jdbcType=INTEGER},
       </if>
-      <if test="record.h_class != null">
-        h_class = #{record.h_class,jdbcType=INTEGER},
+      <if test="record.claId != null" >
+        cla_id = #{record.claId,jdbcType=INTEGER},
       </if>
-      <if test="record.h_create_time != null">
-        h_create_time = #{record.h_create_time,jdbcType=TIMESTAMP},
+      <if test="record.hCreateTime != null" >
+        h_create_time = #{record.hCreateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.h_update_time != null">
-        h_update_time = #{record.h_update_time,jdbcType=TIMESTAMP},
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.h_content != null">
-        h_content = #{record.h_content,jdbcType=LONGVARCHAR},
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
     update homework
-    set h_id = #{record.h_id,jdbcType=INTEGER},
-      h_title = #{record.h_title,jdbcType=VARCHAR},
-      h_finsh_time = #{record.h_finsh_time,jdbcType=TIMESTAMP},
-      h_teacher = #{record.h_teacher,jdbcType=INTEGER},
-      h_class = #{record.h_class,jdbcType=INTEGER},
-      h_create_time = #{record.h_create_time,jdbcType=TIMESTAMP},
-      h_update_time = #{record.h_update_time,jdbcType=TIMESTAMP},
-      h_content = #{record.h_content,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null">
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      finsh_time = #{record.finshTime,jdbcType=TIMESTAMP},
+      tea_id = #{record.teaId,jdbcType=INTEGER},
+      cla_id = #{record.claId,jdbcType=INTEGER},
+      h_create_time = #{record.hCreateTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update homework
-    set h_id = #{record.h_id,jdbcType=INTEGER},
-      h_title = #{record.h_title,jdbcType=VARCHAR},
-      h_finsh_time = #{record.h_finsh_time,jdbcType=TIMESTAMP},
-      h_teacher = #{record.h_teacher,jdbcType=INTEGER},
-      h_class = #{record.h_class,jdbcType=INTEGER},
-      h_create_time = #{record.h_create_time,jdbcType=TIMESTAMP},
-      h_update_time = #{record.h_update_time,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      finsh_time = #{record.finshTime,jdbcType=TIMESTAMP},
+      tea_id = #{record.teaId,jdbcType=INTEGER},
+      cla_id = #{record.claId,jdbcType=INTEGER},
+      h_create_time = #{record.hCreateTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wechat.entity.Homework">
+  <update id="updateByPrimaryKeySelective" parameterType="com.wechat.entity.Homework" >
     update homework
-    <set>
-      <if test="h_title != null">
-        h_title = #{h_title,jdbcType=VARCHAR},
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="h_finsh_time != null">
-        h_finsh_time = #{h_finsh_time,jdbcType=TIMESTAMP},
+      <if test="finshTime != null" >
+        finsh_time = #{finshTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="h_teacher != null">
-        h_teacher = #{h_teacher,jdbcType=INTEGER},
+      <if test="teaId != null" >
+        tea_id = #{teaId,jdbcType=INTEGER},
       </if>
-      <if test="h_class != null">
-        h_class = #{h_class,jdbcType=INTEGER},
+      <if test="claId != null" >
+        cla_id = #{claId,jdbcType=INTEGER},
       </if>
-      <if test="h_create_time != null">
-        h_create_time = #{h_create_time,jdbcType=TIMESTAMP},
+      <if test="hCreateTime != null" >
+        h_create_time = #{hCreateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="h_update_time != null">
-        h_update_time = #{h_update_time,jdbcType=TIMESTAMP},
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="h_content != null">
-        h_content = #{h_content,jdbcType=LONGVARCHAR},
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where h_id = #{h_id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wechat.entity.Homework">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wechat.entity.Homework" >
     update homework
-    set h_title = #{h_title,jdbcType=VARCHAR},
-      h_finsh_time = #{h_finsh_time,jdbcType=TIMESTAMP},
-      h_teacher = #{h_teacher,jdbcType=INTEGER},
-      h_class = #{h_class,jdbcType=INTEGER},
-      h_create_time = #{h_create_time,jdbcType=TIMESTAMP},
-      h_update_time = #{h_update_time,jdbcType=TIMESTAMP},
-      h_content = #{h_content,jdbcType=LONGVARCHAR}
-    where h_id = #{h_id,jdbcType=INTEGER}
+    set title = #{title,jdbcType=VARCHAR},
+      finsh_time = #{finshTime,jdbcType=TIMESTAMP},
+      tea_id = #{teaId,jdbcType=INTEGER},
+      cla_id = #{claId,jdbcType=INTEGER},
+      h_create_time = #{hCreateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.wechat.entity.Homework">
+  <update id="updateByPrimaryKey" parameterType="com.wechat.entity.Homework" >
     update homework
-    set h_title = #{h_title,jdbcType=VARCHAR},
-      h_finsh_time = #{h_finsh_time,jdbcType=TIMESTAMP},
-      h_teacher = #{h_teacher,jdbcType=INTEGER},
-      h_class = #{h_class,jdbcType=INTEGER},
-      h_create_time = #{h_create_time,jdbcType=TIMESTAMP},
-      h_update_time = #{h_update_time,jdbcType=TIMESTAMP}
-    where h_id = #{h_id,jdbcType=INTEGER}
+    set title = #{title,jdbcType=VARCHAR},
+      finsh_time = #{finshTime,jdbcType=TIMESTAMP},
+      tea_id = #{teaId,jdbcType=INTEGER},
+      cla_id = #{claId,jdbcType=INTEGER},
+      h_create_time = #{hCreateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

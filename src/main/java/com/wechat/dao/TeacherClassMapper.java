@@ -1,26 +1,30 @@
 package com.wechat.dao;
 
+import com.wechat.entity.TeacherClass;
 import com.wechat.entity.TeacherClassExample;
-import com.wechat.entity.TeacherClassKey;
 import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-@Mapper
 public interface TeacherClassMapper {
-    long countByExample(TeacherClassExample example);
+    int countByExample(TeacherClassExample example);
 
     int deleteByExample(TeacherClassExample example);
 
-    int deleteByPrimaryKey(TeacherClassKey key);
+    int deleteByPrimaryKey(Integer id);
 
-    int insert(TeacherClassKey record);
+    int insert(TeacherClass record);
 
-    int insertSelective(TeacherClassKey record);
+    int insertSelective(TeacherClass record);
 
-    List<TeacherClassKey> selectByExample(TeacherClassExample example);
+    List<TeacherClass> selectByExample(TeacherClassExample example);
 
-    int updateByExampleSelective(@Param("record") TeacherClassKey record, @Param("example") TeacherClassExample example);
+    TeacherClass selectByPrimaryKey(Integer id);
 
-    int updateByExample(@Param("record") TeacherClassKey record, @Param("example") TeacherClassExample example);
+    int updateByExampleSelective(@Param("record") TeacherClass record, @Param("example") TeacherClassExample example);
+
+    int updateByExample(@Param("record") TeacherClass record, @Param("example") TeacherClassExample example);
+
+    int updateByPrimaryKeySelective(TeacherClass record);
+
+    int updateByPrimaryKey(TeacherClass record);
 }

@@ -1,6 +1,6 @@
 package com.wechat.bean;
 
-import com.wechat.entity.Class;
+import com.wechat.entity.Classes;
 import com.wechat.entity.Student;
 import com.wechat.entity.Teacher;
 
@@ -12,16 +12,16 @@ import java.util.List;
  */
 public class MyClass {
 
-    private Class myclass;
+    private Classes myclass;
     private Teacher headMaster;
     private List<Teacher> teacherList;
     private List<Student> studentList;
 
-    public Class getMyclass() {
+    public Classes getMyclass() {
         return myclass;
     }
 
-    public void setMyclass(Class myclass) {
+    public void setMyclass(Classes myclass) {
         this.myclass = myclass;
     }
 

@@ -3,16 +3,14 @@ package com.wechat.dao;
 import com.wechat.entity.NoticeBulletin;
 import com.wechat.entity.NoticeBulletinExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-@Mapper
 public interface NoticeBulletinMapper {
-    long countByExample(NoticeBulletinExample example);
+    int countByExample(NoticeBulletinExample example);
 
     int deleteByExample(NoticeBulletinExample example);
 
-    int deleteByPrimaryKey(Integer nb_id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(NoticeBulletin record);
 
@@ -22,7 +20,7 @@ public interface NoticeBulletinMapper {
 
     List<NoticeBulletin> selectByExample(NoticeBulletinExample example);
 
-    NoticeBulletin selectByPrimaryKey(Integer nb_id);
+    NoticeBulletin selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") NoticeBulletin record, @Param("example") NoticeBulletinExample example);
 

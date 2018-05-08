@@ -3,16 +3,14 @@ package com.wechat.dao;
 import com.wechat.entity.LeaveRecord;
 import com.wechat.entity.LeaveRecordExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-@Mapper
 public interface LeaveRecordMapper {
-    long countByExample(LeaveRecordExample example);
+    int countByExample(LeaveRecordExample example);
 
     int deleteByExample(LeaveRecordExample example);
 
-    int deleteByPrimaryKey(Integer l_id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(LeaveRecord record);
 
@@ -20,7 +18,7 @@ public interface LeaveRecordMapper {
 
     List<LeaveRecord> selectByExample(LeaveRecordExample example);
 
-    LeaveRecord selectByPrimaryKey(Integer l_id);
+    LeaveRecord selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") LeaveRecord record, @Param("example") LeaveRecordExample example);
 

@@ -3,16 +3,14 @@ package com.wechat.dao;
 import com.wechat.entity.Teacher;
 import com.wechat.entity.TeacherExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-@Mapper
 public interface TeacherMapper {
-    long countByExample(TeacherExample example);
+    int countByExample(TeacherExample example);
 
     int deleteByExample(TeacherExample example);
 
-    int deleteByPrimaryKey(Integer t_id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(Teacher record);
 
@@ -20,7 +18,7 @@ public interface TeacherMapper {
 
     List<Teacher> selectByExample(TeacherExample example);
 
-    Teacher selectByPrimaryKey(Integer t_id);
+    Teacher selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") Teacher record, @Param("example") TeacherExample example);
 

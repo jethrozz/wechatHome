@@ -1,38 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wechat.dao.LeaveRecordMapper">
-  <resultMap id="BaseResultMap" type="com.wechat.entity.LeaveRecord">
-    <id column="l_id" jdbcType="INTEGER" property="l_id" />
-    <result column="l_student" jdbcType="INTEGER" property="l_student" />
-    <result column="l_teacher" jdbcType="INTEGER" property="l_teacher" />
-    <result column="l_reason" jdbcType="VARCHAR" property="l_reason" />
-    <result column="l_type" jdbcType="INTEGER" property="l_type" />
-    <result column="l_start_time" jdbcType="TIMESTAMP" property="l_start_time" />
-    <result column="l_end_time" jdbcType="TIMESTAMP" property="l_end_time" />
-    <result column="l_create_time" jdbcType="TIMESTAMP" property="l_create_time" />
-    <result column="l_update_time" jdbcType="TIMESTAMP" property="l_update_time" />
-    <result column="l_is_agree" jdbcType="INTEGER" property="l_is_agree" />
-    <result column="l_time" jdbcType="REAL" property="l_time" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wechat.dao.LeaveRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.wechat.entity.LeaveRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tea_id" property="teaId" jdbcType="INTEGER" />
+    <result column="stu_id" property="stuId" jdbcType="INTEGER" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_agree" property="isAgree" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="REAL" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -43,25 +43,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -72,243 +72,235 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
-    l_id, l_student, l_teacher, l_reason, l_type, l_start_time, l_end_time, l_create_time, 
-    l_update_time, l_is_agree, l_time
+  <sql id="Base_Column_List" >
+    id, tea_id, stu_id, reason, type, start_time, end_time, create_time, update_time, 
+    is_agree, time
   </sql>
-  <select id="selectByExample" parameterType="com.wechat.entity.LeaveRecordExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wechat.entity.LeaveRecordExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from leave_record
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
-    <if test="limit != null">
-      <if test="offset != null">
-        limit ${offset}, ${limit}
-      </if>
-      <if test="offset == null">
-        limit ${limit}
-      </if>
-    </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from leave_record
-    where l_id = #{l_id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from leave_record
-    where l_id = #{l_id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.wechat.entity.LeaveRecordExample">
+  <delete id="deleteByExample" parameterType="com.wechat.entity.LeaveRecordExample" >
     delete from leave_record
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wechat.entity.LeaveRecord" useGeneratedKeys="true" keyProperty="l_id">
-    insert into leave_record (l_id, l_student, l_teacher, 
-      l_reason, l_type, l_start_time, 
-      l_end_time, l_create_time, l_update_time, 
-      l_is_agree, l_time)
-    values (#{l_id,jdbcType=INTEGER}, #{l_student,jdbcType=INTEGER}, #{l_teacher,jdbcType=INTEGER}, 
-      #{l_reason,jdbcType=VARCHAR}, #{l_type,jdbcType=INTEGER}, #{l_start_time,jdbcType=TIMESTAMP}, 
-      #{l_end_time,jdbcType=TIMESTAMP}, #{l_create_time,jdbcType=TIMESTAMP}, #{l_update_time,jdbcType=TIMESTAMP}, 
-      #{l_is_agree,jdbcType=INTEGER}, #{l_time,jdbcType=REAL})
+  <insert id="insert" parameterType="com.wechat.entity.LeaveRecord" >
+    insert into leave_record (id, tea_id, stu_id, 
+      reason, type, start_time, 
+      end_time, create_time, update_time, 
+      is_agree, time)
+    values (#{id,jdbcType=INTEGER}, #{teaId,jdbcType=INTEGER}, #{stuId,jdbcType=INTEGER}, 
+      #{reason,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{isAgree,jdbcType=INTEGER}, #{time,jdbcType=REAL})
   </insert>
-  <insert id="insertSelective" parameterType="com.wechat.entity.LeaveRecord" useGeneratedKeys="true" keyProperty="l_id">
+  <insert id="insertSelective" parameterType="com.wechat.entity.LeaveRecord" >
     insert into leave_record
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="l_id != null">
-        l_id,
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
       </if>
-      <if test="l_student != null">
-        l_student,
+      <if test="teaId != null" >
+        tea_id,
       </if>
-      <if test="l_teacher != null">
-        l_teacher,
+      <if test="stuId != null" >
+        stu_id,
       </if>
-      <if test="l_reason != null">
-        l_reason,
+      <if test="reason != null" >
+        reason,
       </if>
-      <if test="l_type != null">
-        l_type,
+      <if test="type != null" >
+        type,
       </if>
-      <if test="l_start_time != null">
-        l_start_time,
+      <if test="startTime != null" >
+        start_time,
       </if>
-      <if test="l_end_time != null">
-        l_end_time,
+      <if test="endTime != null" >
+        end_time,
       </if>
-      <if test="l_create_time != null">
-        l_create_time,
+      <if test="createTime != null" >
+        create_time,
       </if>
-      <if test="l_update_time != null">
-        l_update_time,
+      <if test="updateTime != null" >
+        update_time,
       </if>
-      <if test="l_is_agree != null">
-        l_is_agree,
+      <if test="isAgree != null" >
+        is_agree,
       </if>
-      <if test="l_time != null">
-        l_time,
+      <if test="time != null" >
+        time,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="l_id != null">
-        #{l_id,jdbcType=INTEGER},
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="l_student != null">
-        #{l_student,jdbcType=INTEGER},
+      <if test="teaId != null" >
+        #{teaId,jdbcType=INTEGER},
       </if>
-      <if test="l_teacher != null">
-        #{l_teacher,jdbcType=INTEGER},
+      <if test="stuId != null" >
+        #{stuId,jdbcType=INTEGER},
       </if>
-      <if test="l_reason != null">
-        #{l_reason,jdbcType=VARCHAR},
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
       </if>
-      <if test="l_type != null">
-        #{l_type,jdbcType=INTEGER},
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
       </if>
-      <if test="l_start_time != null">
-        #{l_start_time,jdbcType=TIMESTAMP},
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="l_end_time != null">
-        #{l_end_time,jdbcType=TIMESTAMP},
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="l_create_time != null">
-        #{l_create_time,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="l_update_time != null">
-        #{l_update_time,jdbcType=TIMESTAMP},
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="l_is_agree != null">
-        #{l_is_agree,jdbcType=INTEGER},
+      <if test="isAgree != null" >
+        #{isAgree,jdbcType=INTEGER},
       </if>
-      <if test="l_time != null">
-        #{l_time,jdbcType=REAL},
+      <if test="time != null" >
+        #{time,jdbcType=REAL},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.wechat.entity.LeaveRecordExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.wechat.entity.LeaveRecordExample" resultType="java.lang.Integer" >
     select count(*) from leave_record
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update leave_record
-    <set>
-      <if test="record.l_id != null">
-        l_id = #{record.l_id,jdbcType=INTEGER},
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.l_student != null">
-        l_student = #{record.l_student,jdbcType=INTEGER},
+      <if test="record.teaId != null" >
+        tea_id = #{record.teaId,jdbcType=INTEGER},
       </if>
-      <if test="record.l_teacher != null">
-        l_teacher = #{record.l_teacher,jdbcType=INTEGER},
+      <if test="record.stuId != null" >
+        stu_id = #{record.stuId,jdbcType=INTEGER},
       </if>
-      <if test="record.l_reason != null">
-        l_reason = #{record.l_reason,jdbcType=VARCHAR},
+      <if test="record.reason != null" >
+        reason = #{record.reason,jdbcType=VARCHAR},
       </if>
-      <if test="record.l_type != null">
-        l_type = #{record.l_type,jdbcType=INTEGER},
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
       </if>
-      <if test="record.l_start_time != null">
-        l_start_time = #{record.l_start_time,jdbcType=TIMESTAMP},
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.l_end_time != null">
-        l_end_time = #{record.l_end_time,jdbcType=TIMESTAMP},
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.l_create_time != null">
-        l_create_time = #{record.l_create_time,jdbcType=TIMESTAMP},
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.l_update_time != null">
-        l_update_time = #{record.l_update_time,jdbcType=TIMESTAMP},
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.l_is_agree != null">
-        l_is_agree = #{record.l_is_agree,jdbcType=INTEGER},
+      <if test="record.isAgree != null" >
+        is_agree = #{record.isAgree,jdbcType=INTEGER},
       </if>
-      <if test="record.l_time != null">
-        l_time = #{record.l_time,jdbcType=REAL},
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=REAL},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update leave_record
-    set l_id = #{record.l_id,jdbcType=INTEGER},
-      l_student = #{record.l_student,jdbcType=INTEGER},
-      l_teacher = #{record.l_teacher,jdbcType=INTEGER},
-      l_reason = #{record.l_reason,jdbcType=VARCHAR},
-      l_type = #{record.l_type,jdbcType=INTEGER},
-      l_start_time = #{record.l_start_time,jdbcType=TIMESTAMP},
-      l_end_time = #{record.l_end_time,jdbcType=TIMESTAMP},
-      l_create_time = #{record.l_create_time,jdbcType=TIMESTAMP},
-      l_update_time = #{record.l_update_time,jdbcType=TIMESTAMP},
-      l_is_agree = #{record.l_is_agree,jdbcType=INTEGER},
-      l_time = #{record.l_time,jdbcType=REAL}
-    <if test="_parameter != null">
+    set id = #{record.id,jdbcType=INTEGER},
+      tea_id = #{record.teaId,jdbcType=INTEGER},
+      stu_id = #{record.stuId,jdbcType=INTEGER},
+      reason = #{record.reason,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_agree = #{record.isAgree,jdbcType=INTEGER},
+      time = #{record.time,jdbcType=REAL}
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wechat.entity.LeaveRecord">
+  <update id="updateByPrimaryKeySelective" parameterType="com.wechat.entity.LeaveRecord" >
     update leave_record
-    <set>
-      <if test="l_student != null">
-        l_student = #{l_student,jdbcType=INTEGER},
+    <set >
+      <if test="teaId != null" >
+        tea_id = #{teaId,jdbcType=INTEGER},
       </if>
-      <if test="l_teacher != null">
-        l_teacher = #{l_teacher,jdbcType=INTEGER},
+      <if test="stuId != null" >
+        stu_id = #{stuId,jdbcType=INTEGER},
       </if>
-      <if test="l_reason != null">
-        l_reason = #{l_reason,jdbcType=VARCHAR},
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
       </if>
-      <if test="l_type != null">
-        l_type = #{l_type,jdbcType=INTEGER},
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
       </if>
-      <if test="l_start_time != null">
-        l_start_time = #{l_start_time,jdbcType=TIMESTAMP},
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="l_end_time != null">
-        l_end_time = #{l_end_time,jdbcType=TIMESTAMP},
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="l_create_time != null">
-        l_create_time = #{l_create_time,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="l_update_time != null">
-        l_update_time = #{l_update_time,jdbcType=TIMESTAMP},
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="l_is_agree != null">
-        l_is_agree = #{l_is_agree,jdbcType=INTEGER},
+      <if test="isAgree != null" >
+        is_agree = #{isAgree,jdbcType=INTEGER},
       </if>
-      <if test="l_time != null">
-        l_time = #{l_time,jdbcType=REAL},
+      <if test="time != null" >
+        time = #{time,jdbcType=REAL},
       </if>
     </set>
-    where l_id = #{l_id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.wechat.entity.LeaveRecord">
+  <update id="updateByPrimaryKey" parameterType="com.wechat.entity.LeaveRecord" >
     update leave_record
-    set l_student = #{l_student,jdbcType=INTEGER},
-      l_teacher = #{l_teacher,jdbcType=INTEGER},
-      l_reason = #{l_reason,jdbcType=VARCHAR},
-      l_type = #{l_type,jdbcType=INTEGER},
-      l_start_time = #{l_start_time,jdbcType=TIMESTAMP},
-      l_end_time = #{l_end_time,jdbcType=TIMESTAMP},
-      l_create_time = #{l_create_time,jdbcType=TIMESTAMP},
-      l_update_time = #{l_update_time,jdbcType=TIMESTAMP},
-      l_is_agree = #{l_is_agree,jdbcType=INTEGER},
-      l_time = #{l_time,jdbcType=REAL}
-    where l_id = #{l_id,jdbcType=INTEGER}
+    set tea_id = #{teaId,jdbcType=INTEGER},
+      stu_id = #{stuId,jdbcType=INTEGER},
+      reason = #{reason,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_agree = #{isAgree,jdbcType=INTEGER},
+      time = #{time,jdbcType=REAL}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wechat.dao.StudentMapper" >
-  <resultMap id="BaseResultMap" type="com.wechat.entity.Student" >
+<mapper namespace="com.wechat.dao.ClassesMapper" >
+  <resultMap id="BaseResultMap" type="com.wechat.entity.Classes" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="cla_id" property="claId" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="sex" property="sex" jdbcType="VARCHAR" />
-    <result column="identity_number" property="identityNumber" jdbcType="VARCHAR" />
-    <result column="student_number" property="studentNumber" jdbcType="VARCHAR" />
-    <result column="s_create_time" property="sCreateTime" jdbcType="TIMESTAMP" />
+    <result column="teacher" property="teacher" jdbcType="INTEGER" />
+    <result column="grade_name" property="gradeName" jdbcType="INTEGER" />
+    <result column="class_name" property="className" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -70,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, cla_id, name, sex, identity_number, student_number, s_create_time, update_time
+    id, teacher, grade_name, class_name, create_time, update_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wechat.entity.StudentExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wechat.entity.ClassesExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from student
+    from classes
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,50 +87,44 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from student
+    from classes
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from student
+    delete from classes
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.wechat.entity.StudentExample" >
-    delete from student
+  <delete id="deleteByExample" parameterType="com.wechat.entity.ClassesExample" >
+    delete from classes
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wechat.entity.Student" >
-    insert into student (id, cla_id, name, 
-      sex, identity_number, student_number, 
-      s_create_time, update_time)
-    values (#{id,jdbcType=INTEGER}, #{claId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=VARCHAR}, #{identityNumber,jdbcType=VARCHAR}, #{studentNumber,jdbcType=VARCHAR}, 
-      #{sCreateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.wechat.entity.Classes" >
+    insert into classes (id, teacher, grade_name, 
+      class_name, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{teacher,jdbcType=INTEGER}, #{gradeName,jdbcType=INTEGER}, 
+      #{className,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.wechat.entity.Student" >
-    insert into student
+  <insert id="insertSelective" parameterType="com.wechat.entity.Classes" >
+    insert into classes
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="claId != null" >
-        cla_id,
+      <if test="teacher != null" >
+        teacher,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="gradeName != null" >
+        grade_name,
       </if>
-      <if test="sex != null" >
-        sex,
+      <if test="className != null" >
+        class_name,
       </if>
-      <if test="identityNumber != null" >
-        identity_number,
-      </if>
-      <if test="studentNumber != null" >
-        student_number,
-      </if>
-      <if test="sCreateTime != null" >
-        s_create_time,
+      <if test="createTime != null" >
+        create_time,
       </if>
       <if test="updateTime != null" >
         update_time,
@@ -142,58 +134,46 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="claId != null" >
-        #{claId,jdbcType=INTEGER},
+      <if test="teacher != null" >
+        #{teacher,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="gradeName != null" >
+        #{gradeName,jdbcType=INTEGER},
       </if>
-      <if test="sex != null" >
-        #{sex,jdbcType=VARCHAR},
+      <if test="className != null" >
+        #{className,jdbcType=INTEGER},
       </if>
-      <if test="identityNumber != null" >
-        #{identityNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="studentNumber != null" >
-        #{studentNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="sCreateTime != null" >
-        #{sCreateTime,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.wechat.entity.StudentExample" resultType="java.lang.Integer" >
-    select count(*) from student
+  <select id="countByExample" parameterType="com.wechat.entity.ClassesExample" resultType="java.lang.Integer" >
+    select count(*) from classes
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update student
+    update classes
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.claId != null" >
-        cla_id = #{record.claId,jdbcType=INTEGER},
+      <if test="record.teacher != null" >
+        teacher = #{record.teacher,jdbcType=INTEGER},
       </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.gradeName != null" >
+        grade_name = #{record.gradeName,jdbcType=INTEGER},
       </if>
-      <if test="record.sex != null" >
-        sex = #{record.sex,jdbcType=VARCHAR},
+      <if test="record.className != null" >
+        class_name = #{record.className,jdbcType=INTEGER},
       </if>
-      <if test="record.identityNumber != null" >
-        identity_number = #{record.identityNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="record.studentNumber != null" >
-        student_number = #{record.studentNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sCreateTime != null" >
-        s_create_time = #{record.sCreateTime,jdbcType=TIMESTAMP},
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
@@ -204,39 +184,31 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update student
+    update classes
     set id = #{record.id,jdbcType=INTEGER},
-      cla_id = #{record.claId,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=VARCHAR},
-      identity_number = #{record.identityNumber,jdbcType=VARCHAR},
-      student_number = #{record.studentNumber,jdbcType=VARCHAR},
-      s_create_time = #{record.sCreateTime,jdbcType=TIMESTAMP},
+      teacher = #{record.teacher,jdbcType=INTEGER},
+      grade_name = #{record.gradeName,jdbcType=INTEGER},
+      class_name = #{record.className,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wechat.entity.Student" >
-    update student
+  <update id="updateByPrimaryKeySelective" parameterType="com.wechat.entity.Classes" >
+    update classes
     <set >
-      <if test="claId != null" >
-        cla_id = #{claId,jdbcType=INTEGER},
+      <if test="teacher != null" >
+        teacher = #{teacher,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="gradeName != null" >
+        grade_name = #{gradeName,jdbcType=INTEGER},
       </if>
-      <if test="sex != null" >
-        sex = #{sex,jdbcType=VARCHAR},
+      <if test="className != null" >
+        class_name = #{className,jdbcType=INTEGER},
       </if>
-      <if test="identityNumber != null" >
-        identity_number = #{identityNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="studentNumber != null" >
-        student_number = #{studentNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="sCreateTime != null" >
-        s_create_time = #{sCreateTime,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -244,14 +216,12 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.wechat.entity.Student" >
-    update student
-    set cla_id = #{claId,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=VARCHAR},
-      identity_number = #{identityNumber,jdbcType=VARCHAR},
-      student_number = #{studentNumber,jdbcType=VARCHAR},
-      s_create_time = #{sCreateTime,jdbcType=TIMESTAMP},
+  <update id="updateByPrimaryKey" parameterType="com.wechat.entity.Classes" >
+    update classes
+    set teacher = #{teacher,jdbcType=INTEGER},
+      grade_name = #{gradeName,jdbcType=INTEGER},
+      class_name = #{className,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

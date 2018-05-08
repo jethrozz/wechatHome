@@ -1,7 +1,7 @@
 package com.wechat.service;
 
 import com.wechat.entity.Student;
-import com.wechat.entity.Class;
+
 import java.util.List;
 
 /**

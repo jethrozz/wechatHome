@@ -1,29 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wechat.dao.TeacherClassMapper">
-  <resultMap id="BaseResultMap" type="com.wechat.entity.TeacherClassKey">
-    <id column="t_id" jdbcType="INTEGER" property="t_id" />
-    <id column="c_id" jdbcType="INTEGER" property="c_id" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wechat.dao.TeacherClassMapper" >
+  <resultMap id="BaseResultMap" type="com.wechat.entity.TeacherClass" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tea_id" property="teaId" jdbcType="INTEGER" />
+    <result column="cla_id" property="claId" jdbcType="INTEGER" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -34,25 +35,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -63,91 +64,118 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
-    t_id, c_id
+  <sql id="Base_Column_List" >
+    id, tea_id, cla_id
   </sql>
-  <select id="selectByExample" parameterType="com.wechat.entity.TeacherClassExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wechat.entity.TeacherClassExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from teacher_class
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
-    <if test="limit != null">
-      <if test="offset != null">
-        limit ${offset}, ${limit}
-      </if>
-      <if test="offset == null">
-        limit ${limit}
-      </if>
-    </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.wechat.entity.TeacherClassKey">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacher_class
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from teacher_class
-    where t_id = #{t_id,jdbcType=INTEGER}
-      and c_id = #{c_id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.wechat.entity.TeacherClassExample">
+  <delete id="deleteByExample" parameterType="com.wechat.entity.TeacherClassExample" >
     delete from teacher_class
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wechat.entity.TeacherClassKey">
-    insert into teacher_class (t_id, c_id)
-    values (#{t_id,jdbcType=INTEGER}, #{c_id,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.wechat.entity.TeacherClass" >
+    insert into teacher_class (id, tea_id, cla_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{teaId,jdbcType=INTEGER}, #{claId,jdbcType=INTEGER}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.wechat.entity.TeacherClassKey">
+  <insert id="insertSelective" parameterType="com.wechat.entity.TeacherClass" >
     insert into teacher_class
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="t_id != null">
-        t_id,
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
       </if>
-      <if test="c_id != null">
-        c_id,
+      <if test="teaId != null" >
+        tea_id,
+      </if>
+      <if test="claId != null" >
+        cla_id,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="t_id != null">
-        #{t_id,jdbcType=INTEGER},
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="c_id != null">
-        #{c_id,jdbcType=INTEGER},
+      <if test="teaId != null" >
+        #{teaId,jdbcType=INTEGER},
+      </if>
+      <if test="claId != null" >
+        #{claId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.wechat.entity.TeacherClassExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.wechat.entity.TeacherClassExample" resultType="java.lang.Integer" >
     select count(*) from teacher_class
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update teacher_class
-    <set>
-      <if test="record.t_id != null">
-        t_id = #{record.t_id,jdbcType=INTEGER},
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.c_id != null">
-        c_id = #{record.c_id,jdbcType=INTEGER},
+      <if test="record.teaId != null" >
+        tea_id = #{record.teaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.claId != null" >
+        cla_id = #{record.claId,jdbcType=INTEGER},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update teacher_class
-    set t_id = #{record.t_id,jdbcType=INTEGER},
-      c_id = #{record.c_id,jdbcType=INTEGER}
-    <if test="_parameter != null">
+    set id = #{record.id,jdbcType=INTEGER},
+      tea_id = #{record.teaId,jdbcType=INTEGER},
+      cla_id = #{record.claId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wechat.entity.TeacherClass" >
+    update teacher_class
+    <set >
+      <if test="teaId != null" >
+        tea_id = #{teaId,jdbcType=INTEGER},
+      </if>
+      <if test="claId != null" >
+        cla_id = #{claId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wechat.entity.TeacherClass" >
+    update teacher_class
+    set tea_id = #{teaId,jdbcType=INTEGER},
+      cla_id = #{claId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

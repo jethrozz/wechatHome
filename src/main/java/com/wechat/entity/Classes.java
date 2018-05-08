@@ -2,14 +2,14 @@ package com.wechat.entity;
 
 import java.util.Date;
 
-public class ChatRecord {
+public class Classes {
     private Integer id;
 
-    private Integer fromUser;
+    private Integer teacher;
 
-    private Integer toUser;
+    private Integer gradeName;
 
-    private String content;
+    private Integer className;
 
     private Date createTime;
 
@@ -23,28 +23,28 @@ public class ChatRecord {
         this.id = id;
     }
 
-    public Integer getFromUser() {
-        return fromUser;
+    public Integer getTeacher() {
+        return teacher;
     }
 
-    public void setFromUser(Integer fromUser) {
-        this.fromUser = fromUser;
+    public void setTeacher(Integer teacher) {
+        this.teacher = teacher;
     }
 
-    public Integer getToUser() {
-        return toUser;
+    public Integer getGradeName() {
+        return gradeName;
     }
 
-    public void setToUser(Integer toUser) {
-        this.toUser = toUser;
+    public void setGradeName(Integer gradeName) {
+        this.gradeName = gradeName;
     }
 
-    public String getContent() {
-        return content;
+    public Integer getClassName() {
+        return className;
     }
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+    public void setClassName(Integer className) {
+        this.className = className;
     }
 
     public Date getCreateTime() {

@@ -17,6 +17,10 @@ public class Teacher {
 
     private Date updateTime;
 
+    private String teacherId;
+
+    private String password;
+
     public Integer getId() {
         return id;
     }
@@ -71,5 +75,21 @@ public class Teacher {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId == null ? null : teacherId.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 }

@@ -1,6 +1,7 @@
 package com.wechat.service;
 
 import com.wechat.entity.Student;
+import com.wechat.entity.Teacher;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ import java.util.List;
  */
 public interface TeacherService {
     List<Student> getStudentByCid(Integer cid);
-
+    Teacher isTeacher(Teacher teacher);
 }

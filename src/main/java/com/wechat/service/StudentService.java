@@ -12,6 +12,8 @@ import java.util.List;
  * @描述：提供有关学生的一些数据
  */
 public interface StudentService {
+
+    Student isStudent(Student student);
     //根据id获取学生信息
     Student getStudentInfo(Integer sId);
     //根据学生信息获取学生当天各科作业列表

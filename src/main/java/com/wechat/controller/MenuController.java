@@ -1,12 +1,17 @@
 package com.wechat.controller;
 
+import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.StringUtils;
 import com.wechat.bean.AccessToken;
 import com.wechat.model.Menu;
+import com.wechat.model.Template;
+import com.wechat.model.TemplateParam;
 import com.wechat.service.MenuService;
+import com.wechat.service.TemplateService;
 import com.wechat.service.WechatService;
 import com.wechat.util.HttpUtil;
 import com.wechat.util.JSONUtils;
+import com.wechat.util.TemplateId;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +25,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * @作者: jethro
@@ -33,14 +41,18 @@ public class MenuController {
 
     @Value("${wechat.appID}")
     private String appId;
-    @Value("${wechat.wechat.appsecret}")
+    @Value("${wechat.appsecret}")
     private String appsecret;
 
     @Autowired
     private MenuService menuService;
+    @Autowired
+    private TemplateService templateService;
+
     @RequestMapping("/createMenu")
     @ResponseBody
     public ResponseEntity<String> createMenu(HttpServletRequest request, @RequestBody String requestBody){
+
         int i = -1;
         if (requestBody == null || "".equals(requestBody)){
             log.error("requestBody is empty");
@@ -69,5 +81,32 @@ public class MenuController {
         }else{
             return new ResponseEntity<String>("create Menu failed", HttpStatus.OK);
         }
+    }
+
+    @RequestMapping("/sendTemplate")
+    public ResponseEntity<String> sendTemplate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Template template = new Template();
+        TemplateParam p1 = new TemplateParam("keyword1",TemplateId.MSG.getValue(),"#743A3A");
+        TemplateParam p2 = new TemplateParam("keyword2","我有一条没毛驴","#0000ff");
+        TemplateParam p3 = new TemplateParam("keyword3","在吗？","#0000ff");
+        TemplateParam p4 = new TemplateParam("keyword4",sdf.format(new Date()),"#0000ff");
+        ArrayList<TemplateParam> list = new ArrayList<TemplateParam>();
+        list.add(p1);
+        list.add(p2);
+        list.add(p3);
+        list.add(p4);
+        template.setToUser("oMwUa1p65kY_CbMrfDa9-Vko5CsM");
+        template.setTemplateId(TemplateId.MSG.getUrl());
+        template.setTopColor("#abcdef");
+        template.setTemplateParamList(list);
+        AccessToken accessToken = null;
+        try {
+            accessToken = HttpUtil.getAccessToken(appId,appsecret);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        templateService.sendTemplateMsg(accessToken.getAccessToken(),template);
+        return new ResponseEntity<String>("sendTemplate SUCCESS", HttpStatus.OK);
     }
 }

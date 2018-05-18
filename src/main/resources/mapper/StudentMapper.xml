@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.wechat.entity.Student" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="cla_id" property="claId" jdbcType="INTEGER" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="identity_number" property="identityNumber" jdbcType="VARCHAR" />
@@ -70,7 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, cla_id, name, sex, identity_number, student_number, s_create_time, update_time
+    id, cla_id, password, name, sex, identity_number, student_number, s_create_time, 
+    update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wechat.entity.StudentExample" >
     select
@@ -103,12 +105,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.wechat.entity.Student" >
-    insert into student (id, cla_id, name, 
-      sex, identity_number, student_number, 
-      s_create_time, update_time)
-    values (#{id,jdbcType=INTEGER}, #{claId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=VARCHAR}, #{identityNumber,jdbcType=VARCHAR}, #{studentNumber,jdbcType=VARCHAR}, 
-      #{sCreateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into student (id, cla_id, password, 
+      name, sex, identity_number, 
+      student_number, s_create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{claId,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{identityNumber,jdbcType=VARCHAR}, 
+      #{studentNumber,jdbcType=VARCHAR}, #{sCreateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.wechat.entity.Student" >
     insert into student
@@ -118,6 +122,9 @@
       </if>
       <if test="claId != null" >
         cla_id,
+      </if>
+      <if test="password != null" >
+        password,
       </if>
       <if test="name != null" >
         name,
@@ -144,6 +151,9 @@
       </if>
       <if test="claId != null" >
         #{claId,jdbcType=INTEGER},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -180,6 +190,9 @@
       <if test="record.claId != null" >
         cla_id = #{record.claId,jdbcType=INTEGER},
       </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
@@ -207,6 +220,7 @@
     update student
     set id = #{record.id,jdbcType=INTEGER},
       cla_id = #{record.claId,jdbcType=INTEGER},
+      password = #{record.password,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=VARCHAR},
       identity_number = #{record.identityNumber,jdbcType=VARCHAR},
@@ -222,6 +236,9 @@
     <set >
       <if test="claId != null" >
         cla_id = #{claId,jdbcType=INTEGER},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -247,6 +264,7 @@
   <update id="updateByPrimaryKey" parameterType="com.wechat.entity.Student" >
     update student
     set cla_id = #{claId,jdbcType=INTEGER},
+      password = #{password,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
       identity_number = #{identityNumber,jdbcType=VARCHAR},

@@ -7,6 +7,8 @@ public class Student {
 
     private Integer claId;
 
+    private String password;
+
     private String name;
 
     private String sex;
@@ -33,6 +35,14 @@ public class Student {
 
     public void setClaId(Integer claId) {
         this.claId = claId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 
     public String getName() {

@@ -30,6 +30,11 @@ public class StudentServiceImpl implements StudentService {
     private TeacherMapper teacherDao;
 
     @Override
+    public Student isStudent(Student student) {
+        return null;
+    }
+
+    @Override
     public Student getStudentInfo(Integer sId) {
         return studentDao.selectByPrimaryKey(sId);
     }

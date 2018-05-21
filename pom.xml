@@ -22,6 +22,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <springfox.version>2.7.0</springfox.version>
+        <velocity.version>1.7</velocity.version>
+        <zxing.version>3.2.1</zxing.version>
+        <mybatisplus-spring-boot-starter.version>1.0.1</mybatisplus-spring-boot-starter.version>
     </properties>
 
     <dependencies>
@@ -95,6 +99,36 @@
             <version>1.2.3</version>
         </dependency>
 
+
+        <!-- swagger2需要的依赖 localhost:8080/swagger-ui.html-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
+
+        <!-- mybatis逆向生成的依赖-->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>${zxing.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>${velocity.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatisplus-spring-boot-starter</artifactId>
+            <version>${mybatisplus-spring-boot-starter.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

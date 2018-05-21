@@ -12,10 +12,12 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @Configuration
 @ComponentScan("com.wechat.controller")
 public class SpringmvcConfig {
-	@Bean
-	public MultipartResolver multipartResolver(){
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-		multipartResolver.setMaxUploadSize(1000000);
-		return multipartResolver;
-	}
+
+//	@Bean
+//	public MultipartResolver multipartResolver(){
+//		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+//		multipartResolver.setMaxUploadSize(1000000);
+//		return multipartResolver;
+//	}
+
 }

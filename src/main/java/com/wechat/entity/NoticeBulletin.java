@@ -1,75 +1,104 @@
 package com.wechat.entity;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableName;
+import java.io.Serializable;
 
-public class NoticeBulletin {
-    private Integer id;
+/**
+ * <p>
+ * 通知公告，包含
+id
+标题
+内容
+类型
+发布时间
+                                    -&#&
+ * </p>
+ *
+ * @author stylefeng
+ * @since 2018-05-22
+ */
+@TableName("notice_bulletin")
+public class NoticeBulletin extends Model<NoticeBulletin> {
 
-    private Integer teaId;
+    private static final long serialVersionUID = 1L;
 
-    private Integer type;
+	@TableId(value="id", type= IdType.AUTO)
+	private Integer id;
+	@TableField("tea_id")
+	private Integer teaId;
+	private Integer type;
+	private String title;
+	private String content;
+	@TableField("nb_create_time")
+	private Date nbCreateTime;
+	@TableField("update_time")
+	private Date updateTime;
 
-    private String title;
 
-    private Date nbCreateTime;
+	public Integer getId() {
+		return id;
+	}
 
-    private Date updateTime;
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    private String content;
+	public Integer getTeaId() {
+		return teaId;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public void setTeaId(Integer teaId) {
+		this.teaId = teaId;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getType() {
+		return type;
+	}
 
-    public Integer getTeaId() {
-        return teaId;
-    }
+	public void setType(Integer type) {
+		this.type = type;
+	}
 
-    public void setTeaId(Integer teaId) {
-        this.teaId = teaId;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public Integer getType() {
-        return type;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setType(Integer type) {
-        this.type = type;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
+	public Date getNbCreateTime() {
+		return nbCreateTime;
+	}
 
-    public Date getNbCreateTime() {
-        return nbCreateTime;
-    }
+	public void setNbCreateTime(Date nbCreateTime) {
+		this.nbCreateTime = nbCreateTime;
+	}
 
-    public void setNbCreateTime(Date nbCreateTime) {
-        this.nbCreateTime = nbCreateTime;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	@Override
+	protected Serializable pkVal() {
+		return this.id;
+	}
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
 }

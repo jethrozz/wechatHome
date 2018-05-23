@@ -17,6 +17,8 @@ public class ErrorTip extends Tip {
         this.message = message;
     }
 
+
+
     public ErrorTip(BizExceptionEnum bizExceptionEnum) {
         this.code = bizExceptionEnum.getCode();
         this.message = bizExceptionEnum.getMessage();

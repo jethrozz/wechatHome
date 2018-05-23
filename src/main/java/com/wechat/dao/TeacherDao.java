@@ -3,9 +3,12 @@ package com.wechat.dao;
 import com.wechat.entity.Teacher;
 import com.wechat.entity.TeacherExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import java.util.Map;
 
-public interface TeacherMapper {
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+public interface TeacherDao {
     int countByExample(TeacherExample example);
 
     int deleteByExample(TeacherExample example);
@@ -27,4 +30,7 @@ public interface TeacherMapper {
     int updateByPrimaryKeySelective(Teacher record);
 
     int updateByPrimaryKey(Teacher record);
+
+    @Select("select * from teacher where teacher_id = #{teacherId}")
+    Map<String,Object> selectByPrimaryteacherId(@Param("teacherId") String teacherId);
 }

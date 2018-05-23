@@ -39,10 +39,12 @@ public enum BizExceptionEnum {
 	USER_ALREADY_REG(401,"该用户已经注册"),
 	NO_THIS_USER(400,"没有此用户"),
 	USER_NOT_EXISTED(400, "没有此用户"),
+	PUT_PASSWORD_ERROR(-1, "输入密码错误"),
 	ACCOUNT_FREEZED(401, "账号被冻结"),
 	OLD_PWD_NOT_RIGHT(402, "原密码不正确"),
 	TWO_PWD_NOT_MATCH(405, "两次输入密码不一致"),
 
+	FAIL(-1,"操作失败"),
 	/**
 	 * 错误的请求
 	 */

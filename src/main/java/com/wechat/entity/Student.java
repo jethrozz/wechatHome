@@ -1,95 +1,125 @@
 package com.wechat.entity;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.activerecord.Model;
+import java.io.Serializable;
 
-public class Student {
-    private Integer id;
+/**
+ * <p>
+ * 学生表，记录学生的个人信息
+ * </p>
+ *
+ * @author stylefeng
+ * @since 2018-05-22
+ */
+public class Student extends Model<Student> {
 
-    private Integer claId;
+    private static final long serialVersionUID = 1L;
 
-    private String password;
+	@TableId(value="id", type= IdType.AUTO)
+	private Integer id;
+	@TableField("cla_id")
+	private Integer claId;
+	private String password;
+	private String name;
+	private String sex;
+	@TableField("identity_number")
+	private String identityNumber;
+	@TableField("student_number")
+	private String studentNumber;
+	@TableField("s_create_time")
+	private Date sCreateTime;
+	@TableField("update_time")
+	private Date updateTime;
+	private String openId;
 
-    private String name;
 
-    private String sex;
+	public Integer getId() {
+		return id;
+	}
 
-    private String identityNumber;
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    private String studentNumber;
+	public Integer getClaId() {
+		return claId;
+	}
 
-    private Date sCreateTime;
+	public void setClaId(Integer claId) {
+		this.claId = claId;
+	}
 
-    private Date updateTime;
+	public String getPassword() {
+		return password;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Integer getClaId() {
-        return claId;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setClaId(Integer claId) {
-        this.claId = claId;
-    }
+	public String getSex() {
+		return sex;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
+	public String getIdentityNumber() {
+		return identityNumber;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setIdentityNumber(String identityNumber) {
+		this.identityNumber = identityNumber;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public String getStudentNumber() {
+		return studentNumber;
+	}
 
-    public String getSex() {
-        return sex;
-    }
+	public void setStudentNumber(String studentNumber) {
+		this.studentNumber = studentNumber;
+	}
 
-    public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
-    }
+	public Date getsCreateTime() {
+		return sCreateTime;
+	}
 
-    public String getIdentityNumber() {
-        return identityNumber;
-    }
+	public void setsCreateTime(Date sCreateTime) {
+		this.sCreateTime = sCreateTime;
+	}
 
-    public void setIdentityNumber(String identityNumber) {
-        this.identityNumber = identityNumber == null ? null : identityNumber.trim();
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public String getStudentNumber() {
-        return studentNumber;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    public void setStudentNumber(String studentNumber) {
-        this.studentNumber = studentNumber == null ? null : studentNumber.trim();
-    }
+	public String getOpenId() {
+		return openId;
+	}
 
-    public Date getsCreateTime() {
-        return sCreateTime;
-    }
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
 
-    public void setsCreateTime(Date sCreateTime) {
-        this.sCreateTime = sCreateTime;
-    }
+	@Override
+	protected Serializable pkVal() {
+		return this.id;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 }

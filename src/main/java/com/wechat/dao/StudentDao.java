@@ -3,9 +3,12 @@ package com.wechat.dao;
 import com.wechat.entity.Student;
 import com.wechat.entity.StudentExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import java.util.Map;
 
-public interface StudentMapper {
+import org.apache.ibatis.annotations.*;
+
+public interface StudentDao {
+
     int countByExample(StudentExample example);
 
     int deleteByExample(StudentExample example);
@@ -18,7 +21,8 @@ public interface StudentMapper {
 
     List<Student> selectByExample(StudentExample example);
 
-    Student selectByPrimaryKey(Integer id);
+    //@Select("select * from student where id = #{id}")
+    Student selectByPrimaryKey(@Param("id") Integer id);
 
     int updateByExampleSelective(@Param("record") Student record, @Param("example") StudentExample example);
 
@@ -27,4 +31,10 @@ public interface StudentMapper {
     int updateByPrimaryKeySelective(Student record);
 
     int updateByPrimaryKey(Student record);
+
+   @Select({"select * from student where student_number = #{studentNumber}"})
+    Map<String,Object> selectByPrimaryStudentNumber(String studentNumber);
+
+//    @Select({"select * from student where student_number = #{studentNumber}"})
+//    Student selectByPrimaryStudentNumber(@Param("studentNumber") String studentNumber);
 }

@@ -5,7 +5,7 @@ import com.wechat.entity.ExamResultExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface ExamResultMapper {
+public interface ExamResultDao {
     int countByExample(ExamResultExample example);
 
     int deleteByExample(ExamResultExample example);

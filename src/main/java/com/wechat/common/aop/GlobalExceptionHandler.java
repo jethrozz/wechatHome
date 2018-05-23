@@ -30,4 +30,7 @@ public class GlobalExceptionHandler {
         return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
     }
 
+
+
+
 }

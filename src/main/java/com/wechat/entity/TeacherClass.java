@@ -1,33 +1,60 @@
 package com.wechat.entity;
 
-public class TeacherClass {
-    private Integer id;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableName;
+import java.io.Serializable;
 
-    private Integer teaId;
+/**
+ * <p>
+ * 教师班级对应表
+ * </p>
+ *
+ * @author stylefeng
+ * @since 2018-05-22
+ */
+@TableName("teacher_class")
+public class TeacherClass extends Model<TeacherClass> {
 
-    private Integer claId;
+    private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
-        return id;
-    }
+	@TableField("tea_id")
+	private Integer teaId;
+	@TableField("cla_id")
+	private Integer claId;
+	@TableId(value="id", type= IdType.AUTO)
+	private Integer id;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
-    public Integer getTeaId() {
-        return teaId;
-    }
+	public Integer getTeaId() {
+		return teaId;
+	}
 
-    public void setTeaId(Integer teaId) {
-        this.teaId = teaId;
-    }
+	public void setTeaId(Integer teaId) {
+		this.teaId = teaId;
+	}
 
-    public Integer getClaId() {
-        return claId;
-    }
+	public Integer getClaId() {
+		return claId;
+	}
 
-    public void setClaId(Integer claId) {
-        this.claId = claId;
-    }
+	public void setClaId(Integer claId) {
+		this.claId = claId;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	@Override
+	protected Serializable pkVal() {
+		return this.id;
+	}
+
 }

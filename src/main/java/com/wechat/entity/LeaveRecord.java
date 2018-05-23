@@ -1,115 +1,138 @@
 package com.wechat.entity;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableName;
+import java.io.Serializable;
 
-public class LeaveRecord {
-    private Integer id;
+/**
+ * <p>
+ * 请假情况表
+ * </p>
+ *
+ * @author stylefeng
+ * @since 2018-05-22
+ */
+@TableName("leave_record")
+public class LeaveRecord extends Model<LeaveRecord> {
 
-    private Integer teaId;
+    private static final long serialVersionUID = 1L;
 
-    private Integer stuId;
+	@TableId(value="id", type= IdType.AUTO)
+	private Integer id;
+	@TableField("tea_id")
+	private Integer teaId;
+	@TableField("stu_id")
+	private Integer stuId;
+	private String reason;
+	private String type;
+	@TableField("start_time")
+	private Date startTime;
+	@TableField("end_time")
+	private Date endTime;
+	@TableField("create_time")
+	private Date createTime;
+	@TableField("update_time")
+	private Date updateTime;
+	@TableField("is_agree")
+	private Integer isAgree;
+	private Float time;
 
-    private String reason;
 
-    private String type;
+	public Integer getId() {
+		return id;
+	}
 
-    private Date startTime;
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    private Date endTime;
+	public Integer getTeaId() {
+		return teaId;
+	}
 
-    private Date createTime;
+	public void setTeaId(Integer teaId) {
+		this.teaId = teaId;
+	}
 
-    private Date updateTime;
+	public Integer getStuId() {
+		return stuId;
+	}
 
-    private Integer isAgree;
+	public void setStuId(Integer stuId) {
+		this.stuId = stuId;
+	}
 
-    private Float time;
+	public String getReason() {
+		return reason;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public Integer getTeaId() {
-        return teaId;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public void setTeaId(Integer teaId) {
-        this.teaId = teaId;
-    }
+	public Date getStartTime() {
+		return startTime;
+	}
 
-    public Integer getStuId() {
-        return stuId;
-    }
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
 
-    public void setStuId(Integer stuId) {
-        this.stuId = stuId;
-    }
+	public Date getEndTime() {
+		return endTime;
+	}
 
-    public String getReason() {
-        return reason;
-    }
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
 
-    public void setReason(String reason) {
-        this.reason = reason == null ? null : reason.trim();
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public Date getStartTime() {
-        return startTime;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
+	public Integer getIsAgree() {
+		return isAgree;
+	}
 
-    public Date getEndTime() {
-        return endTime;
-    }
+	public void setIsAgree(Integer isAgree) {
+		this.isAgree = isAgree;
+	}
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
+	public Float getTime() {
+		return time;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setTime(Float time) {
+		this.time = time;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	@Override
+	protected Serializable pkVal() {
+		return this.id;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getIsAgree() {
-        return isAgree;
-    }
-
-    public void setIsAgree(Integer isAgree) {
-        this.isAgree = isAgree;
-    }
-
-    public Float getTime() {
-        return time;
-    }
-
-    public void setTime(Float time) {
-        this.time = time;
-    }
 }

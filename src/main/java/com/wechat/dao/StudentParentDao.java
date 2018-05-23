@@ -5,7 +5,7 @@ import com.wechat.entity.StudentParentExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface StudentParentMapper {
+public interface StudentParentDao {
     int countByExample(StudentParentExample example);
 
     int deleteByExample(StudentParentExample example);

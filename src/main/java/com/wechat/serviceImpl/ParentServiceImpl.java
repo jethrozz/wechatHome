@@ -1,6 +1,6 @@
 package com.wechat.serviceImpl;
 
-import com.wechat.dao.ParentMapper;
+import com.wechat.dao.ParentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Service;
 @Service
 public class ParentServiceImpl {
 	@Autowired
-	private ParentMapper parentMapper;
+	private ParentDao parentMapper;
 }

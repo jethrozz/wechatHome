@@ -1,75 +1,98 @@
 package com.wechat.entity;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableName;
+import java.io.Serializable;
 
-public class ExamResult {
-    private Integer id;
+/**
+ * <p>
+ * 考试成绩表
+ * </p>
+ *
+ * @author stylefeng
+ * @since 2018-05-22
+ */
+@TableName("exam_result")
+public class ExamResult extends Model<ExamResult> {
 
-    private Integer stuId;
+    private static final long serialVersionUID = 1L;
 
-    private Integer term;
+	@TableId(value="id", type= IdType.AUTO)
+	private Integer id;
+	@TableField("stu_id")
+	private Integer stuId;
+	private Integer term;
+	private Integer subject;
+	private Float score;
+	@TableField("create_time")
+	private Date createTime;
+	@TableField("update_time")
+	private Date updateTime;
 
-    private Integer subject;
 
-    private Float score;
+	public Integer getId() {
+		return id;
+	}
 
-    private Date createTime;
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    private Date updateTime;
+	public Integer getStuId() {
+		return stuId;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public void setStuId(Integer stuId) {
+		this.stuId = stuId;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getTerm() {
+		return term;
+	}
 
-    public Integer getStuId() {
-        return stuId;
-    }
+	public void setTerm(Integer term) {
+		this.term = term;
+	}
 
-    public void setStuId(Integer stuId) {
-        this.stuId = stuId;
-    }
+	public Integer getSubject() {
+		return subject;
+	}
 
-    public Integer getTerm() {
-        return term;
-    }
+	public void setSubject(Integer subject) {
+		this.subject = subject;
+	}
 
-    public void setTerm(Integer term) {
-        this.term = term;
-    }
+	public Float getScore() {
+		return score;
+	}
 
-    public Integer getSubject() {
-        return subject;
-    }
+	public void setScore(Float score) {
+		this.score = score;
+	}
 
-    public void setSubject(Integer subject) {
-        this.subject = subject;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public Float getScore() {
-        return score;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public void setScore(Float score) {
-        this.score = score;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	@Override
+	protected Serializable pkVal() {
+		return this.id;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 }

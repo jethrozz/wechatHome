@@ -5,7 +5,7 @@ import com.wechat.entity.ClassesExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface ClassesMapper {
+public interface ClassesDao {
     int countByExample(ClassesExample example);
 
     int deleteByExample(ClassesExample example);

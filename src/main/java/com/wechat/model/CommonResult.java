@@ -23,10 +23,10 @@ public class CommonResult<T> {
 		this.msg = msg;
 	}
 
-	public CommonResult(int stauts, T data, String msg) {
+	public CommonResult(int stauts, T data) {
 		this.stauts = stauts;
 		this.data = data;
-		this.msg = msg;
+		this.msg = "操作成功";
 	}
 
 	public int getStauts() {

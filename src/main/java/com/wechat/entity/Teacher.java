@@ -1,95 +1,126 @@
 package com.wechat.entity;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.activerecord.Model;
+import java.io.Serializable;
 
-public class Teacher {
-    private Integer id;
+/**
+ * <p>
+ * 教师表，记录教师的个人信息
 
-    private String name;
+ * </p>
+ *
+ * @author stylefeng
+ * @since 2018-05-22
+ */
+public class Teacher extends Model<Teacher> {
 
-    private Integer subject;
+    private static final long serialVersionUID = 1L;
 
-    private String phoneNumber;
+	@TableId(value="id", type= IdType.AUTO)
+	private Integer id;
+	private String name;
+	private Integer subject;
+	@TableField("phone_number")
+	private String phoneNumber;
+	@TableField("is_headmaster")
+	private Integer isHeadmaster;
+	@TableField("create_time")
+	private Date createTime;
+	@TableField("update_time")
+	private Date updateTime;
+	@TableField("teacher_id")
+	private String teacherId;
+	private String password;
+	private String openId;
 
-    private Integer isHeadmaster;
 
-    private Date createTime;
+	public Integer getId() {
+		return id;
+	}
 
-    private Date updateTime;
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    private String teacherId;
+	public String getName() {
+		return name;
+	}
 
-    private String password;
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getSubject() {
+		return subject;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setSubject(Integer subject) {
+		this.subject = subject;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
-    public Integer getSubject() {
-        return subject;
-    }
+	public Integer getIsHeadmaster() {
+		return isHeadmaster;
+	}
 
-    public void setSubject(Integer subject) {
-        this.subject = subject;
-    }
+	public void setIsHeadmaster(Integer isHeadmaster) {
+		this.isHeadmaster = isHeadmaster;
+	}
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber == null ? null : phoneNumber.trim();
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public Integer getIsHeadmaster() {
-        return isHeadmaster;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public void setIsHeadmaster(Integer isHeadmaster) {
-        this.isHeadmaster = isHeadmaster;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public String getTeacherId() {
+		return teacherId;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public void setTeacherId(String teacherId) {
+		this.teacherId = teacherId;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public String getTeacherId() {
-        return teacherId;
-    }
+	public String getOpenId() {
+		return openId;
+	}
 
-    public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId == null ? null : teacherId.trim();
-    }
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	@Override
+	protected Serializable pkVal() {
+		return this.id;
+	}
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
 }

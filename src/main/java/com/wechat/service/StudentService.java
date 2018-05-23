@@ -6,11 +6,13 @@ import com.wechat.entity.Homework;
 import com.wechat.entity.Student;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @时间: 2018/4/16
  * @描述：提供有关学生的一些数据
  */
+
 public interface StudentService {
 
     Student isStudent(Student student);
@@ -21,5 +23,11 @@ public interface StudentService {
     //获取学生成绩
     List<ExamResult> getScoreBySid(Student student);
     //获取班级信息
+
     MyClass getClassByCid(Student student);
+
+
+    Map<String,Object> CheckLoginStudent(String studentNumber, String password) throws IllegalAccessException;
+
+    Map<String,Object> CheckLoginParent(String studentNumber, String identityNumber);
 }

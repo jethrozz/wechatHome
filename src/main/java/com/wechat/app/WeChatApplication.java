@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @SpringBootApplication
 @ComponentScan("com.wechat")
-@MapperScan("com.wechat.dao")
 public class WeChatApplication {
 
     public static void main(String[] args) {

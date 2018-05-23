@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wechat.dao.StudentMapper" >
+<mapper namespace="com.wechat.dao.StudentDao" >
   <resultMap id="BaseResultMap" type="com.wechat.entity.Student" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="cla_id" property="claId" jdbcType="INTEGER" />
@@ -74,6 +74,17 @@
     id, cla_id, password, name, sex, identity_number, student_number, s_create_time, 
     update_time
   </sql>
+
+
+  <!--&lt;!&ndash; 自定义语句&ndash;&gt;-->
+  <!--<select id="selectByPrimaryStudentNumber" resultMap="java.util.Map" parameterType="java.lang.String" >-->
+    <!--select-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from student-->
+    <!--where student_number = #{student_number,jdbcType=VARCHAR}-->
+  <!--</select>-->
+
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wechat.entity.StudentExample" >
     select
     <if test="distinct" >

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wechat.dao.LeaveRecordMapper" >
+<mapper namespace="com.wechat.dao.LeaveRecordDao" >
   <resultMap id="BaseResultMap" type="com.wechat.entity.LeaveRecord" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="tea_id" property="teaId" jdbcType="INTEGER" />

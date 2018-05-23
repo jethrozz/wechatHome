@@ -5,7 +5,7 @@ import com.wechat.entity.NoticeBulletinExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface NoticeBulletinMapper {
+public interface NoticeBulletinDao {
     int countByExample(NoticeBulletinExample example);
 
     int deleteByExample(NoticeBulletinExample example);

@@ -1,14 +1,20 @@
 package com.wechat.serviceImpl;
 
 import com.wechat.bean.MyClass;
+import com.wechat.common.constat.tips.ErrorTip;
 import com.wechat.dao.*;
 import com.wechat.entity.*;
+import com.wechat.exception.BizExceptionEnum;
+import com.wechat.exception.BussinessException;
 import com.wechat.service.StudentService;
+import com.wechat.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @时间: 2018/4/16
@@ -17,18 +23,20 @@ import java.util.List;
 @Service("StudentService")
 public class StudentServiceImpl implements StudentService {
 
+    private static int code = -1;
+
     @Autowired
-    private StudentMapper studentDao;
+    private StudentDao studentDao;
     @Autowired
-    private ClassesMapper classDao;
+    private ClassesDao classDao;
     @Autowired
-    private ExamResultMapper examResultDao;
+    private ExamResultDao examResultDao;
     @Autowired
-    private HomeworkMapper homeworkDao;
+    private HomeworkDao homeworkDao;
     @Autowired
-    private TeacherClassMapper teacherClassDao;
+    private TeacherClassDao teacherClassDao;
     @Autowired
-    private TeacherMapper teacherDao;
+    private TeacherDao teacherDao;
 
     @Override
     public Student isStudent(Student student) {
@@ -65,5 +73,31 @@ public class StudentServiceImpl implements StudentService {
         //List<Teacher>
 
         return myClass;
+    }
+
+    @Override
+    public Map<String, Object> CheckLoginStudent(String studentNumber, String password) throws IllegalAccessException {
+
+        Map<String, Object> map = studentDao.selectByPrimaryStudentNumber(studentNumber);
+        if (map != null){
+            if (map.get("password").equals(password)){
+                return map;
+            }
+            return null;
+        }
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> CheckLoginParent(String studentNumber, String identityNumber) {
+
+        Map<String, Object> map = studentDao.selectByPrimaryStudentNumber(studentNumber);
+        if (map != null){
+            if (map.get("identity_number").equals(identityNumber)){
+                return map;
+            }
+            return null;
+        }
+        return null;
     }
 }

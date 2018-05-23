@@ -1,85 +1,107 @@
 package com.wechat.entity;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.activerecord.Model;
+import java.io.Serializable;
 
-public class Homework {
-    private Integer id;
+/**
+ * <p>
+ * 作业表
+ * </p>
+ *
+ * @author stylefeng
+ * @since 2018-05-22
+ */
+public class Homework extends Model<Homework> {
 
-    private String title;
+    private static final long serialVersionUID = 1L;
 
-    private Date finshTime;
+	@TableId(value="id", type= IdType.AUTO)
+	private Integer id;
+	private String title;
+	private String content;
+	@TableField("finsh_time")
+	private Date finshTime;
+	@TableField("tea_id")
+	private Integer teaId;
+	@TableField("cla_id")
+	private Integer claId;
+	@TableField("h_create_time")
+	private Date hCreateTime;
+	@TableField("update_time")
+	private Date updateTime;
 
-    private Integer teaId;
 
-    private Integer claId;
+	public Integer getId() {
+		return id;
+	}
 
-    private Date hCreateTime;
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    private Date updateTime;
+	public String getTitle() {
+		return title;
+	}
 
-    private String content;
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public Date getFinshTime() {
+		return finshTime;
+	}
 
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
+	public void setFinshTime(Date finshTime) {
+		this.finshTime = finshTime;
+	}
 
-    public Date getFinshTime() {
-        return finshTime;
-    }
+	public Integer getTeaId() {
+		return teaId;
+	}
 
-    public void setFinshTime(Date finshTime) {
-        this.finshTime = finshTime;
-    }
+	public void setTeaId(Integer teaId) {
+		this.teaId = teaId;
+	}
 
-    public Integer getTeaId() {
-        return teaId;
-    }
+	public Integer getClaId() {
+		return claId;
+	}
 
-    public void setTeaId(Integer teaId) {
-        this.teaId = teaId;
-    }
+	public void setClaId(Integer claId) {
+		this.claId = claId;
+	}
 
-    public Integer getClaId() {
-        return claId;
-    }
+	public Date gethCreateTime() {
+		return hCreateTime;
+	}
 
-    public void setClaId(Integer claId) {
-        this.claId = claId;
-    }
+	public void sethCreateTime(Date hCreateTime) {
+		this.hCreateTime = hCreateTime;
+	}
 
-    public Date gethCreateTime() {
-        return hCreateTime;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public void sethCreateTime(Date hCreateTime) {
-        this.hCreateTime = hCreateTime;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	@Override
+	protected Serializable pkVal() {
+		return this.id;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
 }

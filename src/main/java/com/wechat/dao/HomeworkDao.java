@@ -5,7 +5,7 @@ import com.wechat.entity.HomeworkExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface HomeworkMapper {
+public interface HomeworkDao {
     int countByExample(HomeworkExample example);
 
     int deleteByExample(HomeworkExample example);

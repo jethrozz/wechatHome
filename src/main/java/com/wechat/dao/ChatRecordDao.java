@@ -5,7 +5,7 @@ import com.wechat.entity.ChatRecordExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface ChatRecordMapper {
+public interface ChatRecordDao {
     int countByExample(ChatRecordExample example);
 
     int deleteByExample(ChatRecordExample example);

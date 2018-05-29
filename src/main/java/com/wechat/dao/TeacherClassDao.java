@@ -3,6 +3,8 @@ package com.wechat.dao;
 import com.wechat.entity.TeacherClass;
 import com.wechat.entity.TeacherClassExample;
 import java.util.List;
+
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
 
 public interface TeacherClassDao {
@@ -17,6 +19,7 @@ public interface TeacherClassDao {
     int insertSelective(TeacherClass record);
 
     List<TeacherClass> selectByExample(TeacherClassExample example);
+    List<TeacherClass> selectByClassId(@Param("classId") Integer classId);
 
     TeacherClass selectByPrimaryKey(Integer id);
 

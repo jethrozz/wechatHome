@@ -85,7 +85,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from chat_record
     where id = #{id,jdbcType=INTEGER}
@@ -186,11 +186,11 @@
   <update id="updateByExample" parameterType="map" >
     update chat_record
     set id = #{record.id,jdbcType=INTEGER},
-      from_user = #{record.fromUser,jdbcType=INTEGER},
-      to_user = #{record.toUser,jdbcType=INTEGER},
-      content = #{record.content,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    from_user = #{record.fromUser,jdbcType=INTEGER},
+    to_user = #{record.toUser,jdbcType=INTEGER},
+    content = #{record.content,jdbcType=VARCHAR},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>

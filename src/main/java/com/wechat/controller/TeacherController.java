@@ -2,6 +2,7 @@ package com.wechat.controller;
 
 
 import com.wechat.common.controller.BaseController;
+import com.wechat.dao.ClassesDao;
 import com.wechat.entity.Classes;
 import com.wechat.mapper.ClassesMapper;
 import com.wechat.mapper.TeacherMapper;
@@ -22,6 +23,8 @@ public class TeacherController extends BaseController {
     @Autowired
     private ClassesMapper classesMapper;
 
+    @Autowired
+    private ClassesDao classesDao;
 
     @ApiOperation(value = "新建班级信息接口",notes = "",produces = "application/json")
     @ApiImplicitParam(name = "classes",
@@ -35,15 +38,18 @@ public class TeacherController extends BaseController {
         return  new CommonResult<>(errorcode,errorMessage);
     }
 
+
     @ApiOperation(value = "获取班级概况信息接口",notes = "",produces = "application/json")
     @ApiImplicitParam(name = "id",
             value = "教师id",
             required = true, dataType = "Integer")
     @GetMapping(value = "/getClassesInfo/{id}",produces = "application/json")
-    public CommonResult<Object> getClassesInfo(@PathVariable Integer id){
+    public CommonResult<Object> getClassesInfo(@PathVariable("id") Integer id){
 
-
-
-        return null;
+        Classes classes = classesDao.getClassesInfo(id);
+        if (classes != null){
+            return new CommonResult<>(successcode,classes);
+        }
+        return new CommonResult<>(errorcode,errorMessage);
     }
 }

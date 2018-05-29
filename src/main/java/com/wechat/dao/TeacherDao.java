@@ -31,6 +31,6 @@ public interface TeacherDao {
 
     int updateByPrimaryKey(Teacher record);
 
-    @Select("select * from teacher where teacher_id = #{teacherId}")
+//    @Select("select * from teacher where teacher_id = #{teacherId}")
     Map<String,Object> selectByPrimaryteacherId(@Param("teacherId") String teacherId);
 }

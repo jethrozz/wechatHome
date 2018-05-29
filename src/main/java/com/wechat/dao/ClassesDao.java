@@ -27,4 +27,8 @@ public interface ClassesDao {
     int updateByPrimaryKeySelective(Classes record);
 
     int updateByPrimaryKey(Classes record);
+
+    Classes getClassesInfo(Integer id);
+
+
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wechat.mapper.NoticeBulletinMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.wechat.entity.NoticeBulletin">
+		<id column="id" property="id" />
+		<result column="tea_id" property="teaId" />
+		<result column="type" property="type" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="nb_create_time" property="nbCreateTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+</mapper>

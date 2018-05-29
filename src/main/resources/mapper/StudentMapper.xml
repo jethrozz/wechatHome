@@ -11,6 +11,7 @@
     <result column="student_number" property="studentNumber" jdbcType="VARCHAR" />
     <result column="s_create_time" property="sCreateTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="openId" property="openid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -72,18 +73,22 @@
   </sql>
   <sql id="Base_Column_List" >
     id, cla_id, password, name, sex, identity_number, student_number, s_create_time, 
-    update_time
+    update_time, openId
   </sql>
 
-
-  <!--&lt;!&ndash; 自定义语句&ndash;&gt;-->
-  <!--<select id="selectByPrimaryStudentNumber" resultMap="java.util.Map" parameterType="java.lang.String" >-->
-    <!--select-->
-    <!--<include refid="Base_Column_List" />-->
-    <!--from student-->
-    <!--where student_number = #{student_number,jdbcType=VARCHAR}-->
-  <!--</select>-->
-
+  <!--自定义语句-->
+  <select id="selectByPrimaryStudentNumber" resultType="java.util.Map" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from student
+    where student_number = #{student_number,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByStudentClassId" resultType="java.util.Map" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from student
+    where cla_id = #{cla_id,jdbcType=INTEGER}
+  </select>
 
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wechat.entity.StudentExample" >
     select
@@ -118,12 +123,12 @@
   <insert id="insert" parameterType="com.wechat.entity.Student" >
     insert into student (id, cla_id, password, 
       name, sex, identity_number, 
-      student_number, s_create_time, update_time
-      )
+      student_number, s_create_time, update_time, 
+      openId)
     values (#{id,jdbcType=INTEGER}, #{claId,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{identityNumber,jdbcType=VARCHAR}, 
-      #{studentNumber,jdbcType=VARCHAR}, #{sCreateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{studentNumber,jdbcType=VARCHAR}, #{sCreateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{openid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wechat.entity.Student" >
     insert into student
@@ -155,6 +160,9 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="openid != null" >
+        openId,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -183,6 +191,9 @@
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -222,6 +233,9 @@
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.openid != null" >
+        openId = #{record.openid,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -237,7 +251,8 @@
       identity_number = #{record.identityNumber,jdbcType=VARCHAR},
       student_number = #{record.studentNumber,jdbcType=VARCHAR},
       s_create_time = #{record.sCreateTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      openId = #{record.openid,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -269,6 +284,9 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="openid != null" >
+        openId = #{openid,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -281,7 +299,8 @@
       identity_number = #{identityNumber,jdbcType=VARCHAR},
       student_number = #{studentNumber,jdbcType=VARCHAR},
       s_create_time = #{sCreateTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      openId = #{openid,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

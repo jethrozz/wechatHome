@@ -11,6 +11,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="teacher_id" property="teacherId" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="openId" property="openid" jdbcType="CHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -72,8 +73,18 @@
   </sql>
   <sql id="Base_Column_List" >
     id, name, subject, phone_number, is_headmaster, create_time, update_time, teacher_id, 
-    password
+    password, openId
   </sql>
+
+  <!-- 自定义Sql语句-->
+  <select id="selectByPrimaryteacherId" resultMap="java.util.Map" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from teacher
+    where teacher_id = #{teacherId,jdbcType=VARCHAR}
+  </select>
+
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wechat.entity.TeacherExample" >
     select
     <if test="distinct" >
@@ -107,12 +118,12 @@
   <insert id="insert" parameterType="com.wechat.entity.Teacher" >
     insert into teacher (id, name, subject, 
       phone_number, is_headmaster, create_time, 
-      update_time, teacher_id, password
-      )
+      update_time, teacher_id, password, 
+      openId)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{subject,jdbcType=INTEGER}, 
       #{phoneNumber,jdbcType=VARCHAR}, #{isHeadmaster,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{teacherId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
-      )
+      #{updateTime,jdbcType=TIMESTAMP}, #{teacherId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{openid,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wechat.entity.Teacher" >
     insert into teacher
@@ -144,6 +155,9 @@
       <if test="password != null" >
         password,
       </if>
+      <if test="openid != null" >
+        openId,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -172,6 +186,9 @@
       </if>
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -211,6 +228,9 @@
       <if test="record.password != null" >
         password = #{record.password,jdbcType=VARCHAR},
       </if>
+      <if test="record.openid != null" >
+        openId = #{record.openid,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -226,7 +246,8 @@
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       teacher_id = #{record.teacherId,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR}
+      password = #{record.password,jdbcType=VARCHAR},
+      openId = #{record.openid,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -258,6 +279,9 @@
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
+      <if test="openid != null" >
+        openId = #{openid,jdbcType=CHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -270,7 +294,8 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       teacher_id = #{teacherId,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR}
+      password = #{password,jdbcType=VARCHAR},
+      openId = #{openid,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

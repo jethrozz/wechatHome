@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wechat.mapper.TeacherMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.wechat.entity.Teacher">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="subject" property="subject" />
+		<result column="phone_number" property="phoneNumber" />
+		<result column="is_headmaster" property="isHeadmaster" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="teacher_id" property="teacherId" />
+		<result column="password" property="password" />
+		<result column="openId" property="openId" />
+	</resultMap>
+
+</mapper>

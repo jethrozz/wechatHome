@@ -28,8 +28,7 @@ public class StudentController extends BaseController{
 
 
 
-    @Autowired
-    private StudentMapper studentMapper;
+
 
     @Autowired
     private StudentService studentService;
@@ -37,7 +36,7 @@ public class StudentController extends BaseController{
     @Autowired
     private StudentDao studentDao;
 
-    @ApiOperation(value = "获取学生信息接口",notes = "",produces = "application/json")
+    @ApiOperation(value = "获取单个学生信息接口",notes = "",produces = "application/json")
     @ApiImplicitParam(paramType = "path",name = "id",
                     value = "学生的主键id",
                     required = true, dataType = "Integer")

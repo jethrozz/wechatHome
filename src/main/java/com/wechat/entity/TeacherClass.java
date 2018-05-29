@@ -27,6 +27,15 @@ public class TeacherClass extends Model<TeacherClass> {
 	@TableId(value="id", type= IdType.AUTO)
 	private Integer id;
 
+	Teacher teacher ;
+
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
 
 	public Integer getTeaId() {
 		return teaId;

@@ -32,9 +32,11 @@ public interface StudentDao {
 
     int updateByPrimaryKey(Student record);
 
-   @Select({"select * from student where student_number = #{studentNumber}"})
-    Map<String,Object> selectByPrimaryStudentNumber(String studentNumber);
+//    @Select({"select * from student where student_number = #{studentNumber}"})
+    Map<String,Object> selectByPrimaryStudentNumber(@Param("student_number") String studentNumber);
 
 //    @Select({"select * from student where student_number = #{studentNumber}"})
 //    Student selectByPrimaryStudentNumber(@Param("studentNumber") String studentNumber);
+
+    List<Student> selectByStudentClassId(@Param("cla_id") Integer cla_id);
 }

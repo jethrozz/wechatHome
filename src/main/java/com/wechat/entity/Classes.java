@@ -33,14 +33,14 @@ public class Classes extends Model<Classes> {
 	@TableField("update_time")
 	private Date updateTime;
 
-	Set<Teacher> listteacher = new HashSet<Teacher>();
+	Set<TeacherClass> listteacher = new HashSet<TeacherClass>();
 	Set<Student> liststu = new HashSet<Student>();
 
-	public Set<Teacher> getListteacher() {
+	public Set<TeacherClass> getListteacher() {
 		return listteacher;
 	}
 
-	public void setListteacher(Set<Teacher> listteacher) {
+	public void setListteacher(Set<TeacherClass> listteacher) {
 		this.listteacher = listteacher;
 	}
 

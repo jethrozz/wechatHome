@@ -1,0 +1,14 @@
+#tip{
+    text-align: center;
+    position: fixed;
+    top: 1rem;
+    right: 5rem;
+    min-width: 12rem;
+    min-height: 7.416rem;
+    line-height: 30px;
+    border-radius: 3px;
+    color: #fff;
+    display: none;
+    background-color: #dd514c;
+    z-index: 999;
+}

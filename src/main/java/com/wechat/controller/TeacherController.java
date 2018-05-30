@@ -5,7 +5,6 @@ import com.wechat.common.controller.BaseController;
 import com.wechat.dao.ClassesDao;
 import com.wechat.entity.Classes;
 import com.wechat.mapper.ClassesMapper;
-import com.wechat.mapper.TeacherMapper;
 import com.wechat.model.CommonResult;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

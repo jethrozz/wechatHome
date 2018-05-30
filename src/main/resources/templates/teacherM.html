@@ -1,0 +1,250 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+  <title>Student</title>
+
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
+  <meta name="msapplication-TileColor" content="#0e90d2">
+
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/student.css">
+  <link rel="stylesheet" href="assets/layui/css/layui.mobile.css">
+</head>
+<body>
+<div class="am-tabs" data-am-tabs>
+  <ul class="am-avg-sm-4 am-tabs-nav am-nav am-nav-tabs am-topbar am-topbar-fixed-bottom am-text-center" id="stuNav">
+    <li ><a href="#tab1">作业</a></li>
+    <li><a href="#tab2">通知</a></li>
+    <li><a href="#tab3">成绩</a></li>
+    <li class="am-active"><a href="#tab4">我</a></li>
+  </ul>
+
+  <div class="am-tabs-bd" id="stu_content_bd">
+    <div class="am-tab-panel am-fade " id="tab1">
+     <div>
+      <form class="am-form am-form-horizontal">
+        <div class="am-form-group">
+            <div class="am-u-sm-9 am-input-group am-datepicker-date" data-am-datepicker="{theme: 'success',format: 'yyyy-mm-dd', viewMode: 'years'}">
+              <input type="text" class="am-form-field" placeholder="请选择查询日期" readonly>
+              <span class="am-input-group-btn am-datepicker-add-on">
+                <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
+              </span>
+            </div>
+          <div class="am-u-sm-3">
+          <button type="button" class="am-btn am-btn-sm am-btn-success">查询</button>
+          </div>
+        </div>
+
+      </form>
+      </div>
+      <ul class="am-list am-list-border">
+        <li><a class="am-text-truncate" href="javascript:void(0);" onclick="showHomework(this)" alt="homeworkid1">语文作业</a></li>
+        <li><a href="javascript:void(0);" class="am-text-truncate" onclick="showHomework(this)" alt="homeworkid2">数学作业</a></li>
+        <li><a href="javascript:void(0);" class="am-text-truncate" onclick="showHomework(this)" alt="homeworkid3">化学作业</a></li>
+        <li><a href="javascript:void(0);" class="am-text-truncate" onclick="showHomework(this)" alt="homeworkid4">物理作业</a></li>
+        <li><a href="javascript:void(0);" class="am-text-truncate" onclick="showHomework(this)" alt="homeworkid5">历史作业</a></li>
+        <li><a href="javascript:void(0);" class="am-text-truncate" onclick="showHomework(this)" alt="homeworkid6">政治作业</a></li>
+        <li><a href="javascript:void(0);" class="am-text-truncate" onclick="showHomework(this)" alt="homeworkid7">英语作业</a></li>
+      </ul>
+    </div>
+    <div class="am-tab-panel am-fade" id="tab2">
+      <ul class="am-list am-list-border">
+        <li><a  class="am-text-truncate" href="javascript:void(0);" onclick="showNotice(this)" alt="id1">每个人都有一个死角， 自己走不出来，别人也闯不进去。我把最深沉的秘密放在那里。每个人都有一道伤口， 或深或浅，盖上布，以为不存在。</a></li>
+        <li><a href="javascript:void(0);" onclick="showNotice(this)"  class="am-text-truncate" alt="id2">每个人都有一个死角， 自己走不出来，别人也闯不进去。我把最深沉的秘密放在那里。每个人都有一道伤口， 或深或浅，盖上布，以为不存在。</a></li>
+        <li><a href="javascript:void(0);" onclick="showNotice(this)"   class="am-text-truncate" alt="id3">每个人都有一个死角， 自己走不出来，别人也闯不进去。我把最深沉的秘密放在那里。每个人都有一道伤口， 或深或浅，盖上布，以为不存在。</a></li>
+        <li><a href="javascript:void(0);" onclick="showNotice(this)"   class="am-text-truncate" alt="id4">每个人都有一个死角， 自己走不出来，别人也闯不进去。我把最深沉的秘密放在那里。每个人都有一道伤口， 或深或浅，盖上布，以为不存在。</a></li>
+        <li><a href="javascript:void(0);" onclick="showNotice(this)"  class="am-text-truncate" alt="id5">每个人都有一个死角， 自己走不出来，别人也闯不进去。我把最深沉的秘密放在那里。每个人都有一道伤口， 或深或浅，盖上布，以为不存在。</a></li>
+
+      </ul>
+    </div>
+    <div class="am-tab-panel am-fade" id="tab3">
+      <div>
+      <form class="am-form am-form-horizontal">
+        <div class="am-form-group">
+<div class="am-alert am-alert-danger" id="my-alert" style="display: none">
+  <p>开始日期应小于结束日期！</p>
+</div>
+<div class="am-g">
+  <div class="am-u-sm-4">
+    <button type="button" class="am-btn am-btn-default am-margin-right am-btn-sm" id="my-start">开始日期</button>
+  </div>
+  <div class="am-u-sm-4">
+    <button type="button" class="am-btn am-btn-default am-margin-right am-btn-sm" id="my-end">结束日期</button>
+  </div>
+            <div class="am-u-sm-4">
+            <select id="term" name="term">
+              <option value="1" selected="true">第1学期</option>
+              <option value="2">第2学期</option>
+            </select>
+          </div>
+</div>
+        </div>
+
+      </form>
+      </div>
+      <button type="button" class="am-btn am-btn-success am-btn-block am-radius ">点击查询</button>
+      <hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
+      <div class="am-margin-top-{10}">
+      <table class="am-table am-table-bordered am-table-radius am-table-striped am-table-hover">
+              <thead>
+        <tr>
+            <th>课程</th>
+            <th>分数</th>
+            <th>时间</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Amaze UI</td>
+            <td>http://amazeui.org</td>
+            <td>2012-10-01</td>
+        </tr>
+        <tr>
+            <td>Amaze UI</td>
+            <td>http://amazeui.org</td>
+            <td>2012-10-01</td>
+        </tr>
+        <tr>
+            <td>Amaze UI</td>
+            <td>http://amazeui.org</td>
+            <td>2012-10-01</td>
+        </tr>
+        <tr>
+            <td>Amaze UI</td>
+            <td>http://amazeui.org</td>
+            <td>2012-10-01</td>
+        </tr>
+    </tbody>
+      </table>
+      </div>
+    </div>
+    <div class="am-tab-panel am-fade am-active am-in" id="tab4">
+      <div class="am-g">
+        <div class="am-u-sm-12">
+          <!-- 个人资料 -->
+          <!-- 姓名，性别，学号 -->
+          <div class="am-panel am-panel-default">
+            <div class="am-panel-hd">个人信息<a class="am-btn am-btn-success am-radius am-btn-xs am-fr" href="javascript:void(0);" id="changeBtn" >修改</a></div>
+            <div class="am-panel-bd">
+              <div class="studentId am-text-lg">学号：2014441678</div>
+              <div class="user-name am-text-lg">姓名：朱鑫城</div>
+              <div class="studentId am-text-lg">性别：男</div>
+            </div>
+          </div>
+        </div>
+        <div class="am-u-sm-12">
+          <!-- 班级信息 -->
+          <!-- 班级，班主任 -->
+          <div class="am-panel am-panel-default">
+            <div class="am-panel-hd">班级信息</div>
+            <div class="am-panel-bd">
+              <div class="user-name am-text-lg">班级：2014级12班</div>
+              <div class="studentId am-text-lg">班主任：玲珑骰子</div>
+            </div>
+          </div>
+          <a href="chat.html" class="am-btn am-btn-success am-btn-block">消息</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="changeInfo">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">修改信息
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd">
+      Modal 内容。
+    </div>
+  </div>
+</div>
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="notice">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd" id="notice-title">通知
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd" id="notice-content">
+      通知内容
+    </div>
+  </div>
+</div>
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="homework">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd" id="homework-title">xxxx年xx月xx日家庭作业
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd" id="homework-content">
+      通知内容
+    </div>
+  </div>
+</div>
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/layui/layui.js"></script>
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script src="assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="assets/js/student.js"></script>
+<script>
+  $(function() {
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2025, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-start').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-end').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
+</script>
+</body>
+</html>

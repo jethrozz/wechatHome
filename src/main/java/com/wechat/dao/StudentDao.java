@@ -5,6 +5,7 @@ import com.wechat.entity.StudentExample;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.User;
 import org.apache.ibatis.annotations.*;
 
 public interface StudentDao {

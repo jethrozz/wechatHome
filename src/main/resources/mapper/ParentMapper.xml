@@ -100,7 +100,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wechat.entity.Parent" >
+  <insert id="insert" parameterType="com.wechat.entity.Parent" useGeneratedKeys="true" keyProperty="id">
     insert into parent (id, name, phone_number, 
       create_time, update_time, openid
       )
@@ -108,7 +108,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{openid,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.wechat.entity.Parent" >
+  <insert id="insertSelective" parameterType="com.wechat.entity.Parent" useGeneratedKeys="true" keyProperty="id">
     insert into parent
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

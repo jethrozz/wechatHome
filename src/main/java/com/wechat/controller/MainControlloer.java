@@ -1,0 +1,53 @@
+package com.wechat.controller;
+
+import com.sun.xml.internal.bind.v2.TODO;
+import com.wechat.util.HttpUtil;
+import com.wechat.util.WechatUtil;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Created by zxc on 2018/5/30.
+ * 页面路径映射
+ */
+@Controller
+@RequestMapping("/index")
+@PropertySource(value = {"classpath:wechat.properties"})
+public class MainControlloer {
+
+	@Value("${wechat.appID}")
+	private String appId;
+	@Value("${wechat.appsecret}")
+	private String appSecret;
+	@Value("${wechat.authUrlCode}")
+	private String authUrlCode;
+
+
+	@RequestMapping("/student")
+	public ModelAndView student(HttpServletRequest request, HttpServletResponse response,@RequestParam("code") String code){
+		ModelAndView modelAndView = new ModelAndView("user_login");
+
+		modelAndView.addObject("openId", WechatUtil.getOpenid(authUrlCode,appId,appSecret,code));
+
+		return modelAndView;
+	}
+
+	@RequestMapping("/parent")
+	public ModelAndView parent(HttpServletRequest request, HttpServletResponse response,@RequestParam("code") String code){
+		ModelAndView modelAndView = new ModelAndView("parent_login");
+		modelAndView.addObject("openId",WechatUtil.getOpenid(authUrlCode,appId,appSecret,code));
+		return modelAndView;
+	}
+
+
+
+}

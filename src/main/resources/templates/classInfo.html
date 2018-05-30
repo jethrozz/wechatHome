@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>newClass</title>
+    <link rel="stylesheet" href="./plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="./plugins/font-awesome/css/font-awesome.min.css" media="all">
+    <style>
+        .info-box {
+            height: 85px;
+            background-color: white;
+            background-color: #ecf0f5;
+        }
+        
+        .info-box .info-box-icon {
+            border-top-left-radius: 2px;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 2px;
+            display: block;
+            float: left;
+            height: 85px;
+            width: 85px;
+            text-align: center;
+            font-size: 45px;
+            line-height: 85px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .info-box .info-box-content {
+            padding: 5px 10px;
+            margin-left: 85px;
+        }
+        
+        .info-box .info-box-content .info-box-text {
+            display: block;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+        }
+        
+        .info-box .info-box-content .info-box-number {
+            display: block;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .major {
+            font-weight: 10px;
+            color: #01AAED;
+        }
+        
+        .main {
+            margin-top: 25px;
+        }
+        
+        .main .layui-row {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-fluid main">
+        <fieldset class="layui-elem-field" >
+          <legend>班级信息-主要信息</legend>
+          <div class="layui-field-box">
+            <p>班级名称：三年级5班</p>
+            <p>班主任：刘德华</p>
+          </div>
+        </fieldset>
+         
+        <fieldset class="layui-elem-field layui-field-title">
+          <legend>班级信息-教师&nbsp(7人)</legend>
+          <div class="layui-field-box">
+            <div class="layui-btn-container">
+              <button class="layui-btn layui-btn-lg">张老师</button>
+              <button class="layui-btn layui-btn-lg">李老师</button>
+              <button class="layui-btn layui-btn-lg">刘老师</button>
+              <button class="layui-btn layui-btn-lg">马老师</button>
+              <button class="layui-btn layui-btn-lg">杨老师</button>
+              <button class="layui-btn layui-btn-lg">杨老师</button>
+              <button class="layui-btn layui-btn-lg">孙老师</button>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="layui-elem-field layui-field-title">
+          <legend>班级信息-学生&nbsp(9人)</legend>
+          <div class="layui-field-box">
+            <div class="layui-btn-container">
+              <button class="layui-btn ">王小明</button>
+              <button class="layui-btn ">马冬梅</button>
+              <button class="layui-btn ">李小明</button>
+              <button class="layui-btn ">赵小刀</button>
+              <button class="layui-btn ">刘小刀</button>
+              <button class="layui-btn ">孙政才</button>
+              <button class="layui-btn ">小刚</button>
+              <button class="layui-btn ">李雷</button>
+              <button class="layui-btn ">韩梅梅</button>
+      
+
+            </div>
+          </div>
+        </fieldset>
+    </div>
+<script src="./plugins/layui/layui.js"></script>
+<script>
+//Demo
+layui.use('layer', function(){
+ var layer = layui.layer;
+    layer.open({
+        title:'学生信息',
+        content: '姓名：<br /> 性别： <br />年龄：<br />学号： <br /> 身份证号：' //数组第二项即吸附元素选择器或者DOM
+    });
+});
+
+</script>
+</body>
+
+</html>

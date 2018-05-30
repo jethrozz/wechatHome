@@ -106,7 +106,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wechat.entity.LeaveRecord" >
+  <insert id="insert" parameterType="com.wechat.entity.LeaveRecord" useGeneratedKeys="true" keyProperty="id">
     insert into leave_record (id, tea_id, stu_id, 
       reason, type, start_time, 
       end_time, create_time, update_time, 
@@ -116,7 +116,7 @@
       #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{isAgree,jdbcType=INTEGER}, #{time,jdbcType=REAL})
   </insert>
-  <insert id="insertSelective" parameterType="com.wechat.entity.LeaveRecord" >
+  <insert id="insertSelective" parameterType="com.wechat.entity.LeaveRecord" useGeneratedKeys="true" keyProperty="id">
     insert into leave_record
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

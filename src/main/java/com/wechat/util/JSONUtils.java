@@ -1,5 +1,7 @@
 package com.wechat.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -44,16 +46,17 @@ public class JSONUtils {
      * @return
      */
     static public String toJson(Object object) {
-        try {
-            return objectMapper.writeValueAsString(object);
-        } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            log.error(e.getMessage());
-            log.error(e.getStackTrace().toString());
-
-        }
-        return null;
+//        try {
+//            return objectMapper.writeValueAsString(object);
+//        } catch (JsonProcessingException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//            log.error(e.getMessage());
+//            log.error(e.getStackTrace().toString());
+//
+//        }
+//        return null;
+        return JSON.toJSONString(object, SerializerFeature.DisableCircularReferenceDetect);
     }
 
     static public String throwAbleToString(Exception e) {

@@ -15,6 +15,8 @@ import java.util.Map;
 
 public interface StudentService {
 
+    boolean updateStudent(Student student);
+
     Student isStudent(Student student);
     //根据id获取学生信息
     Student getStudentInfo(Integer sId);

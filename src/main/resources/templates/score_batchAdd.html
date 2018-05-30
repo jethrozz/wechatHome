@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>score_batchAdd</title>
+    <link rel="stylesheet" href="./plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="./plugins/font-awesome/css/font-awesome.min.css" media="all">
+    <style>
+        .info-box {
+            height: 85px;
+            background-color: white;
+            background-color: #ecf0f5;
+        }
+        
+        .info-box .info-box-icon {
+            border-top-left-radius: 2px;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 2px;
+            display: block;
+            float: left;
+            height: 85px;
+            width: 85px;
+            text-align: center;
+            font-size: 45px;
+            line-height: 85px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .info-box .info-box-content {
+            padding: 5px 10px;
+            margin-left: 85px;
+        }
+        
+        .info-box .info-box-content .info-box-text {
+            display: block;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+        }
+        
+        .info-box .info-box-content .info-box-number {
+            display: block;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .major {
+            font-weight: 10px;
+            color: #01AAED;
+        }
+        
+        .main {
+            margin-top: 25px;
+        }
+        
+        .main .layui-row {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-fluid main">
+<div class="layui-progress"  lay-filter="demo">
+  <div class="layui-progress-bar" lay-percent="10%"></div>
+</div>
+        <fieldset class="layui-elem-field">
+          <legend>批量录入-注意事项</legend>
+          <div class="layui-field-box">
+            1.文件后缀.xls<br />
+            2.表格字段内容 年级-班级-姓名-科目-分数-学期<br />
+            3.学期用数字表示，1-表示第一学期，2表示第二学期<br />
+          </div>
+        </fieldset>
+        <button type="button" class="layui-btn" id="uploadFile">
+          <i class="layui-icon">&#xe67c;</i>上传文件
+        </button>
+        
+    </div>
+<script src="./plugins/layui/layui.js"></script>
+<script>
+//Demo
+layui.use('upload', function(){
+  var upload = layui.upload;
+   
+  //执行实例
+  var uploadInst = upload.render({
+    elem: '#uploadFile' //绑定元素
+    ,url: '/upload/' //上传接口
+    ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+        layui.use('element', function(){
+         var element = layui.element;
+        element.progress('demo', '90%')
+        });
+    }
+    ,done: function(res){
+      //上传完毕回调
+    }
+    ,error: function(){
+      //请求异常回调
+    },
+    accept: 'file',
+    exts:"pdf" //设置上传文件后缀
+  });
+});
+layui.use('element', function(){
+  var element = layui.element;
+  element.progress('demo', '50%')
+});
+</script>
+</body>
+
+</html>

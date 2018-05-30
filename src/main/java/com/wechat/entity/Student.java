@@ -1,5 +1,6 @@
 package com.wechat.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -34,6 +35,7 @@ public class Student extends Model<Student> {
 	private Date sCreateTime;
 	@TableField("update_time")
 	private Date updateTime;
+
 	private String openId;
 
 

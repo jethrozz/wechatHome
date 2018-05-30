@@ -1,10 +1,12 @@
 package com.wechat.serviceImpl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.wechat.dao.TeacherDao;
 import com.wechat.entity.Student;
 import com.wechat.entity.Teacher;
 import com.wechat.exception.BizExceptionEnum;
 import com.wechat.exception.BussinessException;
+import com.wechat.mapper.TeacherMapper;
 import com.wechat.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,8 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Autowired
 	TeacherDao teacherDao;
-
+	@Autowired
+	TeacherMapper teacherMapper;
 	@Override
 	public List<Student> getStudentByCid(Integer cid) {
 		return null;
@@ -28,7 +31,7 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public Teacher isTeacher(Teacher teacher) {
-		return null;
+		return teacherDao.selectByPrimaryKey(teacher.getId());
 	}
 
 	@Override

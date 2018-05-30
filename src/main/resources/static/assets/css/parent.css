@@ -1,0 +1,19 @@
+#stuNav{
+	min-height: auto;
+}
+
+#stuNav li a{
+	margin-right: 0px;
+	padding: .5rem 1.2rem;
+}
+#stu_content_bd{
+	border: none;
+}
+#classInfo .am-modal-dialog,#notice .am-modal-dialog,#homework .am-modal-dialog{
+	height: 400px;
+    width: 300px;
+}
+#leave .am-modal-dialog{
+	height: 420px;
+    width: 300px;
+}

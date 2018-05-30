@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>KIT ADMIN</title>
+  <link rel="stylesheet" href="./plugins/layui/css/layui.css" media="all" />
+  <link rel="stylesheet" href="./plugins/font-awesome/css/font-awesome.min.css" media="all" />
+  <link rel="stylesheet" href="./src/css/app.css" media="all" />
+  <link rel="stylesheet" href="./src/css/themes/default.css" media="all" id="skin" kit-skin />
+</head>
+
+<body class="kit-theme">
+  <div class="layui-layout layui-layout-admin kit-layout-admin">
+    <div class="layui-header">
+      <div class="layui-logo">KIT ADMIN</div>
+      <div class="layui-logo kit-logo-mobile">K</div>
+      <ul class="layui-nav layui-layout-left kit-nav">
+        <li class="layui-nav-item"><a href="javascript:;" kit-target data-options="{url:'chat.html',icon:'&#xe609;',title:'消息',id:'1'}">消息管理</a></li>
+      </ul>
+      <ul class="layui-nav layui-layout-right kit-nav">
+        <li class="layui-nav-item">
+          <a href="javascript:;">
+            <img src="http://m.zhengjinfan.cn/images/0.jpg" class="layui-nav-img"> Van
+          </a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;" kit-target data-options="{url:'basic.html',icon:'&#xe658;',title:'基本资料',id:'966'}"><span>基本资料</span></a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item"><a href="login.html"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a></li>
+      </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black kit-side">
+      <div class="layui-side-scroll">
+        <div class="kit-side-fold"><i class="fa fa-navicon" aria-hidden="true"></i></div>
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar>
+          <!--班级管理 -->
+          <li class="layui-nav-item">
+            <a href="javascript:;" ><i class="layui-icon" aria-hidden="true">&#xe629;</i><span> 班级管理</span></a>
+            <dl class="layui-nav-child">
+              <dd>
+                <a href="javascript:;" kit-target data-options="{url:'newClass.html',icon:'&#xe642;',title:'新建班级',id:'1'}">
+                  <i class="layui-icon">&#xe642;</i><span> 新建班级</span></a>
+              </dd>
+              <dd>
+                <a href="javascript:;" kit-target data-options="{url:'页面url',icon:'&#xe642;',title:'修改班级',id:'2'}">
+                  <i class="layui-icon">&#xe642;</i><span> 修改班级</span></a>
+              </dd>
+              <dd>
+                <a href="javascript:;" kit-target data-options="{url:'classInfo.html',icon:'&#xe705;',title:'班级概况',id:'3'}">
+                  <i class="layui-icon">&#xe705;</i><span> 班级概况</span></a>
+              </dd>
+            </dl>
+          </li>
+          <!--作业系统 -->
+          <li class="layui-nav-item">
+            <a href="javascript:;" ><i class="layui-icon" aria-hidden="true">&#xe60a;</i><span> 作业系统</span></a>
+            <dl class="layui-nav-child">
+              <dd>
+                <a href="javascript:;" kit-target data-options="{url:'homework_add.html',icon:'&#xe642;',title:'发布作业',id:'4'}">
+                  <i class="layui-icon">&#xe642;</i><span> 发布当日作业</span></a>
+              </dd>
+              <dd>
+                <a href="javascript:;" kit-target data-options="{url:'homework_all.html',icon:'&#xe655;',title:'所有作业',id:'5'}">
+                  <i class="layui-icon">&#xe655;</i><span> 所有作业</span></a>
+              </dd>
+            </dl>
+          </li>
+          <!--通知公告 -->
+          <li class="layui-nav-item">
+            <a href="javascript:;" ><i class="layui-icon" aria-hidden="true">&#xe609;</i><span> 通知公告</span></a>
+            <dl class="layui-nav-child">
+              <dd>
+                <a href="javascript:;" kit-target data-options="{url:'notice_all.html',icon:'&#xe655;',title:'所有通知',id:'6'}">
+                  <i class="layui-icon">&#xe655;</i><span> 所有通知</span></a>
+              </dd>
+              <dd>
+                <a href="javascript:;" kit-target data-options="{url:'notice_add.html',icon:'&#xe642;',title:'发布通知',id:'7'}">
+                  <i class="layui-icon">&#xe642;</i><span> 发布通知</span></a>
+              </dd>
+            </dl>
+          </li>
+          <!--作业系统 -->
+          <li class="layui-nav-item">
+            <a href="javascript:;" ><i class="layui-icon" aria-hidden="true">&#xe60e;</i><span> 出勤记录</span></a>
+            <dl class="layui-nav-child">
+              <dd>
+                <a href="javascript:;" kit-target data-options="{url:'attendance.html',icon:'&#xe655;',title:'迟到/早退',id:'8'}">
+                  <i class="layui-icon">&#xe655;</i><span> 迟到/早退</span></a>
+              </dd>
+              <dd>
+                <a href="javascript:;" kit-target data-options="{url:'leave_record.html',icon:'&#xe655;',title:'请假记录',id:'9'}">
+                  <i class="layui-icon">&#xe655;</i><span> 请假记录</span></a>
+              </dd>
+            </dl>
+          </li>
+          <!--成绩系统 -->
+          <li class="layui-nav-item">
+            <a href="javascript:;" ><i class="layui-icon" aria-hidden="true">&#xe62a;</i><span> 成绩系统</span></a>
+            <dl class="layui-nav-child">
+              <dd>
+                <a href="javascript:;" kit-target data-options="{url:'./score_all.html',icon:'&#xe655;',title:'所有成绩',id:'11'}">
+                  <i class="layui-icon">&#xe655;</i><span> 所有成绩</span></a>
+              </dd>
+              <dd>
+                <a href="javascript:;" kit-target data-options="{url:'./score_add.html',icon:'&#xe642;',title:'成绩录入（单个）',id:'10'}">
+                  <i class="layui-icon">&#xe642;</i><span> 成绩录入（单个）</span></a>
+              </dd>
+              <dd>
+                <a href="javascript:;" kit-target data-options="{url:'./score_batchAdd.html',icon:'&#xe642;',title:'成绩录入（批量）',id:'12'}">
+                  <i class="layui-icon">&#xe642;</i><span> 成绩录入（批量）</span></a>
+              </dd>
+
+            </dl>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="layui-body" id="container">
+      <!-- 内容主体区域 -->
+      <div style="padding: 15px;"><i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop">&#xe63e;</i> 请稍等...</div>
+    </div>
+
+    <div class="layui-footer">
+      <!-- 底部固定区域 -->
+      2017 &copy;
+      <a href="http://kit.zhengjinfan.cn/">kit.zhengjinfan.cn/</a> MIT license
+    </div>
+  </div>
+  <!-- <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1264021086'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1264021086%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script> -->
+  <script src="./plugins/layui/layui.js"></script>
+  <script>
+    var message;
+    layui.config({
+      base: 'src/js/',
+      version: '1.0.1'
+    }).use(['app', 'message'], function() {
+      var app = layui.app,
+        $ = layui.jquery,
+        layer = layui.layer;
+      //将message设置为全局以便子页面调用
+      message = layui.message;
+      //主入口
+      app.set({
+        type: 'iframe'
+      }).init();
+      $('#pay').on('click', function() {
+        layer.open({
+          title: false,
+          type: 1,
+          content: '<img src="/src/images/pay.png" />',
+          area: ['500px', '250px'],
+          shadeClose: true
+        });
+      });
+      $('dl.skin > dd').on('click', function() {
+        var $that = $(this);
+        var skin = $that.children('a').data('skin');
+        switchSkin(skin);
+      });
+      var setSkin = function(value) {
+          layui.data('kit_skin', {
+            key: 'skin',
+            value: value
+          });
+        },
+        getSkinName = function() {
+          return layui.data('kit_skin').skin;
+        },
+        switchSkin = function(value) {
+          var _target = $('link[kit-skin]')[0];
+          _target.href = _target.href.substring(0, _target.href.lastIndexOf('/') + 1) + value + _target.href.substring(_target.href.lastIndexOf('.'));
+          setSkin(value);
+
+        },
+        initSkin = function() {
+          var skin = getSkinName();
+          switchSkin(skin === undefined ? 'default' : skin);
+        }();
+    });
+  </script>
+</body>
+
+</html>

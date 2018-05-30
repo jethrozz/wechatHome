@@ -1,14 +1,14 @@
 package com.wechat.controller;
 
-import com.sun.tools.javac.util.List;
-import com.sun.tools.javac.util.StringUtils;
 import com.wechat.bean.AccessToken;
+import com.wechat.dao.StudentDao;
+import com.wechat.entity.Student;
 import com.wechat.model.Menu;
 import com.wechat.model.Template;
 import com.wechat.model.TemplateParam;
 import com.wechat.service.MenuService;
+import com.wechat.service.TeacherService;
 import com.wechat.service.TemplateService;
-import com.wechat.service.WechatService;
 import com.wechat.util.HttpUtil;
 import com.wechat.util.JSONUtils;
 import com.wechat.util.TemplateId;
@@ -35,7 +35,7 @@ import java.util.Date;
  * @描述：
  */
 @RestController
-@RequestMapping("/wechatMenu")
+@RequestMapping("/wechat")
 public class MenuController {
     private static Logger log = LoggerFactory.getLogger(MenuController.class);
 
@@ -48,6 +48,23 @@ public class MenuController {
     private MenuService menuService;
     @Autowired
     private TemplateService templateService;
+    @Autowired
+    private TeacherService teacherService;
+    @Autowired
+    private StudentDao studentMapper;
+
+    @RequestMapping("/getToken")
+    @ResponseBody
+    public ResponseEntity<String> getToken(){
+        try {
+            String accessToken = HttpUtil.getAccessToken(appId,appsecret).getAccessToken();
+            return new ResponseEntity<String>(accessToken, HttpStatus.OK);
+        } catch (JSONException e) {
+            log.error("get accessToken failed",e);
+            e.printStackTrace();
+            return new ResponseEntity<String>("get accessToken failed", HttpStatus.OK);
+        }
+    }
 
     @RequestMapping("/createMenu")
     @ResponseBody
@@ -58,6 +75,7 @@ public class MenuController {
             log.error("requestBody is empty");
             return new ResponseEntity<String>("requestBody is empty", HttpStatus.OK);
         }
+        System.out.println(requestBody);
         Menu menu = JSONUtils.readValue(requestBody,Menu.class);
         AccessToken accessToken = null;
         try {
@@ -109,4 +127,13 @@ public class MenuController {
         templateService.sendTemplateMsg(accessToken.getAccessToken(),template);
         return new ResponseEntity<String>("sendTemplate SUCCESS", HttpStatus.OK);
     }
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public String getTest(){
+
+        Student student = studentMapper.selectByPrimaryKey(1);
+        return student.getName();
+    }
+
 }

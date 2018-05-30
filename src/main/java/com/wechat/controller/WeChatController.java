@@ -2,10 +2,12 @@ package com.wechat.controller;
 
 import com.wechat.service.WechatService;
 import com.wechat.util.SignUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +24,16 @@ import java.io.PrintWriter;
 public class WeChatController {
 	@Value("${wechat.token}")
 	private String TOKEN;
-	@Resource
+	@Value("${wechat.appID}")
+	private String appId;
+	@Value("${wechat.appsecret}")
+	private String appSecret;
+	@Value("${wechat.authUrl}")
+	private String authUrl;
+
+
+
+	@Autowired
 	WechatService wechatService;
 
 
@@ -58,5 +69,26 @@ public class WeChatController {
 			System.err.println("Failed to convert the message from weixin!");
 		}
 		return respMessage;
+	}
+
+	@RequestMapping("/auth")
+	public ModelAndView auth2_0(HttpServletRequest request , HttpServletResponse response, int type){
+		ModelAndView modelAndView = new ModelAndView();
+		String url = "redirect:";
+		authUrl = authUrl.replace("APPID",appId);
+		if(type == 0){
+			//学生
+			String backurl = "http://www.iwonderhow.cn/index/student";
+			authUrl = authUrl.replace("REDIRECT_URI",backurl);
+		}else if(type == 1){
+			//家长
+			String backurl = "http://www.iwonderhow.cn/index/parent";
+			authUrl = authUrl.replace("REDIRECT_URI",backurl);
+		}else if(type == 2){
+			//教师
+		}
+		url = url + authUrl;
+		modelAndView.setViewName(url);
+		return modelAndView;
 	}
 }

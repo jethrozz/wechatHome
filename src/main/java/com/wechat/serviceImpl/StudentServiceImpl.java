@@ -39,6 +39,14 @@ public class StudentServiceImpl implements StudentService {
     private TeacherDao teacherDao;
 
     @Override
+    public boolean updateStudent(Student student) {
+        if(studentDao.updateByPrimaryKeySelective(student) >= 1){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public Student isStudent(Student student) {
         return null;
     }

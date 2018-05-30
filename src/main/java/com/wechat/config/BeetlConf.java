@@ -1,9 +1,12 @@
 package com.wechat.config;
 
 
+import org.beetl.core.GroupTemplate;
+import org.beetl.core.Template;
 import org.beetl.core.resource.WebAppResourceLoader;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.beetl.ext.spring.BeetlSpringViewResolver;
+import org.beetl.ext.web.WebRenderExt;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +15,8 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
@@ -20,7 +25,7 @@ import java.io.IOException;
  */
 @Configuration
 @PropertySource(value = {"classpath:beetl.properties"})
-public class BeetlConf {
+public class BeetlConf implements WebRenderExt {
 
 	@Bean(initMethod = "init", name = "beetlConfig")
 	public BeetlGroupUtilConfiguration getBeetlGroupUtilConfiguration() {
@@ -46,5 +51,10 @@ public class BeetlConf {
 		beetlSpringViewResolver.setOrder(0);
 		beetlSpringViewResolver.setConfig(beetlGroupUtilConfiguration);
 		return beetlSpringViewResolver;
+	}
+
+	@Override
+	public void modify(Template template, GroupTemplate groupTemplate, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		template.binding("basePath",httpServletRequest.getContextPath());
 	}
 }

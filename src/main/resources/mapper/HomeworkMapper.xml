@@ -125,7 +125,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wechat.entity.Homework" >
+  <insert id="insert" parameterType="com.wechat.entity.Homework" useGeneratedKeys="true" keyProperty="id">
     insert into homework (id, title, finsh_time, 
       tea_id, cla_id, h_create_time, 
       update_time, content)
@@ -133,7 +133,7 @@
       #{teaId,jdbcType=INTEGER}, #{claId,jdbcType=INTEGER}, #{hCreateTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wechat.entity.Homework" >
+  <insert id="insertSelective" parameterType="com.wechat.entity.Homework" useGeneratedKeys="true" keyProperty="id">
     insert into homework
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

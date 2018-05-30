@@ -97,13 +97,13 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wechat.entity.StudentParent" >
+  <insert id="insert" parameterType="com.wechat.entity.StudentParent" useGeneratedKeys="true" keyProperty="id">
     insert into student_parent (id, stu_id, par_id
       )
     values (#{id,jdbcType=INTEGER}, #{stuId,jdbcType=INTEGER}, #{parId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.wechat.entity.StudentParent" >
+  <insert id="insertSelective" parameterType="com.wechat.entity.StudentParent" useGeneratedKeys="true" keyProperty="id">
     insert into student_parent
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

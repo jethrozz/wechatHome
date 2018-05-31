@@ -2,6 +2,7 @@ package com.wechat.controller;
 
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.wechat.bean.AccessToken;
 import com.wechat.bean.MyClass;
 import com.wechat.bean.TeacherHomeworkResult;
 import com.wechat.common.controller.BaseController;
@@ -10,12 +11,18 @@ import com.wechat.entity.*;
 import com.wechat.mapper.ClassesMapper;
 import com.wechat.mapper.TeacherClassMapper;
 import com.wechat.model.CommonResult;
+import com.wechat.model.NoticeTemplateQueue;
+import com.wechat.model.Template;
+import com.wechat.model.TemplateParam;
 import com.wechat.service.StudentService;
 import com.wechat.service.TeacherService;
+import com.wechat.service.TemplateService;
 import com.wechat.util.DateUtil;
+import com.wechat.util.HttpUtil;
 import com.wechat.util.OfficeUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +50,7 @@ public class TeacherController extends BaseController {
     StudentService studentService;
     @Autowired
     TeacherService teacherService;
+
 
     @ApiOperation(value = "新建班级信息接口",notes = "",produces = "application/json")
     @ApiImplicitParam(name = "classes",
@@ -184,4 +192,15 @@ public class TeacherController extends BaseController {
     }
 
     //发布通知接口
+    @PostMapping("/addNotice")
+    public CommonResult<String> addNotice(HttpServletRequest request,NoticeBulletin notice){
+        Teacher teacher = (Teacher)request.getSession().getAttribute("user");
+
+        notice.setTeaId(teacher.getId());
+        notice.insert();
+
+        NoticeTemplateQueue.getInstance().addTemplate(notice);
+
+        return new CommonResult(0,successMessage);
+    }
 }

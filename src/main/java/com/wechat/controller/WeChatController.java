@@ -78,11 +78,11 @@ public class WeChatController {
 		authUrl = authUrl.replace("APPID",appId);
 		if(type == 0){
 			//学生
-			String backurl = "http://www.iwonderhow.cn/index/student";
+			String backurl = "http://iwonderhow.s1.natapp.cc/index/student";
 			authUrl = authUrl.replace("REDIRECT_URI",backurl);
 		}else if(type == 1){
 			//家长
-			String backurl = "http://www.iwonderhow.cn/index/parent";
+			String backurl = "http://iwonderhow.s1.natapp.cc/index/parent";
 			authUrl = authUrl.replace("REDIRECT_URI",backurl);
 		}else if(type == 2){
 			//教师

@@ -5,7 +5,6 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="tea_id" property="teaId" jdbcType="INTEGER" />
     <result column="cla_id" property="claId" jdbcType="INTEGER" />
-    <association property="teacher" column="tea_id" select="com.wechat.dao.TeacherDao.selectByPrimaryKey"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >

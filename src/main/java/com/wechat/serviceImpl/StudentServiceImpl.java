@@ -57,6 +57,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Student getStudentInfoByStudentNumber(String studentNumber) {
+        StudentExample example = new StudentExample();
+        example.or().andStudentNumberEqualTo(studentNumber);
+        List<Student> list = studentDao.selectByExample(example);
+        if(list != null && list.size() != 0){
+            return list.get(0);
+        }
+        return null;
+    }
+
+    @Override
     public List<Homework> getTodayHomeWork(Student student) {
         HomeworkExample homeworkExample = new HomeworkExample();
         homeworkExample.or().andClaIdEqualTo(student.getClaId()).andHCreateTimeEqualTo(new Date());

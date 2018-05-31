@@ -20,6 +20,8 @@ public interface StudentService {
     Student isStudent(Student student);
     //根据id获取学生信息
     Student getStudentInfo(Integer sId);
+    //根据学号获取学生
+    Student getStudentInfoByStudentNumber(String studentNumber);
     //根据学生信息获取学生当天各科作业列表
     List<Homework> getTodayHomeWork(Student student);
     //获取学生成绩

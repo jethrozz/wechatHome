@@ -10,6 +10,7 @@
   <meta http-equiv="Cache-Control" content="no-siteapp" />
   <link rel="alternate icon" type="image/png" href="/assets/i/favicon.png">
   <link rel="stylesheet" href="/assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="/assets/css/tip.css"/>
   <style>
     .header {
       text-align: center;
@@ -55,6 +56,11 @@
 <script src="/assets/js/amazeui.min.js"></script>
 <script>
  $("#login").on("click",function () {
+     $("#tip").addClass("student");
+     $("#tip").css(
+         {left: ($(window).width() - $('#tip').outerWidth())/2,
+             top: ($(window).height() - $('#tip').outerHeight())/2 + $(document).scrollTop() }
+     )
      var account = $("#studentId").val();
      var password = $("#password").val();
      var openId = $("#openId").val();
@@ -72,12 +78,13 @@
                 },
                 success: function (data,stauts,result) {
                     console.log(data)
-                    var res = JSON.parse(data);
-                    console.log(res)
-                    if(res.status == 0){
+//                    var res = JSON.parse(data);
+//                    console.log(res)
+                    if(data.status == 0){
                         window.location.href = "/"
                     }else{
                         $("#tip").text("用户名或密码有误");
+
                         $("#tip").fadeIn(1500).fadeOut(3000);
                     }
                 }

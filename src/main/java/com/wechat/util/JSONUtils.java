@@ -32,7 +32,6 @@ public class JSONUtils {
         try {
             return objectMapper.readValue(key, valueType);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             log.error(JSONUtils.throwAbleToString(e));
         }
 
@@ -49,7 +48,6 @@ public class JSONUtils {
 //        try {
 //            return objectMapper.writeValueAsString(object);
 //        } catch (JsonProcessingException e) {
-//            // TODO Auto-generated catch block
 //            e.printStackTrace();
 //            log.error(e.getMessage());
 //            log.error(e.getStackTrace().toString());

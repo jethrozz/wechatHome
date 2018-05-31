@@ -109,7 +109,6 @@ public class WechatServiceImpl implements WechatService {
 
 					respMessage = MessageUtil.messageToXml(text);
 				}
-				// TODO 取消订阅后用户再收不到公众号发送的消息，因此不需要回复消息
 				else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {// 取消订阅
 
 

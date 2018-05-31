@@ -9,4 +9,5 @@ import com.wechat.entity.Teacher;
 public interface ParentService {
 	Parent addParent(Parent parent);
 	boolean updateParent(Parent parent);
+	Parent getParentByOpenId(String openId);
 }

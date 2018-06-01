@@ -5,19 +5,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>KIT ADMIN</title>
-  <link rel="stylesheet" href="./plugins/layui/css/layui.css" media="all" />
-  <link rel="stylesheet" href="./plugins/font-awesome/css/font-awesome.min.css" media="all" />
-  <link rel="stylesheet" href="./src/css/app.css" media="all" />
-  <link rel="stylesheet" href="./src/css/themes/default.css" media="all" id="skin" kit-skin />
+  <link rel="stylesheet" href="/plugins/layui/css/layui.css" media="all" />
+  <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css" media="all" />
+  <link rel="stylesheet" href="/src/css/app.css" media="all" />
+  <link rel="stylesheet" href="/src/css/themes/default.css" media="all" id="skin" kit-skin />
 </head>
 
 <body class="kit-theme">
   <div class="layui-layout layui-layout-admin kit-layout-admin">
     <div class="layui-header">
-      <div class="layui-logo">KIT ADMIN</div>
+      <div class="layui-logo">家校通系统</div>
       <div class="layui-logo kit-logo-mobile">K</div>
       <ul class="layui-nav layui-layout-left kit-nav">
-        <li class="layui-nav-item"><a href="javascript:;" kit-target data-options="{url:'chat.html',icon:'&#xe609;',title:'消息',id:'1'}">消息管理</a></li>
+        <li class="layui-nav-item"><a href="javascript:;" kit-target data-options="{url:'/lay/chat',icon:'&#xe609;',title:'消息',id:'1'}">消息管理</a></li>
       </ul>
       <ul class="layui-nav layui-layout-right kit-nav">
         <li class="layui-nav-item">
@@ -42,7 +42,7 @@
             <a href="javascript:;" ><i class="layui-icon" aria-hidden="true">&#xe629;</i><span> 班级管理</span></a>
             <dl class="layui-nav-child">
               <dd>
-                <a href="javascript:;" kit-target data-options="{url:'newClass.html',icon:'&#xe642;',title:'新建班级',id:'1'}">
+                <a href="javascript:;" kit-target data-options="{url:'/lay/newClass',icon:'&#xe642;',title:'新建班级',id:'1'}">
                   <i class="layui-icon">&#xe642;</i><span> 新建班级</span></a>
               </dd>
               <dd>
@@ -50,7 +50,7 @@
                   <i class="layui-icon">&#xe642;</i><span> 修改班级</span></a>
               </dd>
               <dd>
-                <a href="javascript:;" kit-target data-options="{url:'classInfo.html',icon:'&#xe705;',title:'班级概况',id:'3'}">
+                <a href="javascript:;" kit-target data-options="{url:'/lay/classInfo',icon:'&#xe705;',title:'班级概况',id:'3'}">
                   <i class="layui-icon">&#xe705;</i><span> 班级概况</span></a>
               </dd>
             </dl>
@@ -60,11 +60,11 @@
             <a href="javascript:;" ><i class="layui-icon" aria-hidden="true">&#xe60a;</i><span> 作业系统</span></a>
             <dl class="layui-nav-child">
               <dd>
-                <a href="javascript:;" kit-target data-options="{url:'homework_add.html',icon:'&#xe642;',title:'发布作业',id:'4'}">
+                <a href="javascript:;" kit-target data-options="{url:'/lay/homework_add',icon:'&#xe642;',title:'发布作业',id:'4'}">
                   <i class="layui-icon">&#xe642;</i><span> 发布当日作业</span></a>
               </dd>
               <dd>
-                <a href="javascript:;" kit-target data-options="{url:'homework_all.html',icon:'&#xe655;',title:'所有作业',id:'5'}">
+                <a href="javascript:;" kit-target data-options="{url:'/lay/homework_all',icon:'&#xe655;',title:'所有作业',id:'5'}">
                   <i class="layui-icon">&#xe655;</i><span> 所有作业</span></a>
               </dd>
             </dl>
@@ -74,11 +74,11 @@
             <a href="javascript:;" ><i class="layui-icon" aria-hidden="true">&#xe609;</i><span> 通知公告</span></a>
             <dl class="layui-nav-child">
               <dd>
-                <a href="javascript:;" kit-target data-options="{url:'notice_all.html',icon:'&#xe655;',title:'所有通知',id:'6'}">
+                <a href="javascript:;" kit-target data-options="{url:'/lay/notice_all',icon:'&#xe655;',title:'所有通知',id:'6'}">
                   <i class="layui-icon">&#xe655;</i><span> 所有通知</span></a>
               </dd>
               <dd>
-                <a href="javascript:;" kit-target data-options="{url:'notice_add.html',icon:'&#xe642;',title:'发布通知',id:'7'}">
+                <a href="javascript:;" kit-target data-options="{url:'/lay/notice_add',icon:'&#xe642;',title:'发布通知',id:'7'}">
                   <i class="layui-icon">&#xe642;</i><span> 发布通知</span></a>
               </dd>
             </dl>
@@ -88,11 +88,11 @@
             <a href="javascript:;" ><i class="layui-icon" aria-hidden="true">&#xe60e;</i><span> 出勤记录</span></a>
             <dl class="layui-nav-child">
               <dd>
-                <a href="javascript:;" kit-target data-options="{url:'attendance.html',icon:'&#xe655;',title:'迟到/早退',id:'8'}">
+                <a href="javascript:;" kit-target data-options="{url:'/lay/attendance',icon:'&#xe655;',title:'迟到/早退',id:'8'}">
                   <i class="layui-icon">&#xe655;</i><span> 迟到/早退</span></a>
               </dd>
               <dd>
-                <a href="javascript:;" kit-target data-options="{url:'leave_record.html',icon:'&#xe655;',title:'请假记录',id:'9'}">
+                <a href="javascript:;" kit-target data-options="{url:'/lay/leave_record',icon:'&#xe655;',title:'请假记录',id:'9'}">
                   <i class="layui-icon">&#xe655;</i><span> 请假记录</span></a>
               </dd>
             </dl>
@@ -102,15 +102,15 @@
             <a href="javascript:;" ><i class="layui-icon" aria-hidden="true">&#xe62a;</i><span> 成绩系统</span></a>
             <dl class="layui-nav-child">
               <dd>
-                <a href="javascript:;" kit-target data-options="{url:'./score_all.html',icon:'&#xe655;',title:'所有成绩',id:'11'}">
+                <a href="javascript:;" kit-target data-options="{url:'/lay/score_all',icon:'&#xe655;',title:'所有成绩',id:'11'}">
                   <i class="layui-icon">&#xe655;</i><span> 所有成绩</span></a>
               </dd>
               <dd>
-                <a href="javascript:;" kit-target data-options="{url:'./score_add.html',icon:'&#xe642;',title:'成绩录入（单个）',id:'10'}">
+                <a href="javascript:;" kit-target data-options="{url:'/lay/score_add',icon:'&#xe642;',title:'成绩录入（单个）',id:'10'}">
                   <i class="layui-icon">&#xe642;</i><span> 成绩录入（单个）</span></a>
               </dd>
               <dd>
-                <a href="javascript:;" kit-target data-options="{url:'./score_batchAdd.html',icon:'&#xe642;',title:'成绩录入（批量）',id:'12'}">
+                <a href="javascript:;" kit-target data-options="{url:'/lay/score_batchAdd',icon:'&#xe642;',title:'成绩录入（批量）',id:'12'}">
                   <i class="layui-icon">&#xe642;</i><span> 成绩录入（批量）</span></a>
               </dd>
 
@@ -134,11 +134,11 @@
         var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
         document.write(unescape("%3Cspan id='cnzz_stat_icon_1264021086'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1264021086%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
     </script> -->
-  <script src="./plugins/layui/layui.js"></script>
+  <script src="/plugins/layui/layui.js"></script>
   <script>
     var message;
     layui.config({
-      base: 'src/js/',
+      base: '/src/js/',
       version: '1.0.1'
     }).use(['app', 'message'], function() {
       var app = layui.app,

@@ -101,32 +101,32 @@ public class MenuController {
         }
     }
 
-    @RequestMapping("/sendTemplate")
-    public ResponseEntity<String> sendTemplate(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Template template = new Template();
-        TemplateParam p1 = new TemplateParam("keyword1",TemplateId.MSG.getValue(),"#743A3A");
-        TemplateParam p2 = new TemplateParam("keyword2","我有一条没毛驴","#0000ff");
-        TemplateParam p3 = new TemplateParam("keyword3","在吗？","#0000ff");
-        TemplateParam p4 = new TemplateParam("keyword4",sdf.format(new Date()),"#0000ff");
-        ArrayList<TemplateParam> list = new ArrayList<TemplateParam>();
-        list.add(p1);
-        list.add(p2);
-        list.add(p3);
-        list.add(p4);
-        template.setToUser("oMwUa1p65kY_CbMrfDa9-Vko5CsM");
-        template.setTemplateId(TemplateId.MSG.getUrl());
-        template.setTopColor("#abcdef");
-        template.setTemplateParamList(list);
-        AccessToken accessToken = null;
-        try {
-            accessToken = HttpUtil.getAccessToken(appId,appsecret);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        templateService.sendTemplateMsg(accessToken.getAccessToken(),template);
-        return new ResponseEntity<String>("sendTemplate SUCCESS", HttpStatus.OK);
-    }
+//    @RequestMapping("/sendTemplate")
+//    public ResponseEntity<String> sendTemplate(){
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//        Template template = new Template();
+//        TemplateParam p1 = new TemplateParam("keyword1",TemplateId.MSG.getValue(),"#743A3A");
+//        TemplateParam p2 = new TemplateParam("keyword2","我有一条没毛驴","#0000ff");
+//        TemplateParam p3 = new TemplateParam("keyword3","在吗？","#0000ff");
+//        TemplateParam p4 = new TemplateParam("keyword4",sdf.format(new Date()),"#0000ff");
+//        ArrayList<TemplateParam> list = new ArrayList<TemplateParam>();
+//        list.add(p1);
+//        list.add(p2);
+//        list.add(p3);
+//        list.add(p4);
+//        template.setToUser("oMwUa1p65kY_CbMrfDa9-Vko5CsM");
+//        template.setTemplateId(TemplateId.MSG.getUrl());
+//        template.setTopColor("#abcdef");
+//        template.setTemplateParamList(list);
+//        AccessToken accessToken = null;
+//        try {
+//            accessToken = HttpUtil.getAccessToken(appId,appsecret);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        templateService.sendTemplateMsg(accessToken.getAccessToken(),template);
+//        return new ResponseEntity<String>("sendTemplate SUCCESS", HttpStatus.OK);
+//    }
 
     @RequestMapping("/test")
     @ResponseBody

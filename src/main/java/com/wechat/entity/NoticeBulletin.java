@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 
 /**
@@ -35,6 +37,7 @@ public class NoticeBulletin extends Model<NoticeBulletin> {
 	private String title;
 	private String content;
 	@TableField("nb_create_time")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date nbCreateTime;
 	@TableField("update_time")
 	private Date updateTime;

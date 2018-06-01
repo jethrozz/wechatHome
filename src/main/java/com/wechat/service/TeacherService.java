@@ -1,5 +1,6 @@
 package com.wechat.service;
 
+import com.github.pagehelper.Page;
 import com.wechat.entity.Classes;
 import com.wechat.entity.Student;
 import com.wechat.entity.Teacher;
@@ -15,5 +16,8 @@ public interface TeacherService {
     List<Student> getStudentByCid(Integer cid);
     Teacher isTeacher(Teacher teacher);
     Classes getClassByTeacherId(Teacher teacher);
+    Page<Map<String,Object>> getNotice(int pageNo,int pageSize);
+
     Map<String,Object> CheckLoginTeacher(String teacherId, String password);
+
 }

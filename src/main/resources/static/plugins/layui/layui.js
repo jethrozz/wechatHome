@@ -90,7 +90,6 @@ Lay.fn.define = function(deps, callback){
 Lay.fn.use = function(apps, callback, exports){
   var that = this, dir = config.dir = config.dir ? config.dir : getPath;
   var head = doc.getElementsByTagName('head')[0];
-
   apps = typeof apps === 'string' ? [apps] : apps;
   
   //如果页面已经存在jQuery1.7+库且所定义的模块依赖jQuery，则不加载内部jquery模块
@@ -189,6 +188,7 @@ Lay.fn.getStyle = function(node, name){
 
 //css外部加载器
 Lay.fn.link = function(href, fn, cssname){
+  // href = href.substring(1,href.length);
   var that = this, link = doc.createElement('link');
   var head = doc.getElementsByTagName('head')[0];
   if(typeof fn === 'string') cssname = fn;

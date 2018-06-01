@@ -3,6 +3,8 @@ package com.wechat.dao;
 import com.wechat.entity.NoticeBulletin;
 import com.wechat.entity.NoticeBulletinExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface NoticeBulletinDao {
@@ -33,4 +35,6 @@ public interface NoticeBulletinDao {
     int updateByPrimaryKeyWithBLOBs(NoticeBulletin record);
 
     int updateByPrimaryKey(NoticeBulletin record);
+    List<Map<String,Object>> getAllNotice();
+    List<Map<String,Object>> getAllNoticeByTime(@Param("startTime") String startTime,@Param("endTime") String endTime);
 }

@@ -76,6 +76,15 @@
     password, openId
   </sql>
 
+  <select id="selectClassTeacher" resultType="java.util.Map">
+      SELECT teacher.name as username ,teacher.openId as id,teacher.subject as subject FROM teacher inner join teacher_class on teacher_class.tea_id = teacher.id where teacher_class.cla_id = #{claId}
+  </select>
+
+  <select id="selectNoticeByPage" resultType="java.util.Map">
+    SELECT notice_bulletin.id as id,notice_bulletin.tea_id as teaId,title,content, DATE_FORMAT(nb_create_time,   '%Y-%m-%d %H:%i:%S') as createTime
+         ,teacher.name as teacherName FROM wechatHome.notice_bulletin inner join wechatHome.teacher on teacher.id = notice_bulletin.tea_id
+  </select>
+
   <!-- 自定义Sql语句-->
   <select id="selectByPrimaryteacherId" resultType="java.util.Map" parameterType="java.lang.Integer" >
     select

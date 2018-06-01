@@ -175,52 +175,62 @@ public class ChatRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andFromUserEqualTo(Integer value) {
+        public Criteria andFromUserEqualTo(String value) {
             addCriterion("from_user =", value, "fromUser");
             return (Criteria) this;
         }
 
-        public Criteria andFromUserNotEqualTo(Integer value) {
+        public Criteria andFromUserNotEqualTo(String value) {
             addCriterion("from_user <>", value, "fromUser");
             return (Criteria) this;
         }
 
-        public Criteria andFromUserGreaterThan(Integer value) {
+        public Criteria andFromUserGreaterThan(String value) {
             addCriterion("from_user >", value, "fromUser");
             return (Criteria) this;
         }
 
-        public Criteria andFromUserGreaterThanOrEqualTo(Integer value) {
+        public Criteria andFromUserGreaterThanOrEqualTo(String value) {
             addCriterion("from_user >=", value, "fromUser");
             return (Criteria) this;
         }
 
-        public Criteria andFromUserLessThan(Integer value) {
+        public Criteria andFromUserLessThan(String value) {
             addCriterion("from_user <", value, "fromUser");
             return (Criteria) this;
         }
 
-        public Criteria andFromUserLessThanOrEqualTo(Integer value) {
+        public Criteria andFromUserLessThanOrEqualTo(String value) {
             addCriterion("from_user <=", value, "fromUser");
             return (Criteria) this;
         }
 
-        public Criteria andFromUserIn(List<Integer> values) {
+        public Criteria andFromUserLike(String value) {
+            addCriterion("from_user like", value, "fromUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserNotLike(String value) {
+            addCriterion("from_user not like", value, "fromUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserIn(List<String> values) {
             addCriterion("from_user in", values, "fromUser");
             return (Criteria) this;
         }
 
-        public Criteria andFromUserNotIn(List<Integer> values) {
+        public Criteria andFromUserNotIn(List<String> values) {
             addCriterion("from_user not in", values, "fromUser");
             return (Criteria) this;
         }
 
-        public Criteria andFromUserBetween(Integer value1, Integer value2) {
+        public Criteria andFromUserBetween(String value1, String value2) {
             addCriterion("from_user between", value1, value2, "fromUser");
             return (Criteria) this;
         }
 
-        public Criteria andFromUserNotBetween(Integer value1, Integer value2) {
+        public Criteria andFromUserNotBetween(String value1, String value2) {
             addCriterion("from_user not between", value1, value2, "fromUser");
             return (Criteria) this;
         }
@@ -235,52 +245,62 @@ public class ChatRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andToUserEqualTo(Integer value) {
+        public Criteria andToUserEqualTo(String value) {
             addCriterion("to_user =", value, "toUser");
             return (Criteria) this;
         }
 
-        public Criteria andToUserNotEqualTo(Integer value) {
+        public Criteria andToUserNotEqualTo(String value) {
             addCriterion("to_user <>", value, "toUser");
             return (Criteria) this;
         }
 
-        public Criteria andToUserGreaterThan(Integer value) {
+        public Criteria andToUserGreaterThan(String value) {
             addCriterion("to_user >", value, "toUser");
             return (Criteria) this;
         }
 
-        public Criteria andToUserGreaterThanOrEqualTo(Integer value) {
+        public Criteria andToUserGreaterThanOrEqualTo(String value) {
             addCriterion("to_user >=", value, "toUser");
             return (Criteria) this;
         }
 
-        public Criteria andToUserLessThan(Integer value) {
+        public Criteria andToUserLessThan(String value) {
             addCriterion("to_user <", value, "toUser");
             return (Criteria) this;
         }
 
-        public Criteria andToUserLessThanOrEqualTo(Integer value) {
+        public Criteria andToUserLessThanOrEqualTo(String value) {
             addCriterion("to_user <=", value, "toUser");
             return (Criteria) this;
         }
 
-        public Criteria andToUserIn(List<Integer> values) {
+        public Criteria andToUserLike(String value) {
+            addCriterion("to_user like", value, "toUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andToUserNotLike(String value) {
+            addCriterion("to_user not like", value, "toUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andToUserIn(List<String> values) {
             addCriterion("to_user in", values, "toUser");
             return (Criteria) this;
         }
 
-        public Criteria andToUserNotIn(List<Integer> values) {
+        public Criteria andToUserNotIn(List<String> values) {
             addCriterion("to_user not in", values, "toUser");
             return (Criteria) this;
         }
 
-        public Criteria andToUserBetween(Integer value1, Integer value2) {
+        public Criteria andToUserBetween(String value1, String value2) {
             addCriterion("to_user between", value1, value2, "toUser");
             return (Criteria) this;
         }
 
-        public Criteria andToUserNotBetween(Integer value1, Integer value2) {
+        public Criteria andToUserNotBetween(String value1, String value2) {
             addCriterion("to_user not between", value1, value2, "toUser");
             return (Criteria) this;
         }

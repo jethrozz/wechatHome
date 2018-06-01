@@ -1,8 +1,13 @@
 package com.wechat.util;
 
+import com.wechat.model.Template;
+import com.wechat.model.TemplateParam;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.context.annotation.PropertySource;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  */
@@ -20,5 +25,23 @@ public class WechatUtil {
 			e.printStackTrace();
 		}
 		return openId;
+	}
+
+	public static Template getTemplate(String toUser,String id,String color,String url,String[] value){
+		Template template = new Template();
+		template.setToUser(toUser);
+		template.setTemplateId(id);
+		template.setTopColor(color);
+		template.setUrl(url);
+		ArrayList<TemplateParam> list = new ArrayList<TemplateParam>();
+		int index = 1;
+		for(String val : value){
+			TemplateParam p = new TemplateParam("keyword"+index,val,"#0000ff");
+			list.add(p);
+			index++;
+		}
+		template.setTemplateParamList(list);
+
+		return template;
 	}
 }

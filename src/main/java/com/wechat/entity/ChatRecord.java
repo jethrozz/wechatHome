@@ -24,15 +24,31 @@ public class ChatRecord extends Model<ChatRecord> {
 	@TableId(value="id", type= IdType.AUTO)
 	private Integer id;
 	@TableField("from_user")
-	private Integer fromUser;
+	private String fromUser;
 	@TableField("to_user")
-	private Integer toUser;
+	private String toUser;
+
 	private String content;
 	@TableField("create_time")
 	private Date createTime;
 	@TableField("update_time")
 	private Date updateTime;
 
+	public String getFromUser() {
+		return fromUser;
+	}
+
+	public void setFromUser(String fromUser) {
+		this.fromUser = fromUser;
+	}
+
+	public String getToUser() {
+		return toUser;
+	}
+
+	public void setToUser(String toUser) {
+		this.toUser = toUser;
+	}
 
 	public Integer getId() {
 		return id;
@@ -42,21 +58,6 @@ public class ChatRecord extends Model<ChatRecord> {
 		this.id = id;
 	}
 
-	public Integer getFromUser() {
-		return fromUser;
-	}
-
-	public void setFromUser(Integer fromUser) {
-		this.fromUser = fromUser;
-	}
-
-	public Integer getToUser() {
-		return toUser;
-	}
-
-	public void setToUser(Integer toUser) {
-		this.toUser = toUser;
-	}
 
 	public String getContent() {
 		return content;

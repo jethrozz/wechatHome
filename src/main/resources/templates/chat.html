@@ -15,69 +15,48 @@
   <!-- No Baidu Siteapp-->
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
 
-  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+  <link rel="icon" sizes="192x192" href="/assets/i/app-icon72x72\@2x.png">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
-  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72\@2x.png">
 
   <!-- Tile icon for Win8 (144x144 + tile color) -->
-  <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
+  <meta name="msapplication-TileImage" content="/assets/i/app-icon72x72\@2x.png">
   <meta name="msapplication-TileColor" content="#0e90d2">
 
-  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="/assets/css/amazeui.min.css">
 
-  <link rel="stylesheet" href="assets/layui/css/layui.mobile.css">
+  <link rel="stylesheet" href="/assets/layui/css/layui.mobile.css">
 </head>
 <body>
 
 <!--[if (gte IE 9)|!(IE)]><!-->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/layui/layui.js"></script>
-<script src="assets/js/amazeui.min.js"></script>
-<script type="text/javascript" src="assets/js/student.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/assets/layui/layui.js"></script>
+<script src="/assets/js/amazeui.min.js"></script>
+<script type="text/javascript" src="/assets/js/student.js"></script>
 
 <script>
-layui.use('mobile', function(){
+layui.use(['mobile','jquery'], function(){
   var mobile = layui.mobile
-  ,layim = mobile.layim; 
+  ,layim = mobile.layim
+      ,$ = layui.jquery;
   //基础配置
-  layim.config({
-    init: {
-      //设置我的基础信息
-//设置我的基础信息
-  mine: {
-    "username": "佟丽娅" //我的昵称
-    ,"id": 123 //我的ID
-    ,"avatar": "http://tp4.sinaimg.cn/1345566427/180/5730976522/0" //我的头像
-    ,"sign": "我的签名"
-  }
-  //好友列表，同PC版本
-  ,"friend": [{
-    "groupname": "前端码屌" //好友分组名
-    ,"id": 1 //分组ID
-    ,"list": [{ //分组下的好友列表
-      "username": "贤心" //好友昵称
-      ,"id": "100001" //好友ID
-      ,"avatar": "a.jpg" //好友头像
-      ,"sign": "这些都是测试数据，实际使用请严格按照该格式返回" //好友签名
-      ,"status": "online" //若值为offline代表离线，online或者不填为在线
-    }]
-  }]}
-  });
-  //创建一个会话
-  layim.chat({
-    id: 111111
-    ,name: '许闲心'
-    ,type: 'friend' //friend、group等字符，如果是group，则创建的是群聊
-    ,avatar: 'http://tp1.sinaimg.cn/1571889140/180/40030060651/1'
-  });
+
+  $.post("/chat/teacherChat",function (data) {
+      var res = data.data;
+      layim.config({
+          init:{"mine":res.mine,
+          "friend":res.friend}
+      });
+  })
 });
 </script>
 </body>

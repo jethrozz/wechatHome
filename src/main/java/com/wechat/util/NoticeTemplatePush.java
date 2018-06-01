@@ -31,6 +31,8 @@ public class NoticeTemplatePush implements Runnable{
 	private String appId;
 	@Value("${wechat.appsecret}")
 	private String appsecret;
+	@Value("${wechat.href}")
+	private String href;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	@Override
 	public void run() {
@@ -67,9 +69,9 @@ public class NoticeTemplatePush implements Runnable{
 	private void sendMsg(String openId,NoticeBulletin notice){
 		Template template = new Template();
 		template.setToUser(openId);
-		template.setTemplateId(TemplateId.MSG.getUrl());
+		template.setTemplateId(TemplateId.NOTICE.getUrl());
 		template.setTopColor("#ccc");
-		AccessToken accessToken = null;
+		template.setUrl(href+"/index/notice/"+notice.getId());
 		TemplateParam p1 = new TemplateParam("keyword1",TemplateId.NOTICE.getValue(),"#743A3A");
 		TemplateParam p2 = new TemplateParam("keyword2",notice.getTitle(),"#0000ff");
 		TemplateParam p3 = new TemplateParam("keyword3",notice.getContent(),"#0000ff");
@@ -80,12 +82,8 @@ public class NoticeTemplatePush implements Runnable{
 		list.add(p3);
 		list.add(p4);
 		template.setTemplateParamList(list);
-		try {
-			accessToken = HttpUtil.getAccessToken(appId,appsecret);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		templateService.sendTemplateMsg(accessToken.getAccessToken(),template);
+
+		templateService.sendTemplateMsg(template);
 	}
 	private void stopThread(){
 		stopme = true;

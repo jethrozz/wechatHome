@@ -1,7 +1,9 @@
 package com.wechat.serviceImpl;
 
+import com.wechat.bean.AccessToken;
 import com.wechat.model.Template;
 import com.wechat.service.TemplateService;
+import com.wechat.util.HttpUtil;
 import com.wechat.util.JSONUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,12 +22,18 @@ public class TemplateServiceImpl implements TemplateService {
 	private static Logger log = LoggerFactory.getLogger(TemplateServiceImpl.class);
 	@Value("${wechat.templateUrl}")
 	private String templateUrl;
+	@Value("${wechat.appID}")
+	private String appId;
+	@Value("${wechat.appsecret}")
+	private String appsecret;
+	@Value("${wechat.href}")
+	private String href;
 
 	@Override
-	public boolean sendTemplateMsg(String token, Template template) {
+	public boolean sendTemplateMsg(Template template) {
 		boolean flag=false;
 
-		String url = templateUrl.replace("ACCESS_TOKEN", token);
+		String url = templateUrl.replace("ACCESS_TOKEN", getToken());
 		JSONObject jsonResult= httpRequest(url, "POST", template.toJSON());
 
 
@@ -50,5 +58,16 @@ public class TemplateServiceImpl implements TemplateService {
 			}
 		}
 		return flag;
+	}
+
+	private String getToken(){
+		AccessToken accessToken = null;
+		try {
+			accessToken = HttpUtil.getAccessToken(appId,appsecret);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return "";
+		}
+		return accessToken.getAccessToken();
 	}
 }

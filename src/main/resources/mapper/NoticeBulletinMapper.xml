@@ -76,6 +76,19 @@
   <sql id="Blob_Column_List" >
     content
   </sql>
+  
+  <!--以下为自定义的sql-->
+  <select id="getAllNotice" resultType="java.util.Map">
+        SELECT notice_bulletin.id as id,notice_bulletin.tea_id as teaId,title,content, DATE_FORMAT(nb_create_time,   '%Y-%m-%d %H:%i:%S') as createTime
+         ,teacher.name as teacherName FROM wechatHome.notice_bulletin inner join wechatHome.teacher on teacher.id = notice_bulletin.tea_id
+  </select>
+  <select id="getAllNoticeByTime" resultType="java.util.Map">
+        SELECT notice_bulletin.id as id,notice_bulletin.tea_id as teaId,title,content, DATE_FORMAT(nb_create_time,   '%Y-%m-%d %H:%i:%S') as createTime
+         ,teacher.name as teacherName FROM wechatHome.notice_bulletin inner join wechatHome.teacher on teacher.id = notice_bulletin.tea_id
+    where notice_bulletin.nb_create_time between #{startTime} and #{endTime}
+  </select>
+  
+  <!--以下为工具生成的sql-->
   <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.wechat.entity.NoticeBulletinExample" >
     select
     <if test="distinct" >

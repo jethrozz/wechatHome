@@ -1,14 +1,11 @@
 package com.wechat.serviceImpl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.wechat.dao.ClassesDao;
+import com.wechat.dao.NoticeBulletinDao;
 import com.wechat.dao.TeacherDao;
-import com.wechat.entity.Classes;
-import com.wechat.entity.ClassesExample;
-import com.wechat.entity.Student;
-import com.wechat.entity.Teacher;
-import com.wechat.exception.BizExceptionEnum;
-import com.wechat.exception.BussinessException;
+import com.wechat.entity.*;
 import com.wechat.mapper.TeacherMapper;
 import com.wechat.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +24,8 @@ public class TeacherServiceImpl implements TeacherService {
 	TeacherDao teacherDao;
 	@Autowired
 	TeacherMapper teacherMapper;
+	@Autowired
+	NoticeBulletinDao noticeDao;
 	@Autowired
 	ClassesDao classesDao;
 	@Override
@@ -49,6 +48,13 @@ public class TeacherServiceImpl implements TeacherService {
 		}
 		return null;
 	}
+
+	@Override
+	public Page<Map<String,Object>> getNotice(int pageNo, int pageSize) {
+		PageHelper.startPage(pageNo,pageSize);
+		return teacherDao.selectNoticeByPage();
+	}
+
 
 	@Override
 	public Map<String, Object> CheckLoginTeacher(String teacherId, String password) {

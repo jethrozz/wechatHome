@@ -57,7 +57,8 @@ public class LoginController  extends BaseController{
             teacher.setTeacherId(account);
             teacher.setPassword(password);
             responseBody = teacherService.CheckLoginTeacher(teacher.getTeacherId(),teacher.getPassword());
-            saveUser(request,responseBody);
+
+            saveUserTosession(request,responseBody);
             return new CommonResult<Object>(0, responseBody);
         }else if (identity.equals("student")){
             Student student = new Student();
@@ -76,7 +77,7 @@ public class LoginController  extends BaseController{
                 //封装返回结果
                 result.setStudent(user);
                 //将用户存储到session中
-                saveUser(request,responseBody);
+                saveUserTosession(request,responseBody);
                 return new CommonResult<Object>(0, result);
             }
 
@@ -103,7 +104,7 @@ public class LoginController  extends BaseController{
                 result.setParent(parent);
                 result.setStudent((Student) responseBody);
                 //将用户存储到session中
-                saveUser(request,parent);
+                saveUserTosession(request,parent);
                 return new CommonResult<Object>(0, result);
             }
         }
@@ -111,7 +112,7 @@ public class LoginController  extends BaseController{
         return new CommonResult<>(errorcode,errorMessage);
     }
 
-    private void saveUser(HttpServletRequest request,Object object){
+    private void saveUserTosession(HttpServletRequest request,Object object){
         HttpSession session = request.getSession();
         session.setAttribute("user",object);
     }

@@ -2,27 +2,25 @@ package com.wechat.controller;
 
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.wechat.bean.AccessToken;
 import com.wechat.bean.MyClass;
+import com.wechat.bean.TableResult;
 import com.wechat.bean.TeacherHomeworkResult;
 import com.wechat.common.controller.BaseController;
 import com.wechat.dao.ClassesDao;
+import com.wechat.dao.NoticeBulletinDao;
 import com.wechat.entity.*;
 import com.wechat.mapper.ClassesMapper;
 import com.wechat.mapper.TeacherClassMapper;
 import com.wechat.model.CommonResult;
 import com.wechat.model.NoticeTemplateQueue;
-import com.wechat.model.Template;
-import com.wechat.model.TemplateParam;
 import com.wechat.service.StudentService;
 import com.wechat.service.TeacherService;
-import com.wechat.service.TemplateService;
 import com.wechat.util.DateUtil;
-import com.wechat.util.HttpUtil;
 import com.wechat.util.OfficeUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/teacher")
@@ -47,9 +46,22 @@ public class TeacherController extends BaseController {
     @Autowired
     private ClassesDao classesDao;
     @Autowired
+    private NoticeBulletinDao noticeDao;
+    @Autowired
     StudentService studentService;
     @Autowired
     TeacherService teacherService;
+
+    @PostMapping("/userLogin")
+    public CommonResult<Object> teacherLogin(HttpServletRequest request,Teacher teacher){
+        List<Teacher> list = teacher.selectList("teacher_id = {0} and password = {1}",teacher.getTeacherId(),teacher.getPassword());
+        if(list.size() != 0){
+            request.getSession().setAttribute("user",list.get(0));
+
+            return new CommonResult<>(successcode,list.get(0));
+        }
+        return new CommonResult<>(errorcode,"用户名或者密码错误");
+    }
 
 
     @ApiOperation(value = "新建班级信息接口",notes = "",produces = "application/json")
@@ -194,13 +206,32 @@ public class TeacherController extends BaseController {
     //发布通知接口
     @PostMapping("/addNotice")
     public CommonResult<String> addNotice(HttpServletRequest request,NoticeBulletin notice){
-        Teacher teacher = (Teacher)request.getSession().getAttribute("user");
+        //Teacher teacher = (Teacher)request.getSession().getAttribute("user");
 
-        notice.setTeaId(teacher.getId());
+        //notice.setTeaId(teacher.getId());
         notice.insert();
 
         NoticeTemplateQueue.getInstance().addTemplate(notice);
 
         return new CommonResult(0,successMessage);
     }
+
+    @RequestMapping("/getAllNotice")
+    public TableResult<Object> getAllNotice(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "20") int pageSize){
+        TableResult<Object> result = new TableResult<>();
+        result.setCode(0);
+        result.setMsg("操作成功");
+        result.setDate(teacherService.getNotice(pageNo,pageSize));
+        return result;
+    }
+    //根据日期范围查询通知
+    @RequestMapping("/getNoticeByTime")
+    public CommonResult<Object> getNoticeByTime(HttpServletRequest request,String startTime,String endTime){
+        List<Map<String,Object>> result = noticeDao.getAllNoticeByTime(startTime,endTime);
+
+        return new CommonResult<>(successcode,result);
+    }
+
+
+
 }

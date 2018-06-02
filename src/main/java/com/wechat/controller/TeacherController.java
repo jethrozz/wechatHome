@@ -30,8 +30,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -150,18 +154,24 @@ public class TeacherController extends BaseController {
 
     //批量上传成绩接口
     @PostMapping("/uploadStudentScore")
-    public CommonResult<String> uploadStudentScore(MultipartFile file,HttpServletRequest request){
-        if(file == null && file.isEmpty()){
+    public CommonResult<String> uploadStudentScore(String file,HttpServletRequest request){
+        if(file == null ){
             return new CommonResult(errorcode,"the file is empty");
         }
         InputStream in = null;
-
         try {
-            in = file.getInputStream();
+            URL url = new URL(file);
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("GET");
+            //得到输入流
+            in = conn.getInputStream();
+
         } catch (IOException e) {
             return new CommonResult(errorcode,"get the InputStream is error");
         }
-        List<ExamResult> list = OfficeUtil.readStudentScore(in,1,studentService);
+        boolean isExcel2003 = false;
+
+        List<ExamResult> list = OfficeUtil.readStudentScore(in,1,studentService,false);
         for (ExamResult result:list){
             result.insert();
         }

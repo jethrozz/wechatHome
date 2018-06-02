@@ -8,17 +8,10 @@ import com.wechat.mapper.LeaveRecordMapper;
 import com.wechat.model.CommonResult;
 import com.wechat.model.Template;
 import com.wechat.service.TemplateService;
-import com.wechat.util.HttpUtil;
 import com.wechat.util.JSONUtils;
 import com.wechat.util.TemplateId;
 import com.wechat.util.WechatUtil;
 import io.goeasy.GoEasy;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.DefaultManagedHttpClientConnection;
-import org.apache.http.protocol.HttpContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,6 +69,7 @@ public class ParentController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/leave_record",method = RequestMethod.GET)
+	@ResponseBody
 	public CommonResult leave_record(HttpServletRequest request,LeaveRecord leaveRecord){
 
 			//查询学生教师的openid
@@ -111,6 +103,7 @@ public class ParentController extends BaseController{
 	 * @return
 	 */
 	@GetMapping("/getHomeworkByClassId/{classId}")
+	@ResponseBody
 	public CommonResult getHomeworkByClassId(HttpServletRequest request,@PathVariable(required = false) Integer classId){
 		Parent parent = (Parent) request.getSession().getAttribute("user");
 
@@ -126,6 +119,7 @@ public class ParentController extends BaseController{
 	 * @return
 	 */
 	@GetMapping("/getOneHomeworkById/{homeworkId}")
+	@ResponseBody
 	public CommonResult getOneHomeworkById(HttpServletRequest request,@PathVariable(required = true) Integer homeworkId){
 		Parent parent = (Parent) request.getSession().getAttribute("user");
 		Homework homework = homeworkDao.selectByPrimaryKey(homeworkId);
@@ -138,6 +132,7 @@ public class ParentController extends BaseController{
 	}
 
 	@GetMapping("/getHomeworkByTime/{classId}")
+	@ResponseBody
 	public CommonResult getHomeworkByTime(HttpServletRequest request,@PathVariable(required = false) Integer classId,String date){
 		Parent parent = (Parent) request.getSession().getAttribute("user");
 		Homework homework = new Homework();

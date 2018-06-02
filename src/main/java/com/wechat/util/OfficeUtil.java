@@ -5,7 +5,10 @@ import com.wechat.entity.Student;
 import com.wechat.model.SubjectEnum;
 import com.wechat.service.StudentService;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -38,6 +41,7 @@ public class OfficeUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		HSSFWorkbook wb = null;
 		try {
 			wb = new HSSFWorkbook(fs);
@@ -94,7 +98,7 @@ public class OfficeUtil {
 		return list;
 	}
 
-	public static List<ExamResult> readStudentScore(InputStream inputStream, int ingoreRow, StudentService studentService){
+	public static List<ExamResult> readStudentScore(InputStream inputStream, int ingoreRow, StudentService studentService,boolean isExcel2003){
 		List<ExamResult> list = new ArrayList<>();
 		if(inputStream == null){
 			return list;
@@ -108,25 +112,42 @@ public class OfficeUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		HSSFWorkbook wb = null;
+
+
+		Workbook wb = null;
 		try {
-			wb = new HSSFWorkbook(fs);
+			wb = WorkbookFactory.create(inputStream);
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (InvalidFormatException e) {
+			e.printStackTrace();
 		}
+//		try {
+//
+//			if (isExcel2003)
+//			{
+//				wb = new HSSFWorkbook(inputStream);
+//			}
+//			else
+//			{
+//				wb = new XSSFWorkbook(inputStream);
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
-		HSSFCell cell = null;
+		Cell cell = null;
 		//遍历sheet
 		for (int sheetIndex = 0; sheetIndex < wb.getNumberOfSheets(); sheetIndex++) {
 			//获取当前sheet
-			HSSFSheet st = wb.getSheetAt(sheetIndex);
+			Sheet st = wb.getSheetAt(sheetIndex);
 			if(st == null){
 				continue;
 			}
 			//遍历当前sheet的row
 			// 第一行为标题，不取
 			for (int rowIndex = ingoreRow; rowIndex <= st.getLastRowNum(); rowIndex++) {
-				HSSFRow row = st.getRow(rowIndex);
+				Row row = st.getRow(rowIndex);
 				if (row == null) {
 					continue;
 				}

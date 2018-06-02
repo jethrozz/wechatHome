@@ -1,7 +1,6 @@
 package com.wechat.model;
 
 /**
- * Created by zxc on 2018/5/31.
  */
 public enum SubjectEnum {
 	YUWEN(1,"语文"),

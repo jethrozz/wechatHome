@@ -16,24 +16,17 @@ $("#leaveBtn").bind('click', function(event) {
 	var $modal = $('#leave');
 	$modal.modal();
 });
-function showHomework(e){
-	var homework = $(e);
-	var $modal = $("#homework");
-	$("#homework-title").text("数学作业")
-	$("#homework-content").text(homework.attr("alt"));
-	$modal.modal();
-}
 
+
+//请假
 $("#leave_btn").click(function(){
 	var startTime = $("#startTime").val();
 	var endTime = $("#endTime").val();
 	var type = $("#leave_type").val();
 	var reson = $("#reason").val();
-	console.log(startTime);
-    console.log(endTime);
-    console.log(type);
-    console.log(reson)
+
     var xmlHttpRequest;
+
     if(window.XMLHttpRequest){
     	xmlHttpRequest=new XMLHttpRequest();}else{xmlHttpRequest=new ActiveXObject("Microsoft.XMLHTTP");
     }
@@ -74,3 +67,47 @@ function datedifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格�
     iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
     return iDays
 };
+
+//当天作业
+function showHomeIndex() {
+    var calId = $("#calssesId").val();
+    var url = "/parent/getHomeworkByClassId/"+calId;
+    $.get(url,function () {
+        
+    });
+}
+//作业详情
+function showHomework(e){
+    var homework = $(e);
+   var hId = homework.attr("alt");
+    var url = "/parent/getOneHomeworkById/"+hId;
+    $.get(url,function () {
+    });
+}
+//根据时间查询
+$("#hw_btn").click(function () {
+    var date = $("#homeworkDate").val();
+    if(date != ""){
+        var calId = $("#calssesId").val();
+        var url = "/parent/getHomeworkByTime/"+calId;
+        $.ajax({
+            url:url,
+            type:"get",
+            async:false,
+            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+            data:{
+                date:date
+            },
+            success: function (data,stauts,result) {
+                console.log(data);
+                if(data.status == 0){
+                    // alert("提交成功");
+                }
+            },
+            error:function(data,status,result){
+                console.log(data);
+            }
+        });
+    }
+})
+

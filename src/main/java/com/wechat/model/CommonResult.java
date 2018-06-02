@@ -17,6 +17,26 @@ public class CommonResult<T> {
 	private T data;
 	@JsonProperty("msg")
 	private String msg;
+	private int userId;
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public CommonResult(int stauts, T data, int userId) {
+		this.stauts = stauts;
+		this.data = data;
+		this.userId = userId;
+	}
+
+	public CommonResult(int stauts, int userId) {
+		this.stauts = stauts;
+		this.userId = userId;
+	}
 
 	public CommonResult() {
 	}
@@ -55,4 +75,9 @@ public class CommonResult<T> {
 		this.data = data;
 	}
 
+	public CommonResult(int stauts, T data, String msg) {
+		this.stauts = stauts;
+		this.data = data;
+		this.msg = msg;
+	}
 }

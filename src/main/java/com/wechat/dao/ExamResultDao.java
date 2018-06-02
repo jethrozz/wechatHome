@@ -3,6 +3,8 @@ package com.wechat.dao;
 import com.wechat.entity.ExamResult;
 import com.wechat.entity.ExamResultExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ExamResultDao {
@@ -27,4 +29,12 @@ public interface ExamResultDao {
     int updateByPrimaryKeySelective(ExamResult record);
 
     int updateByPrimaryKey(ExamResult record);
+
+
+    List<Map<String,Object>> selectByStuId(@Param("stuId") Integer stuId);
+
+    List<Map<String,Object>> getOneStudentByTimeArange(@Param("stuId") Integer stuId,
+                                                       @Param("startTime") String startTime,
+                                                       @Param("endTime") String endTime,
+                                                       @Param("term") Integer term);
 }

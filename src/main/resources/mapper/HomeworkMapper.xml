@@ -77,6 +77,15 @@
   <sql id="Blob_Column_List" >
     content
   </sql>
+
+  <!-- 自定义sql  -->
+  <select id="getNowDateHomeworkByClassId" resultType="java.util.Map" >
+    SELECT id, title, DATE_FORMAT(finsh_time,   '%Y-%m-%d %H:%i:%S') AS finshTime,
+     tea_id, cla_id, DATE_FORMAT(h_create_time,   '%Y-%m-%d %H:%i:%S') AS hCreateTime, update_time
+     FROM  homework
+     WHERE cla_id = #{classId,jdbcType=INTEGER} AND TO_DAYS(h_create_time) = TO_DAYS(NOW())
+  </select>
+
   <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.wechat.entity.HomeworkExample" >
     select
     <if test="distinct" >

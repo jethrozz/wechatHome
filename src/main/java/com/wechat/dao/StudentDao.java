@@ -40,4 +40,5 @@ public interface StudentDao {
 //    Student selectByPrimaryStudentNumber(@Param("studentNumber") String studentNumber);
 
     List<Student> selectByStudentClassId(@Param("cla_id") Integer cla_id);
+
 }

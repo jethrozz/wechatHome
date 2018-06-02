@@ -11,10 +11,9 @@
     <link rel="stylesheet" href="/src/css/ztree/metro/ztree.css" media="all" />
     <link rel="stylesheet" href="/src/css/treeselect.css" media="all" />
     <script type="text/html" id="barDemo">
-      <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
-      <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-      
+      <a class="layui-btn layui-btn-xs" lay-event="detail">同意</a>
+      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">拒绝</a>
+
       <!-- 这里同样支持 laytpl 语法，如： -->
       {{#  if(d.auth > 2){ }}
         <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>
@@ -90,36 +89,25 @@ layui.use('table', function(){
   table.render({
     elem: '#demo'
     ,height: 430
-    ,url: "./data.json" //数据接口
+    ,url: "/teacher/getLeaveRecord" //数据接口
     ,page: true //开启分页
     ,limit:20
     ,cols: [[ //表头
       {field: 'id', title: 'ID', width:100,  fixed: 'left',hide:true}
-      ,{field: 'stuId', title: '请假人', width:120}
-      ,{field: 'teaId', title: '审核人', width:120}
+      ,{field: 'studentName', title: '请假人', width:120}
+      ,{field: 'teacherName', title: '审核人', width:120}
       ,{field: 'type', title: '类型', width:80 }
       ,{field: 'startTime', title: '起始时间', width:100 }
       ,{field: 'endTime', title: '结束时间', width:100 }
       ,{field: 'dayNumber', title: '天数', width:80 }
-      ,{field: 'isAgree', title: '审核状态', width:120}
+      ,{field: 'status', title: '审核状态', width:120}
       ,{field: 'reason', title: '原因', width:300 }
-      ,{fixed: 'right', width:300, align:'center', toolbar: '#barDemo'}
+      ,{fixed: 'right', title:'操作', width:300, align:'center', toolbar: '#barDemo'}
     ]],
-    data:  [{
-        "id": 10029,
-        "stuId": "唐钰小宝",
-        "teaId": "阿奴老师",
-        "type": "病假",
-        "startTime": "2017-07-08",
-        "endTime": "2017-07-10",
-        "dayNumber": "2天",
-        "isAgree": "未同意",
-        "reason": "生病了"
-    }]  ,
     done: function(res, curr, count) {
             //如果是异步请求数据方式，res即为你接口返回的信息。
             //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-            // console.log(res);
+             //console.log(res);
             // //得到当前页码
             // console.log(curr);
             // //得到数据总量
@@ -134,12 +122,6 @@ table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test�
  
   if(layEvent === 'detail'){ //查看
     //do somehing
-  } else if(layEvent === 'del'){ //删除
-    layer.confirm('真的删除行么', function(index){
-      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-      layer.close(index);
-      //向服务端发送删除指令
-    });
   } else if(layEvent === 'edit'){ //编辑
     //do something
     

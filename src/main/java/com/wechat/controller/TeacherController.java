@@ -13,6 +13,7 @@ import com.wechat.dao.LeaveRecordDao;
 import com.wechat.dao.NoticeBulletinDao;
 import com.wechat.entity.*;
 import com.wechat.mapper.ClassesMapper;
+import com.wechat.mapper.ExamResultMapper;
 import com.wechat.mapper.TeacherClassMapper;
 import com.wechat.model.CommonResult;
 import com.wechat.model.NoticeTemplateQueue;
@@ -45,6 +46,7 @@ public class TeacherController extends BaseController {
     private ClassesMapper classesMapper;
     @Autowired
     private TeacherClassMapper teacherClassMapper;
+
     @Autowired
     private ClassesDao classesDao;
     @Autowired
@@ -53,6 +55,9 @@ public class TeacherController extends BaseController {
     StudentService studentService;
     @Autowired
     TeacherService teacherService;
+
+    @Autowired
+    private ExamResultMapper examResultMapper;
 
 
     @PostMapping("/userLogin")
@@ -278,6 +283,60 @@ public class TeacherController extends BaseController {
         result.setCode(0);
 
         return result;
+    }
+
+    /**
+     * 修改成绩
+     * @param sid
+     * @param score
+     * @return
+     */
+    @RequestMapping(value = "/updateStudentScore")
+    public CommonResult updateStudentScore(@RequestParam("sid") Integer sid,@RequestParam ("score") Float score){
+        ExamResult examResult = new ExamResult();
+        examResult.setId(sid);
+        examResult.setScore(score);
+        boolean flag = examResult.updateById();
+        if (flag)
+            return new CommonResult(successcode,successMessage);
+        return new CommonResult(errorcode,errorMessage);
+    }
+
+
+    /**
+     * 修改作业接口
+     * @param id
+     * @param title
+     * @param content
+     * @return
+     */
+    @RequestMapping(value = "/updateHomeWork")
+    public CommonResult updateHomeWork(@RequestParam("id") Integer id,
+                                       @RequestParam ("title") String title,
+                                       @RequestParam("content") String content){
+        Homework homework = new Homework();
+        homework.setId(id);
+        homework.setTitle(title);
+        homework.setContent(content);
+        boolean flag = homework.updateById();
+        if (flag)
+            return new CommonResult(successcode,successMessage);
+        return new CommonResult(errorcode,errorMessage);
+    }
+
+    /**
+     * 删除接口
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/deleteHomeWork/{id}")
+    public CommonResult deleteHomeWork(@PathVariable("id") Integer id){
+        Homework homework = new Homework();
+        homework.setId(id);
+        boolean flag = homework.deleteById();
+        if (flag)
+            return new CommonResult(successcode,successMessage);
+        return new CommonResult(errorcode,errorMessage);
     }
 
 }

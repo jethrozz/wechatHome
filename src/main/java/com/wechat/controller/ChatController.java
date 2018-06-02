@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -160,17 +161,17 @@ public class ChatController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/sendCheckMsg")
-	public CommonResult<Object> sendCheckMsg(Map<String,Object> msg){
+	public CommonResult<Object> sendCheckMsg(@RequestBody Map<String,Object> map){
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		//封装模板消息需要的数据
 		String []val =  new String[5];
 		val[0] = TemplateId.LEAVE.getValue();
-		val[1] = msg.get("studentName").toString();
-		val[2] = msg.get("reason").toString();
+		val[1] = map.get("studentName").toString();
+		val[2] = map.get("reason").toString();
 		val[3] = sdf.format(new Date());
-		val[4] = msg.get("dayNum").toString();
-		Template template = WechatUtil.getTemplate(msg.get("teacherOpenId").toString(),TemplateId.LEAVE.getUrl(),"#ccc","",val);
+		val[4] = map.get("dayNum").toString();
+		Template template = WechatUtil.getTemplate(map.get("teacherOpenId").toString(),TemplateId.LEAVE.getUrl(),"#ccc","",val);
 		//发送模板消息
 		templateService.sendTemplateMsg(template);
 		//返回消息结果

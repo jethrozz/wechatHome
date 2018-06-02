@@ -39,10 +39,12 @@ public class ParentController extends BaseController{
 
 	@Autowired
 	private LeaveRecordMapper leaveRecordMapper;
-	@Autowired
-	TemplateService templateService;
+
 	@Autowired
 	private ParentDao parentDao;
+
+	@Autowired
+	private TemplateService templateService;
 
 	@RequestMapping("/index")
 	public ModelAndView parentIndex(HttpServletRequest request){
@@ -55,7 +57,7 @@ public class ParentController extends BaseController{
 			student = student.selectById(list.get(0).getStuId());
 		}
 		modelAndView.addObject("parent",parent);
-		modelAndView.addObject("student",student);
+		modelAndView.addObject("student",parent);
 		Classes classes = new Classes();
 		classes = classes.selectById(student.getClaId());
 		modelAndView.addObject("classes",classes);
@@ -93,17 +95,6 @@ public class ParentController extends BaseController{
 
 			Template template = WechatUtil.getTemplate(m.get("openId").toString(),TemplateId.LEAVE.getUrl(),"#ccc","",val);
 			templateService.sendTemplateMsg(template);
-//			Map<String,Object> map = new HashMap<String,Object>();
-//			map.put("studentName",);
-//			map.put("reason",leaveRecord.getReason());
-//			map.put("dayNum",leaveRecord.getTime());
-//			map.put("teacherOpenId",);
-//
-//			String url = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
-//			url += "/chat/sendCheckMsg";
-//			HttpUtil httpUtil = new HttpUtil();
-//			String str = httpUtil.doPost(url,map);
-//			System.out.println("-->"+str);
 			return new CommonResult(successcode,successMessage);
 		}
 		return new CommonResult(errorcode,errorMessage);

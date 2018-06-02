@@ -2,14 +2,15 @@
 <html>
 <head lang="en">
   <meta charset="UTF-8">
-  <title>Login Page | Amaze UI Example</title>
+  <title>家长登录</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="format-detection" content="telephone=no">
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
-  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+  <link rel="alternate icon" type="image/png" href="/assets/i/favicon.png">
+  <link rel="stylesheet" href="/assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="/assets/css/tip.css"/>
   <style>
     .header {
       text-align: center;
@@ -25,23 +26,26 @@
   </style>
 </head>
 <body>
+<div id="tip"></div>
 <div class="header">
   <div class="am-g">
     <h1>家长身份验证</h1>
   </div>
   <hr />
 </div>
+
 <div class="am-g">
   <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
     <form method="post" class="am-form">
       <label for="studentId">学号:</label>
       <input type="text" name="studentId" id="studentId" value="">
+      <input type="hidden" id="openId" name="openId" value="${openId}">
       <br>
       <label for="idCard">身份证号:</label>
       <input type="text" name="idCard" id="idCard" value="">
       <br />
       <div class="am-cf">
-        <input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-lg am-fl">
+        <button type="button" id="login" class="am-btn am-btn-primary am-btn-lg am-fl">登 录</button>
       </div>
     </form>
     <hr>
@@ -49,4 +53,53 @@
   </div>
 </div>
 </body>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/amazeui.min.js"></script>
+<script>
+    $("#login").on("click",function () {
+        $("#tip").addClass("student");
+        $("#tip").css(
+            {left: ($(window).width() - $('#tip').outerWidth())/2,
+                top: ($(window).height() - $('#tip').outerHeight())/2 + $(document).scrollTop() }
+        )
+        var account = $("#studentId").val();
+        var password = $("#idCard").val();
+        var openId = $("#openId").val();
+
+        if(account != ""){
+            if(password != ""){
+                $.ajax({
+                    url:"/parent/login",
+                    type:"post",
+                    async:true,
+                    contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+                    data:{
+                        account:account,
+                        password:password,
+                        openId:openId
+                    },
+                    success: function (data,stauts,result) {
+                        console.log(data)
+//                    var res = JSON.parse(data);
+//                    console.log(res)
+                        if(data.status == 0){
+                            window.location.href = "/"
+                        }else{
+                            $("#tip").text("用户名或密码有误");
+                            $("#tip").fadeIn(1500).fadeOut(3000);
+                        }
+                    }
+                });
+            }else{
+                $("#tip").text("身份证号不能为空");
+                $("#tip").fadeIn(1500).fadeOut(3000);
+                $("#password").focus();
+            }
+        }else{
+            $("#tip").text("学号不能为空");
+            $("#tip").fadeIn(1500).fadeOut(3000);
+            $("#studentId").focus();
+        }
+    })
+</script>
 </html>

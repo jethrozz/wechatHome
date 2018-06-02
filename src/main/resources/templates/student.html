@@ -37,8 +37,8 @@
 </head>
 <body>
 
-    <input type="hidden" id="studentId" name="parentId" value="${student.id}" />
-    <input type="hidden" id="calsses" name="parentId" value="${classes.id}" />
+    <input type="hidden" id="studentId" name="parentId" value="${session.user.id}" />
+    <input type="hidden" id="calssesId" name="calssesId" value="${session.user.claId}" />
 
 <div class="am-tabs" data-am-tabs>
   <ul class="am-avg-sm-4 am-tabs-nav am-nav am-nav-tabs am-topbar am-topbar-fixed-bottom am-text-center" id="stuNav">
@@ -156,9 +156,9 @@
           <div class="am-panel am-panel-default">
             <div class="am-panel-hd">个人信息<a class="am-btn am-btn-success am-radius am-btn-xs am-fr" href="javascript:void(0);" id="changeBtn" >修改</a></div>
             <div class="am-panel-bd">
-              <div class="studentId am-text-lg">学号：2014441678</div>
-              <div class="user-name am-text-lg">姓名：朱鑫城</div>
-              <div class="studentId am-text-lg">性别：男</div>
+              <div class="studentId am-text-lg">学号：${session.user.studentNumber}</div>
+              <div class="user-name am-text-lg">姓名：${session.user.name}</div>
+              <div class="studentId am-text-lg">性别：${session.user.sex}</div>
             </div>
           </div>
         </div>
@@ -168,8 +168,8 @@
           <div class="am-panel am-panel-default">
             <div class="am-panel-hd">班级信息</div>
             <div class="am-panel-bd">
-              <div class="user-name am-text-lg">班级：2014级12班</div>
-              <div class="studentId am-text-lg">班主任：玲珑骰子</div>
+              <div class="user-name am-text-lg">班级：${classes.gradeName}年级${classes.className}班</div>
+              <div class="studentId am-text-lg">班主任：${headMaster.name}</div>
             </div>
           </div>
           <a href="chat.html" class="am-btn am-btn-success am-btn-block">消息</a>

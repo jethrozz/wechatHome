@@ -12,13 +12,6 @@
     <link rel="stylesheet" href="/src/css/treeselect.css" media="all" />
     <script type="text/html" id="barDemo">
       <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
-      <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-      
-      <!-- 这里同样支持 laytpl 语法，如： -->
-      {{#  if(d.auth > 2){ }}
-        <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>
-      {{#  } }}
     </script>
     <style>
         .info-box {
@@ -84,8 +77,10 @@
 <script src="/plugins/layui/layui.js"></script>
 <script>
 //Demo
-layui.use('table', function(){
+layui.use(['table','layer'], function(){
   var table = layui.table;
+  var layer = layui.layer;
+
   //第一个实例
   table.render({
     elem: '#demo'
@@ -102,10 +97,10 @@ layui.use('table', function(){
       }
     ,cols: [[ //表头
       {field: 'id', title: 'ID', width:100,  fixed: 'left',hide:true}
-      ,{field: 'title', title: '标题', width:120}
-      ,{field: 'content', title: '内容', width:180}
-      ,{field: 'teacherName', title: '发布者', width:80 }
-      ,{field: 'createTime', title: '发布时间', width:120 }
+      ,{field: 'title', title: '标题', width:300}
+      ,{field: 'content', title: '内容', width:300}
+      ,{field: 'teacherName', title: '发布者', width:100 }
+      ,{field: 'createTime', title: '发布时间', width:150 }
       ,{fixed: 'right', width:150, align:'center', toolbar: '#barDemo'}
     ]],
     done: function(res, curr, count) {
@@ -125,21 +120,14 @@ table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test�
   var tr = obj.tr; //获得当前行 tr 的DOM对象
  
   if(layEvent === 'detail'){ //查看
-    //do somehing
-  } else if(layEvent === 'del'){ //删除
-    layer.confirm('真的删除行么', function(index){
-      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-      layer.close(index);
-      //向服务端发送删除指令
-    });
-  } else if(layEvent === 'edit'){ //编辑
-    //do something
-    
-    //同步更新缓存对应的值
-    obj.update({
-      username: '123'
-      ,title: 'xxx'
-    });
+    //todo
+      var str = "/index/notice/"+data.id;
+      layer.open({
+          type: 2,
+          content: str //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+          ,area: ['500px', '300px']
+      });
+      console.log(data);
   }
 });
 });

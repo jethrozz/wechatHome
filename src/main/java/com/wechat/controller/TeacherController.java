@@ -8,6 +8,8 @@ import com.wechat.bean.TableResult;
 import com.wechat.bean.TeacherHomeworkResult;
 import com.wechat.common.controller.BaseController;
 import com.wechat.dao.ClassesDao;
+import com.wechat.dao.ExamResultDao;
+import com.wechat.dao.LeaveRecordDao;
 import com.wechat.dao.NoticeBulletinDao;
 import com.wechat.entity.*;
 import com.wechat.mapper.ClassesMapper;
@@ -21,6 +23,7 @@ import com.wechat.util.OfficeUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,6 +53,7 @@ public class TeacherController extends BaseController {
     StudentService studentService;
     @Autowired
     TeacherService teacherService;
+
 
     @PostMapping("/userLogin")
     public CommonResult<Object> teacherLogin(HttpServletRequest request,Teacher teacher){
@@ -182,24 +186,16 @@ public class TeacherController extends BaseController {
     }
     //根据教师id获取所有作业
     @RequestMapping("/getHomeworkByTid")
-    public CommonResult<List<TeacherHomeworkResult>> getHomeworkByTid(HttpServletRequest request,int tid){
+    public TableResult<Object> getHomeworkByTid(HttpServletRequest request,@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int limit){
         Teacher teacher = (Teacher)request.getSession().getAttribute("user");
-        List<TeacherHomeworkResult> resultList = new ArrayList<>();
-        Homework homework = new Homework();
-        EntityWrapper<Homework> ew = new EntityWrapper<>();
-        ew.where("tea_id = {0}",teacher.getId());
-        List<Homework> list = homework.selectList(ew);
+        TableResult<Object> result = new TableResult<>();
+        Page<Map<String,Object>> mapList = teacherService.getHomework(teacher.getId(),page,limit);
 
-        for(Homework work:list){
-            TeacherHomeworkResult t = new TeacherHomeworkResult();
-            t.setHomework(work);
-            Classes c = new Classes();
-            c = c.selectById(work.getClaId());
-            t.setClasses(c);
-            resultList.add(t);
-        }
+        result.setCount((int)mapList.getTotal());
+        result.setData(mapList);
+        result.setCode(0);
 
-        return new CommonResult(0,resultList);
+        return result;
     }
 
     //发布通知接口
@@ -214,6 +210,8 @@ public class TeacherController extends BaseController {
 
         return new CommonResult(0,successMessage);
     }
+
+    //发布作业时需要的班级列表
     @RequestMapping("/getMyclassList")
     public CommonResult<Object> getMyclassList(HttpServletRequest request){
         Teacher teacher = (Teacher)request.getSession().getAttribute("user");
@@ -226,6 +224,8 @@ public class TeacherController extends BaseController {
         }
         return new CommonResult(successcode,classesList);
     }
+
+    //获取所有通知
     @RequestMapping("/getAllNotice")
     public TableResult<Object> getAllNotice(HttpServletRequest request, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int limit){
         TableResult<Object> result = new TableResult<>();
@@ -235,7 +235,7 @@ public class TeacherController extends BaseController {
         NoticeBulletin notice = new NoticeBulletin();
         List<NoticeBulletin> list = notice.selectAll();
         result.setCount(list.size());
-        result.setDate(mapPage);
+        result.setData(mapPage);
         return result;
     }
     //根据日期范围查询通知
@@ -245,6 +245,39 @@ public class TeacherController extends BaseController {
         return new CommonResult<>(successcode,result);
     }
 
+    //上传单个学生成绩
+    @RequestMapping("/addExamResult")
+    public CommonResult<Object> addExamResult(HttpServletRequest request,ExamResult examResult){
+        if(examResult.insert()){
+            return new CommonResult<>(successcode,successMessage);
+        }else{
+            return new CommonResult<>(errorcode,errorMessage);
+        }
+    }
 
+    //教师端获取请假记录
+    @RequestMapping("/getLeaveRecord")
+    public TableResult<Object> getLeaveRecord(HttpServletRequest request,@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int limit){
+        Teacher teacher = (Teacher)request.getSession().getAttribute("user");
+        TableResult<Object> result = new TableResult<>();
+        Page<Map<String,Object>> mapList = teacherService.getLeaverRecord(teacher.getId(),page,limit);
+        result.setCode(0);
+        result.setCount((int)mapList.getTotal());
+        result.setData(mapList);
+        return result;
+    }
+    //所有成绩
+    @RequestMapping("/getExamResult")
+    public TableResult<Object> getExamResult(HttpServletRequest request,@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int limit){
+        Teacher teacher = (Teacher)request.getSession().getAttribute("user");
+        TableResult<Object> result = new TableResult<>();
+        Page<Map<String,Object>> mapList = teacherService.getExamResult(teacher.getId(),page,limit);
+
+        result.setCount((int)mapList.getTotal());
+        result.setData(mapList);
+        result.setCode(0);
+
+        return result;
+    }
 
 }

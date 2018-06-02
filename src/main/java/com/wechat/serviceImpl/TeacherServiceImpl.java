@@ -2,9 +2,7 @@ package com.wechat.serviceImpl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.wechat.dao.ClassesDao;
-import com.wechat.dao.NoticeBulletinDao;
-import com.wechat.dao.TeacherDao;
+import com.wechat.dao.*;
 import com.wechat.entity.*;
 import com.wechat.mapper.TeacherMapper;
 import com.wechat.service.TeacherService;
@@ -28,6 +26,14 @@ public class TeacherServiceImpl implements TeacherService {
 	NoticeBulletinDao noticeDao;
 	@Autowired
 	ClassesDao classesDao;
+
+	@Autowired
+	ExamResultDao examResultDao;
+	@Autowired
+	LeaveRecordDao leaveRecordDao;
+	@Autowired
+	HomeworkDao homeworkDao;
+
 	@Override
 	public List<Student> getStudentByCid(Integer cid) {
 		return null;
@@ -57,14 +63,39 @@ public class TeacherServiceImpl implements TeacherService {
 
 
 	@Override
-	public Map<String, Object> CheckLoginTeacher(String teacherId, String password) {
-		Map<String, Object> teacher = teacherDao.selectByPrimaryteacherId(teacherId);
+	public Teacher CheckLoginTeacher(String teacherId, String password) {
+		Teacher teacher = teacherDao.selectByPrimaryteacherId(teacherId);
 		if (teacher != null){
-			if (teacher.get("password").equals(password)){
+			if (teacher.getPassword().equals(password)){
 				return teacher;
 			}
 			return null;
 		}
 		return null;
+	}
+
+	@Override
+	public Page<Map<String, Object>> getExamResult(int teaId, int pageNo, int pageSize) {
+		Page<Map<String, Object>> page =  PageHelper.startPage(pageNo,pageSize);
+		Page<Map<String, Object>> result = examResultDao.getTeacherClassExamResult(teaId);
+		result.setTotal(page.getTotal());
+		return result;
+	}
+
+	@Override
+	public Page<Map<String, Object>> getLeaverRecord(int teaId, int pageNo, int pageSize) {
+		Page<Map<String, Object>> page =  PageHelper.startPage(pageNo,pageSize);
+
+		Page<Map<String, Object>> result = leaveRecordDao.getTeacherLeaveList(teaId);
+		result.setTotal(page.getTotal());
+		return result;
+	}
+
+	@Override
+	public Page<Map<String, Object>> getHomework(int teaId, int pageNo, int pageSize) {
+		Page<Map<String, Object>> page =  PageHelper.startPage(pageNo,pageSize);
+		Page<Map<String, Object>> result = homeworkDao.getHomeworkTeacher(teaId);
+		result.setTotal(page.getTotal());
+		return result;
 	}
 }

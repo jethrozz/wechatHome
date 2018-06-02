@@ -72,6 +72,41 @@
     id, stu_id, term, subject, score, create_time, update_time
   </sql>
 
+  <!--自定义sql getTeacherClassExamResult-->
+  <select id="getTeacherClassExamResult" resultType="java.util.Map">
+      SELECT exam_result.id as id, student.name as studentName ,concat_ws('-',classes.grade_name,classes.class_name) as className,
+( CASE subject
+	WHEN 1 THEN
+		"语文"
+	WHEN 2 THEN
+		"数学"
+	WHEN 3 THEN
+		"英语"
+	WHEN 4 THEN
+		"政治"
+	WHEN 5 THEN
+		"历史"
+	WHEN 6 THEN
+		"地理"
+	WHEN 7 THEN
+		"化学"
+	WHEN 8 THEN
+		"物理"
+	WHEN 9 THEN
+		"生物"
+END) as
+subject, score, DATE_FORMAT(exam_result.create_time,'%Y-%m-%d %H:%i:%S') AS createTime, ( CASE exam_result.term
+	WHEN 1 THEN
+		"第一学期"
+	WHEN 2 THEN
+		"第二学期"
+END) as term
+FROM  exam_result inner join student inner join classes inner join teacher_class on exam_result.stu_id = student.id and student.cla_id = classes.id and teacher_class.cla_id = classes.id
+where teacher_class.tea_id = #{teaId}
+ORDER BY exam_result.create_time desc
+  </select>
+
+
   <!-- 自定义sql selectByStuId-->
   <select id="selectByStuId" resultType="java.util.Map" parameterType="java.lang.Integer" >
       SELECT id, stu_id, term,

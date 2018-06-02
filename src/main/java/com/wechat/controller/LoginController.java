@@ -7,6 +7,7 @@ import com.wechat.common.constat.tips.ErrorTip;
 import com.wechat.common.controller.BaseController;
 import com.wechat.entity.Parent;
 import com.wechat.entity.Student;
+import com.wechat.entity.StudentParent;
 import com.wechat.entity.Teacher;
 import com.wechat.exception.BizExceptionEnum;
 import com.wechat.exception.BussinessException;
@@ -51,24 +52,19 @@ public class LoginController  extends BaseController{
     public CommonResult<?> login(HttpServletRequest request, @PathVariable("identity") String identity,
                                  @RequestParam("account") String account,
                                  @RequestParam("password") String password, @RequestParam("openId")String openId) throws IllegalAccessException, ClassNotFoundException {
-        Map<String,?> responseBody = new HashMap<String,Object>();
         if (identity.equals("teacher")){
-            Teacher teacher = new Teacher();
-            teacher.setTeacherId(account);
-            teacher.setPassword(password);
-            responseBody = teacherService.CheckLoginTeacher(teacher.getTeacherId(),teacher.getPassword());
+            Teacher teacher = teacherService.CheckLoginTeacher(account,password);
+            if(teacher != null){
+                saveUserTosession(request,teacher);
+                return new CommonResult<Object>(0, teacher);
+            }
 
-            saveUserTosession(request,responseBody);
-            return new CommonResult<Object>(0, responseBody);
         }else if (identity.equals("student")){
-            Student student = new Student();
-            student.setStudentNumber(account);
-            student.setPassword(password);
-            responseBody = studentService.CheckLoginStudent(student.getStudentNumber(),student.getPassword());
+            Student student = studentService.CheckLoginStudent(account,password);
 
-            if(responseBody instanceof Student){
+            if(student != null){
                 StudentLoginResult result = new StudentLoginResult();
-                Student user = (Student) responseBody;
+                Student user = student;
                 //判断他的openId是否为空，如果为空就将该openId更新到他的记录中去
                 if(StringUtils.isEmpty(user.getOpenId())){
                     user.setOpenId(openId);
@@ -77,17 +73,14 @@ public class LoginController  extends BaseController{
                 //封装返回结果
                 result.setStudent(user);
                 //将用户存储到session中
-                saveUserTosession(request,responseBody);
+                saveUserTosession(request,student);
                 return new CommonResult<Object>(0, result);
             }
 
         }else if (identity.equals("parent")){
-            Student student = new Student();
-            student.setStudentNumber(account);
-            student.setIdentityNumber(password);
-            responseBody = studentService.CheckLoginParent(student.getStudentNumber(),student.getIdentityNumber());
+            Student student = studentService.CheckLoginParent(account,password);
 
-            if(responseBody instanceof Student){
+            if(student != null){
                 //因为openId是唯一的，所以在家长用户登录之后，
                 // 会去判断该家长用户以前是否认证过，如果认证过就直接登录，
                 // 没有认证，就先将该家长写入之后
@@ -97,12 +90,17 @@ public class LoginController  extends BaseController{
                     parent.setOpenid(openId);
                     parent.setName(student.getName()+"的家长");
                     parent = parentService.addParent(parent);
+                    //为家长和学生建立关系
+                    StudentParent studentParent = new StudentParent();
+                    studentParent.setParId(parent.getId());
+                    studentParent.setStuId(student.getId());
+                    studentParent.insert();
                 }
 
                 ParentLoginResult result = new ParentLoginResult();
 
                 result.setParent(parent);
-                result.setStudent((Student) responseBody);
+                result.setStudent(student);
                 //将用户存储到session中
                 saveUserTosession(request,parent);
                 return new CommonResult<Object>(0, result);

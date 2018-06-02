@@ -9,7 +9,15 @@ public class TableResult<T> {
 	private int code;
 	private String msg;
 	private int count;
-	private T date;
+	private T data;
+
+	public T getData() {
+		return data;
+	}
+
+	public void setData(T data) {
+		this.data = data;
+	}
 
 	public int getCode() {
 		return code;
@@ -35,11 +43,4 @@ public class TableResult<T> {
 		this.count = count;
 	}
 
-	public T getDate() {
-		return date;
-	}
-
-	public void setDate(T date) {
-		this.date = date;
-	}
 }

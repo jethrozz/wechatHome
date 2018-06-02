@@ -77,13 +77,13 @@
   </sql>
 
   <!--自定义语句-->
-  <select id="selectByPrimaryStudentNumber" resultType="java.util.Map" parameterType="java.lang.String" >
+  <select id="selectByPrimaryStudentNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     from student
     where student_number = #{student_number,jdbcType=VARCHAR}
   </select>
-  <select id="selectByStudentClassId" resultType="java.util.Map" parameterType="java.lang.Integer">
+  <select id="selectByStudentClassId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select
     <include refid="Base_Column_List" />
     from student

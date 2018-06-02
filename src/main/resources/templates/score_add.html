@@ -73,7 +73,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">选择学生</label>
         <div class="layui-input-block layui-input-treeselect">
-            <input type="text" name="t1" id="stuSelect" required lay-verify="required" autocomplete="off" class="layui-input">
+            <input type="text" name="studentId" id="stuSelect" required lay-verify="required" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -118,38 +118,24 @@
 <script>
 //Demo
 layui.config({
-        base: './src/js/' //自定义组件的目录--相对路径
-    }).use(['form', 'treeselect'], function() {
+        base: '/src/js/' //自定义组件的目录--相对路径
+    }).use(['form', 'treeselect','jquery'], function() {
         var form = layui.form,
-        treeselect = layui.treeselect;
+        treeselect = layui.treeselect
+        ,$ = layui.jquery;
         //通过调用render方法进行渲染 [render支持链式调用]
+
+    $.get("/class/allClass",function (data) {
         treeselect.render({ //渲染第一个
             elem:'#stuSelect', //这个设置必要为id属性且必须加上#号
-            data:[{
-                id:1,
-                name:'父节点一'
-            },{
-                id:2,
-                name:'父节点二',
-                open:true, //是否默认打开
-                isParent:true, //是否为父节点
-                children:[{
-                    id:3,
-                    name:'子节点一'
-                },{
-                    id:4,
-                    name:'子节点二',
-                    isParent:true,
-                    children:[{
-                        id:5,
-                        name:'子节点2.1'
-                    }]
-                }]
-            }]
+            data:data
         });
+
+    })
         // 监听表单提交
         form.on('submit(formDemo)', function(data) {
-            console.log(data);
+            console.log(data.field);
+
             return false; //返回false阻止提交
         });
     });

@@ -23,3 +23,31 @@ function showHomework(e){
 	$("#homework-content").text(homework.attr("alt"));
 	$modal.modal();
 }
+
+$("#leave_btn").click(function(){
+	var startTime = $("#startTime").val();
+	var endTime = $("endTime").val();
+	var type = $("#leave_type").val();
+	var reson = $("#reason").val();
+
+
+    $.ajax({
+        url:"/parent/leave_record",
+        type:"post",
+        async:true,
+        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+        data:{
+            reason:reson,
+            type:type,
+            startTime:startTime,
+            endTime:endTime
+        },
+        success: function (data,stauts,result) {
+            console.log(data);
+            if(data.status == 0){
+                
+            }
+        }
+    });
+
+});

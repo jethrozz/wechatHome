@@ -2,10 +2,7 @@ package com.wechat.controller;
 
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.sun.xml.internal.bind.v2.TODO;
-import com.wechat.entity.NoticeBulletin;
-import com.wechat.entity.Parent;
-import com.wechat.entity.Student;
-import com.wechat.entity.Teacher;
+import com.wechat.entity.*;
 import com.wechat.util.HttpUtil;
 import com.wechat.util.WechatUtil;
 import org.json.JSONException;
@@ -21,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Created by zxc on 2018/5/30.
@@ -44,17 +42,18 @@ public class MainControlloer {
 		Student student = new Student();
 		String openId = WechatUtil.getOpenid(authUrlCode,appId,appSecret,code);
 		student = student.selectOne("openId = {0}",openId);
+
 		if(student == null){
 			modelAndView.setViewName("user_login");
 		}else{
 			request.getSession().setAttribute("user",student);
-			modelAndView.setViewName("mStudent");
+			modelAndView.setViewName("/student/index");
 		}
 		modelAndView.addObject("openId",openId);
 
-
 		return modelAndView;
 	}
+
 
 	@RequestMapping("/parent")
 	public ModelAndView parent(HttpServletRequest request, HttpServletResponse response,@RequestParam("code") String code){
@@ -63,11 +62,12 @@ public class MainControlloer {
 
 		String openId = WechatUtil.getOpenid(authUrlCode,appId,appSecret,code);
 		parent = parent.selectOne("openId = {0}",openId);
+
 		if(parent == null){
 			modelAndView.setViewName("parent_login");
 		}else{
 			request.getSession().setAttribute("user",parent);
-			modelAndView.setViewName("mParent");
+			modelAndView.setViewName("/parent/index");
 		}
 
 		modelAndView.addObject("openId",openId);

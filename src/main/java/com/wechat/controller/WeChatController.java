@@ -28,8 +28,7 @@ public class WeChatController {
 	private String appId;
 	@Value("${wechat.appsecret}")
 	private String appSecret;
-	@Value("${wechat.authUrl}")
-	private String authUrl;
+
 
 
 
@@ -74,6 +73,7 @@ public class WeChatController {
 	@RequestMapping("/auth")
 	public ModelAndView auth2_0(HttpServletRequest request , HttpServletResponse response, int type){
 		ModelAndView modelAndView = new ModelAndView();
+		String authUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_base#wechat_redirect";
 		String url = "redirect:";
 		authUrl = authUrl.replace("APPID",appId);
 		if(type == 0){

@@ -6,10 +6,7 @@ import com.wechat.dao.ExamResultDao;
 import com.wechat.dao.HomeworkDao;
 import com.wechat.dao.StudentDao;
 import com.wechat.dao.TeacherDao;
-import com.wechat.entity.ExamResult;
-import com.wechat.entity.Homework;
-import com.wechat.entity.Student;
-import com.wechat.entity.Teacher;
+import com.wechat.entity.*;
 import com.wechat.exception.BizExceptionEnum;
 import com.wechat.exception.BussinessException;
 import com.wechat.mapper.HomeworkMapper;
@@ -24,7 +21,9 @@ import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Wrapper;
 import java.util.Date;
 import java.util.List;
@@ -129,12 +128,22 @@ public class StudentController extends BaseController{
         return  new CommonResult(successcode,list);
     }
 
-    @RequestMapping("/test")
+    @RequestMapping("/index")
     @ResponseBody
-    public String test(){
-        //EntityWrapper<Teacher> ew = new EntityWrapper<>();
-        //ew.where("",).and("","").or("",)
-        return studentDao.selectByPrimaryKey(1).getName();
+    public ModelAndView index(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("/student");
+        Student student = (Student)request.getSession().getAttribute("user");
+        Classes classes = new Classes();
+        classes = classes.selectById(student.getClaId());
+        //添加班级信息
+        modelAndView.addObject("classes",student);
+        Teacher headMaster = new Teacher();
+        headMaster = headMaster.selectById(classes.getTeacher());
+        //添加班主任信息
+        modelAndView.addObject("headMaster",headMaster);
+
+
+        return modelAndView;
     }
 
 

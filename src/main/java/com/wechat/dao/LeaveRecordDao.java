@@ -1,8 +1,11 @@
 package com.wechat.dao;
 
 
+import com.github.pagehelper.Page;
 import com.wechat.entity.LeaveRecordExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface LeaveRecordDao {
@@ -12,5 +15,6 @@ public interface LeaveRecordDao {
 
     int deleteByPrimaryKey(Integer id);
 
+    Page<Map<String,Object>> getTeacherLeaveList(@Param("teaId")int teaId);
 
 }

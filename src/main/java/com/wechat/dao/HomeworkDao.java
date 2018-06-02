@@ -1,5 +1,6 @@
 package com.wechat.dao;
 
+import com.github.pagehelper.Page;
 import com.wechat.entity.Homework;
 import com.wechat.entity.HomeworkExample;
 
@@ -39,5 +40,5 @@ public interface HomeworkDao {
     int updateByPrimaryKey(Homework record);
 
     List<Map<String,Object>> getNowDateHomeworkByClassId(@Param("classId") Integer classId);
-
+    Page<Map<String,Object>> getHomeworkTeacher(@Param("teaId")int teaId);
 }

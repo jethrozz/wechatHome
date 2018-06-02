@@ -95,12 +95,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Map<String, Object> CheckLoginStudent(String studentNumber, String password) throws IllegalAccessException {
+    public Student CheckLoginStudent(String studentNumber, String password){
 
-        Map<String, Object> map = studentDao.selectByPrimaryStudentNumber(studentNumber);
-        if (map != null){
-            if (map.get("password").equals(password)){
-                return map;
+        Student student = studentDao.selectByPrimaryStudentNumber(studentNumber);
+        if (student != null){
+            if (password.equals(student.getPassword())){
+                return  student;
             }
             return null;
         }
@@ -108,12 +108,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Map<String, Object> CheckLoginParent(String studentNumber, String identityNumber) {
+    public Student CheckLoginParent(String studentNumber, String identityNumber) {
 
-        Map<String, Object> map = studentDao.selectByPrimaryStudentNumber(studentNumber);
-        if (map != null){
-            if (map.get("identity_number").equals(identityNumber)){
-                return map;
+        Student student = studentDao.selectByPrimaryStudentNumber(studentNumber);
+        if (student != null){
+            if (student.getIdentityNumber().equals(identityNumber)){
+                return student;
             }
             return null;
         }

@@ -77,7 +77,33 @@
   <sql id="Blob_Column_List" >
     content
   </sql>
-
+<select id="getHomeworkTeacher" resultType="java.util.Map">
+        SELECT homework.id as id, homework.title as title ,concat_ws('-',classes.grade_name,classes.class_name) as className,
+( CASE teacher.subject
+	WHEN 1 THEN
+		"语文"
+	WHEN 2 THEN
+		"数学"
+	WHEN 3 THEN
+		"英语"
+	WHEN 4 THEN
+		"政治"
+	WHEN 5 THEN
+		"历史"
+	WHEN 6 THEN
+		"地理"
+	WHEN 7 THEN
+		"化学"
+	WHEN 8 THEN
+		"物理"
+	WHEN 9 THEN
+		"生物"
+END) as
+subject, DATE_FORMAT(homework.h_create_time,'%Y-%m-%d') AS createTime, date_format(homework.finsh_time,'%Y-%m-%d') as finishTime ,teacher.name as teahcerName
+FROM  homework inner join teacher inner join classes inner join teacher_class on homework.tea_id = teacher.id and classes.id = teacher_class.cla_id
+where teacher_class.tea_id = #{teaId}
+ORDER BY homework.h_create_time desc
+</select>
   <!-- 自定义sql  -->
   <select id="getNowDateHomeworkByClassId" resultType="java.util.Map" >
     SELECT id, title, DATE_FORMAT(finsh_time,   '%Y-%m-%d %H:%i:%S') AS finshTime,

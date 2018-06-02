@@ -5,8 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="">
   <meta name="keywords" content="">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
+  <meta name="viewport"        content="width=device-width, initial-scale=1">
   <title>家长</title>
 
   <!-- Set render engine for 360 browser -->
@@ -15,20 +14,20 @@
   <!-- No Baidu Siteapp-->
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
 
-  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72\@2x.png">
+  <link rel="icon" sizes="192x192" href="/assets/i/app-icon72x72\@2x.png">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
-  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72\@2x.png">
+  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72\@2x.png">
 
   <!-- Tile icon for Win8 (144x144 + tile color) -->
-  <meta name="msapplication-TileImage" content="assets/i/app-icon72x72\@2x.png">
+  <meta name="msapplication-TileImage" content="/assets/i/app-icon72x72\@2x.png">
   <meta name="msapplication-TileColor" content="#0e90d2">
 
   <link rel="stylesheet" href="/assets/css/amazeui.min.css">
@@ -46,17 +45,17 @@
     
   </ul>
 
-  <input type="hidden" id="parentId" name="parentId" value="${parent.id}" />
-  <input type="hidden" id="studentId" name="parentId" value="${student.id}" />
-  <input type="hidden" id="calsses" name="parentId" value="${classes.id}" />
+  <input type="hidden" id="parentId" name="parentId" value="${session.user.id}" />
+  <input type="hidden" id="studentId" name="studentId" value="${student.id}" />
+  <input type="hidden" id="calssesId" name="calssesId" value="${student.claId}" />
 
   <div class="am-tabs-bd" id="stu_content_bd">
     @ include("/parent/homework.html"){};
-    @ include("/parent/notice.html"){};
-    @ include("/parent/parentMe.html"){};
-    @ include("/parent/score.html"){};
-    @ include("/parent/leave.html"){};
-
+     include("/parent/notice.html"){};
+     include("/parent/parentMe.html"){};
+     include("/parent/score.html"){};
+     include("/parent/leave.html"){};
+@}
   </div>
   </div>
 </div>
@@ -109,7 +108,7 @@
         <div class="am-form-group am-form-group-sm">
           <label for="leave_type" class="am-u-sm-3 am-form-label am-text-sm">开始</label>
           <div class="am-input-group am-datepicker-date am-u-sm-9" data-am-datepicker="{format: 'yyyy-MM-dd'}">
-  <input type="text" class="am-form-field" placeholder="请选择开始时间" readonly>
+  <input type="text" id="startTime" class="am-form-field" placeholder="请选择开始时间" readonly>
   <span class="am-input-group-btn am-datepicker-add-on">
     <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
   </span>
@@ -118,7 +117,7 @@
         <div class="am-form-group am-form-group-sm">
           <label for="leave_type" class="am-u-sm-3 am-form-label am-text-sm">结束</label>
                     <div class="am-input-group am-datepicker-date am-u-sm-9" data-am-datepicker="{format: 'yyyy-MM-dd'}">
-  <input type="text" class="am-form-field" placeholder="请选择结束时间" readonly>
+  <input type="text" class="am-form-field" id="endTime" placeholder="请选择结束时间" readonly>
   <span class="am-input-group-btn am-datepicker-add-on">
     <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
   </span>
@@ -140,7 +139,7 @@
           </div>
         </div>
         <div class="am-form-group ">
-            <button type="button" class="am-btn am-center am-btn-primary">提交审核</button>
+            <button type="button" id="leave_btn" class="am-btn am-center am-btn-primary">提交审核</button>
         </div>
       </form>
     </div>

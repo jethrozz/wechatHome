@@ -36,6 +36,7 @@ public class WechatUtil {
 		template.setUrl(url);
 		ArrayList<TemplateParam> list = new ArrayList<TemplateParam>();
 		int index = 1;
+
 		for(String val : value){
 			TemplateParam p = new TemplateParam("keyword"+index,val,"#0000ff");
 			list.add(p);

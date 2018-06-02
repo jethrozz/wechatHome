@@ -1,5 +1,6 @@
 package com.wechat.dao;
 
+import com.github.pagehelper.Page;
 import com.wechat.entity.ExamResult;
 import com.wechat.entity.ExamResultExample;
 import java.util.List;
@@ -37,4 +38,7 @@ public interface ExamResultDao {
                                                        @Param("startTime") String startTime,
                                                        @Param("endTime") String endTime,
                                                        @Param("term") Integer term);
+
+
+    Page<Map<String,Object>> getTeacherClassExamResult(@Param("teaId")int teaId);
 }

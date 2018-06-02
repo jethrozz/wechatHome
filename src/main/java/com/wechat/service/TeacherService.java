@@ -18,6 +18,10 @@ public interface TeacherService {
     Classes getClassByTeacherId(Teacher teacher);
     Page<Map<String,Object>> getNotice(int pageNo,int pageSize);
 
-    Map<String,Object> CheckLoginTeacher(String teacherId, String password);
+    Teacher CheckLoginTeacher(String teacherId, String password);
+
+    Page<Map<String,Object>> getExamResult(int teaId,int pageNo,int pageSize);
+    Page<Map<String,Object>> getLeaverRecord(int teaId,int pageNo,int pageSize);
+    Page<Map<String,Object>> getHomework(int teaId,int pageNo,int pageSize);
 
 }

@@ -30,8 +30,7 @@ public interface StudentService {
 
     MyClass getClassByCid(Student student);
 
+    Student CheckLoginStudent(String studentNumber, String password);
 
-    Map<String,Object> CheckLoginStudent(String studentNumber, String password) throws IllegalAccessException;
-
-    Map<String,Object> CheckLoginParent(String studentNumber, String identityNumber);
+    Student CheckLoginParent(String studentNumber, String identityNumber);
 }

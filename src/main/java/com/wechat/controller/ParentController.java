@@ -48,7 +48,7 @@ public class ParentController extends BaseController{
 			student = student.selectById(list.get(0).getStuId());
 		}
 		modelAndView.addObject("parent",parent);
-		modelAndView.addObject("student",parent);
+		modelAndView.addObject("student",student);
 		Classes classes = new Classes();
 		classes = classes.selectById(student.getClaId());
 		modelAndView.addObject("classes",classes);

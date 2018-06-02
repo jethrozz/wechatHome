@@ -70,6 +70,16 @@
   <sql id="Base_Column_List" >
     id, name, phone_number, create_time, update_time, openid
   </sql>
+  <!-- -->
+
+  <select id="getMyStudentTeacherOpenId" resultType="java.util.Map" parameterType="java.lang.Integer">
+    SELECT teacher.openId,student.`name` FROM student,student_parent,parent,teacher_class,teacher
+    WHERE parent.id = #{id,jdbcType=INTEGER}
+    and parent.id = student_parent.par_id
+    AND student.id= student_parent.stu_id
+    AND student.cla_id = teacher_class.cla_id
+  </select>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wechat.entity.ParentExample" >
     select
     <if test="distinct" >

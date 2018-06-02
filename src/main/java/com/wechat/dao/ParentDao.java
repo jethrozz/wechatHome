@@ -3,6 +3,8 @@ package com.wechat.dao;
 import com.wechat.entity.Parent;
 import com.wechat.entity.ParentExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ParentDao {
@@ -27,4 +29,6 @@ public interface ParentDao {
     int updateByPrimaryKeySelective(Parent record);
 
     int updateByPrimaryKey(Parent record);
+
+    Map<String,Object> getMyStudentTeacherOpenId(@Param("id") Integer id);
 }

@@ -119,6 +119,12 @@ public class ChatController extends BaseController {
 		return  result;
 	}
 
+	/**
+	 *发送消息通知
+	 * @param type
+	 * @param data
+	 * @return
+	 */
 	@RequestMapping("/sendMsg")
 	public CommonResult<Object> sendMsg(String type,String data){
 		LayMessage msg = (LayMessage)JSON.parseObject(data,LayMessage.class);
@@ -146,6 +152,32 @@ public class ChatController extends BaseController {
 		//返回消息结果
 		return new CommonResult<>(successcode,successMessage);
 	}
+
+	/**
+	 *发送审核通知
+	 * @param type
+	 * @param data
+	 * @return
+	 */
+	@RequestMapping("/sendCheckMsg")
+	public CommonResult<Object> sendCheckMsg(Map<String,Object> msg){
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		//封装模板消息需要的数据
+		String []val =  new String[5];
+		val[0] = TemplateId.LEAVE.getValue();
+		val[1] = msg.get("studentName").toString();
+		val[2] = msg.get("reason").toString();
+		val[3] = sdf.format(new Date());
+		val[4] = msg.get("dayNum").toString();
+		Template template = WechatUtil.getTemplate(msg.get("teacherOpenId").toString(),TemplateId.LEAVE.getUrl(),"#ccc","",val);
+		//发送模板消息
+		templateService.sendTemplateMsg(template);
+		//返回消息结果
+		return new CommonResult<>(successcode,successMessage);
+	}
+
+
 
 	//学生以及家长端的聊天群组数据接口
 	@RequestMapping("/studentChatInfo")

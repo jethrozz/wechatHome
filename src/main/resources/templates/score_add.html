@@ -80,13 +80,15 @@
         <label class="layui-form-label">科目</label>
         <div class="layui-input-block">
           <select name="subject" lay-verify="required">
-            <option value="化学">化学</option>
-            <option value="物理">物理</option>
-            <option value="语文">语文</option>
-            <option value="数学">数学</option>
-            <option value="英语">英语</option>
-            <option value="历史">历史</option>
-            <option value="政治">政治</option>
+            <option value="7">化学</option>
+            <option value="8">物理</option>
+            <option value="1">语文</option>
+            <option value="2">数学</option>
+            <option value="3">英语</option>
+            <option value="5">历史</option>
+            <option value="4">政治</option>
+            <option value="6">地理</option>
+            <option value="9">生物</option>
           </select>
         </div>
     </div>
@@ -102,7 +104,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">分数</label>
         <div class="layui-input-inline">
-          <input type="number" name="className" required lay-verify="required" placeholder="如：68分" autocomplete="off" class="layui-input">
+          <input type="number" name="score" required lay-verify="required" placeholder="如：68分" autocomplete="off" class="layui-input">
         </div>
         <div class="layui-form-mid layui-word-aux">分</div>
     </div>
@@ -134,7 +136,27 @@ layui.config({
     })
         // 监听表单提交
         form.on('submit(formDemo)', function(data) {
-            console.log(data.field);
+            var data = data.field;
+            $.ajax({
+                type: "POST",
+                url: "/teacher/addExamResult",
+                contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+                data:{"stuId":data.studentId,"term":data.term,"subject":data.subject,"score":data.score},
+                dataType: "json",
+                success: function(data){
+                    if(data.status===0) {
+                        layer.msg('上传成功！');
+                        setTimeout(function(){
+                            location.href='/lay/score_all';
+                        },500);
+                    } else {
+                        layer.msg('上传失败，请检查！');
+                    }
+                },
+                error: function (e) {
+                    layer.msg(e);
+                }
+            });
 
             return false; //返回false阻止提交
         });

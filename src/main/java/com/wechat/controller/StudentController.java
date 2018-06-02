@@ -14,6 +14,8 @@ import com.wechat.mapper.StudentMapper;
 import com.wechat.mapper.TeacherMapper;
 import com.wechat.model.CommonResult;
 import com.wechat.service.StudentService;
+import com.wechat.util.JSONUtils;
+import io.goeasy.GoEasy;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -44,6 +46,8 @@ public class StudentController extends BaseController{
 
     @Autowired
     private ExamResultDao examResultDao;
+    @Autowired
+    private GoEasy goEasy;
 
     @Autowired
     private HomeworkMapper homeworkMapper;
@@ -70,16 +74,35 @@ public class StudentController extends BaseController{
      * @return
      */
     @GetMapping("/getHomeworkByClassId/{classId}")
-    public CommonResult getHomeworkByClassId(@PathVariable(required = false) Integer classId){
+    public CommonResult getHomeworkByClassId(HttpServletRequest request,@PathVariable(required = false) Integer classId){
+        Student student = (Student) request.getSession().getAttribute("user");
+
         if (classId != null){
             List<Map<String,Object>> homeworks= homeworkDao.getNowDateHomeworkByClassId(classId);
             return new CommonResult(successcode,homeworks);
         }
-        Student student = (Student)request.getSession().getAttribute("user");
         classId = student.getClaId();
         List<Map<String,Object>> homeworks= homeworkDao.getNowDateHomeworkByClassId(classId);
+
+        goEasy.publish("getHomeworkByClassIdStudent", JSONUtils.toJson(new CommonResult(successcode,homeworks,student.getId())));
+
+
         return new CommonResult(successcode,homeworks);
     }
+
+    //根据时间查询作业
+    @GetMapping("/getHomeworkByTime/{classId}")
+    public CommonResult getHomeworkByClassId(HttpServletRequest request,String date,@PathVariable(required = false) Integer classId){
+        Student student = (Student) request.getSession().getAttribute("user");
+        Homework homework = new Homework();
+        List<Homework> homeworks= homework.selectList("cla_id = {0} and date_format(create_time,\"%Y-%m-%d\") = {1}",classId,date);
+
+        goEasy.publish("getHomeworkByTimeStudent", JSONUtils.toJson(new CommonResult(successcode,homeworks,student.getId())));
+
+
+        return new CommonResult(successcode,homeworks);
+    }
+
 
     /**
      * 根据作业id查询作业详情

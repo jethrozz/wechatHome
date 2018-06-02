@@ -37,7 +37,7 @@
 <body>
 <div class="am-tabs" data-am-tabs>
   <ul class="am-avg-sm-5 am-tabs-nav am-nav am-nav-tabs am-topbar am-topbar-fixed-bottom am-text-center am-text-sm" id="stuNav">
-    <li ><a href="#tab1">作业</a></li>
+    <li ><a href="#tab1" onclick="showHomeIndex()">作业</a></li>
     <li><a href="#tab2">通知</a></li>
     <li><a href="#tab3">成绩</a></li>
     <li><a href="#tab5">出勤</a></li>
@@ -145,8 +145,9 @@
     </div>
   </div>
 </div>
+<script src="https://cdn-hangzhou.goeasy.io/goeasy.js​"></script>
 <!--[if (gte IE 9)|!(IE)]><!-->
-<script src="/assets/js/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
 <script src="/assets/layui/layui.js"></script>
 <!--<![endif]-->
 <!--[if lte IE 8 ]>
@@ -156,6 +157,7 @@
 <![endif]-->
 <script src="/assets/js/amazeui.min.js"></script>
 <script type="text/javascript" src="/assets/js/parent.js"></script>
+<script type="text/javascript" src="/assets/js/subscribe.js"></script>
 <script>
   $(function() {
     var startDate = new Date(2014, 11, 20);

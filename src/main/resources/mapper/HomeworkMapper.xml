@@ -78,7 +78,7 @@
     content
   </sql>
 <select id="getHomeworkTeacher" resultType="java.util.Map">
-        SELECT homework.id as id, homework.title as title ,concat_ws('-',classes.grade_name,classes.class_name) as className,
+        SELECT homework.id as id,homework.content as content, homework.title as title ,concat_ws('-',classes.grade_name,classes.class_name) as className,
 ( CASE teacher.subject
 	WHEN 1 THEN
 		"语文"

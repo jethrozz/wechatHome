@@ -10,16 +10,6 @@
     <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css" media="all">
     <link rel="stylesheet" href="/src/css/ztree/metro/ztree.css" media="all" />
     <link rel="stylesheet" href="/src/css/treeselect.css" media="all" />
-    <script type="text/html" id="barDemo">
-      <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
-      <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-      
-      <!-- 这里同样支持 laytpl 语法，如： -->
-      {{#  if(d.auth > 2){ }}
-        <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>
-      {{#  } }}
-    </script>
     <style>
         .info-box {
             height: 85px;
@@ -90,34 +80,22 @@ layui.use('table', function(){
   table.render({
     elem: '#demo'
     ,height: 430
-    ,url: "./data.json" //数据接口
+    ,url: "/teacher/getExamResult" //数据接口
     ,page: true //开启分页
     ,limit:20
     ,cols: [[ //表头
       {field: 'id', title: 'ID', width:100,  fixed: 'left',hide:true}
-      ,{field: 'stuId', title: '学生', width:120}
-      ,{field: 'classId', title: '班级', width:180}
+      ,{field: 'studentName', title: '学生', width:120}
+      ,{field: 'className', title: '班级', width:180}
       ,{field: 'subject', title: '科目', width:80 }
-      ,{field: 'score', title: '分数', width:120 }
+      ,{field: 'score', title: '分数', width:120, edit:'text' }
       ,{field: 'term', title: '学期', width:120 }
-      ,{field: 'startTime', title: '发布时间', width:120 }
-      ,{fixed: 'right', width:150, align:'center', toolbar: '#barDemo'}
+      ,{field: 'createTime', title: '发布时间', width:200 }
     ]],
-    data:  [{
-        "id": 10029,
-        "stuId": "唐钰小宝",
-        "teaId": "阿奴老师",
-        "type": "病假",
-        "startTime": "2017-07-08",
-        "endTime": "2017-07-10",
-        "dayNumber": "2天",
-        "isAgree": "未同意",
-        "reason": "生病了"
-    }]  ,
     done: function(res, curr, count) {
             //如果是异步请求数据方式，res即为你接口返回的信息。
             //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-            // console.log(res);
+            console.log(res);
             // //得到当前页码
             // console.log(curr);
             // //得到数据总量
@@ -125,28 +103,11 @@ layui.use('table', function(){
         },
   });
 //监听工具条
-table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-  var data = obj.data; //获得当前行数据
-  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-  var tr = obj.tr; //获得当前行 tr 的DOM对象
- 
-  if(layEvent === 'detail'){ //查看
-    //do somehing
-  } else if(layEvent === 'del'){ //删除
-    layer.confirm('真的删除行么', function(index){
-      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-      layer.close(index);
-      //向服务端发送删除指令
-    });
-  } else if(layEvent === 'edit'){ //编辑
-    //do something
-    
-    //同步更新缓存对应的值
-    obj.update({
-      username: '123'
-      ,title: 'xxx'
-    });
-  }
+table.on('edit(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+    var value = obj.value //得到修改后的值
+    ,data = obj.data //得到所在行所有键值
+    ,field = obj.field; //得到字段
+    layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
 });
 });
 

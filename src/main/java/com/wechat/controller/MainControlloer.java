@@ -3,11 +3,14 @@ package com.wechat.controller;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.sun.xml.internal.bind.v2.TODO;
 import com.wechat.entity.NoticeBulletin;
+import com.wechat.entity.Parent;
+import com.wechat.entity.Student;
 import com.wechat.entity.Teacher;
 import com.wechat.util.HttpUtil;
 import com.wechat.util.WechatUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
@@ -35,20 +38,39 @@ public class MainControlloer {
 	@Value("${wechat.authUrlCode}")
 	private String authUrlCode;
 
-
 	@RequestMapping("/student")
 	public ModelAndView student(HttpServletRequest request, HttpServletResponse response,@RequestParam("code") String code){
-		ModelAndView modelAndView = new ModelAndView("user_login");
+		ModelAndView modelAndView = new ModelAndView();
+		Student student = new Student();
+		String openId = WechatUtil.getOpenid(authUrlCode,appId,appSecret,code);
+		student = student.selectOne("openId = {0}",openId);
+		if(student == null){
+			modelAndView.setViewName("user_login");
+		}else{
+			request.getSession().setAttribute("user",student);
+			modelAndView.setViewName("mStudent");
+		}
+		modelAndView.addObject("openId",openId);
 
-		modelAndView.addObject("openId", WechatUtil.getOpenid(authUrlCode,appId,appSecret,code));
 
 		return modelAndView;
 	}
 
 	@RequestMapping("/parent")
 	public ModelAndView parent(HttpServletRequest request, HttpServletResponse response,@RequestParam("code") String code){
-		ModelAndView modelAndView = new ModelAndView("parent_login");
-		modelAndView.addObject("openId",WechatUtil.getOpenid(authUrlCode,appId,appSecret,code));
+		ModelAndView modelAndView = new ModelAndView();
+		Parent parent = new Parent();
+
+		String openId = WechatUtil.getOpenid(authUrlCode,appId,appSecret,code);
+		parent = parent.selectOne("openId = {0}",openId);
+		if(parent == null){
+			modelAndView.setViewName("parent_login");
+		}else{
+			request.getSession().setAttribute("user",parent);
+			modelAndView.setViewName("mParent");
+		}
+
+		modelAndView.addObject("openId",openId);
 		return modelAndView;
 	}
 

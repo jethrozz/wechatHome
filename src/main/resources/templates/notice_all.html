@@ -90,37 +90,33 @@ layui.use('table', function(){
   table.render({
     elem: '#demo'
     ,height: 430
-    ,url: "./data.json" //数据接口
-    ,page: true //开启分页
+    ,url: "/teacher/getAllNotice" //数据接口
     ,limit:20
+      ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+          layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+          //,curr: 5 //设定初始在第 5 页
+          ,groups: 1 //只显示 1 个连续页码
+          ,first: false //不显示首页
+          ,last: false //不显示尾页
+
+      }
     ,cols: [[ //表头
       {field: 'id', title: 'ID', width:100,  fixed: 'left',hide:true}
       ,{field: 'title', title: '标题', width:120}
       ,{field: 'content', title: '内容', width:180}
-      ,{field: 'teaId', title: '发布者', width:80 }
-      ,{field: 'startTime', title: '发布时间', width:120 }
+      ,{field: 'teacherName', title: '发布者', width:80 }
+      ,{field: 'createTime', title: '发布时间', width:120 }
       ,{fixed: 'right', width:150, align:'center', toolbar: '#barDemo'}
     ]],
-    data:  [{
-        "id": 10029,
-        "stuId": "唐钰小宝",
-        "teaId": "阿奴老师",
-        "type": "病假",
-        "startTime": "2017-07-08",
-        "endTime": "2017-07-10",
-        "dayNumber": "2天",
-        "isAgree": "未同意",
-        "reason": "生病了"
-    }]  ,
     done: function(res, curr, count) {
             //如果是异步请求数据方式，res即为你接口返回的信息。
             //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-            // console.log(res);
+             console.log(res);
             // //得到当前页码
             // console.log(curr);
             // //得到数据总量
             // console.log(count);
-        },
+    },
   });
 //监听工具条
 table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"

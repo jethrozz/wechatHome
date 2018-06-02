@@ -2,8 +2,7 @@ package com.wechat.controller;
 
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.wechat.bean.AccessToken;
+import com.github.pagehelper.Page;
 import com.wechat.bean.MyClass;
 import com.wechat.bean.TableResult;
 import com.wechat.bean.TeacherHomeworkResult;
@@ -169,7 +168,7 @@ public class TeacherController extends BaseController {
     }
     //发布作业接口
     @RequestMapping("/addHomework")
-    public CommonResult<String> addHomework(HttpServletRequest request,int claId,String title,String content,String finshTime,int tid){
+    public CommonResult<String> addHomework(HttpServletRequest request,int claId,String title,String content,String finshTime){
         Teacher teacher = (Teacher)request.getSession().getAttribute("user");
         Homework homework = new Homework();
         homework.setClaId(claId);
@@ -215,20 +214,34 @@ public class TeacherController extends BaseController {
 
         return new CommonResult(0,successMessage);
     }
-
+    @RequestMapping("/getMyclassList")
+    public CommonResult<Object> getMyclassList(HttpServletRequest request){
+        Teacher teacher = (Teacher)request.getSession().getAttribute("user");
+        TeacherClass teacherClass = new TeacherClass();
+        List<Classes> classesList = new ArrayList<>();
+        Classes classes = new Classes();
+        List<TeacherClass> list = teacherClass.selectList("tea_id = {0}",teacher.getId());
+        for(TeacherClass tc : list){
+            classesList.add(classes.selectById(tc.getClaId()));
+        }
+        return new CommonResult(successcode,classesList);
+    }
     @RequestMapping("/getAllNotice")
-    public TableResult<Object> getAllNotice(HttpServletRequest request, @RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "20") int pageSize){
+    public TableResult<Object> getAllNotice(HttpServletRequest request, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int limit){
         TableResult<Object> result = new TableResult<>();
         result.setCode(0);
         result.setMsg("操作成功");
-        result.setDate(teacherService.getNotice(pageNo,pageSize));
+        Page<Map<String,Object>> mapPage = teacherService.getNotice(page,limit);
+        NoticeBulletin notice = new NoticeBulletin();
+        List<NoticeBulletin> list = notice.selectAll();
+        result.setCount(list.size());
+        result.setDate(mapPage);
         return result;
     }
     //根据日期范围查询通知
     @RequestMapping("/getNoticeByTime")
     public CommonResult<Object> getNoticeByTime(HttpServletRequest request,String startTime,String endTime){
         List<Map<String,Object>> result = noticeDao.getAllNoticeByTime(startTime,endTime);
-
         return new CommonResult<>(successcode,result);
     }
 

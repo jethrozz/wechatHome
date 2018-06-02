@@ -1,0 +1,33 @@
+<!--个人页-->
+<div class="am-tab-panel am-fade am-active am-in" id="tab4">
+    <div class="am-g">
+        <div class="am-u-sm-12">
+            <!-- 个人资料 -->
+            <h3>${}</h3>>
+            <!-- 姓名，性别，学号 -->
+            <div class="am-panel am-panel-default ">
+                <div class="am-panel-hd">学生信息</div>
+                <div class="am-panel-bd ">
+                    <div class="studentId am-text-sm">学号：${student.studentNumber}</div>
+                    <div class="user-name am-text-sm">姓名：${student.name}</div>
+                    <div class="studentId am-text-sm">性别：${student.sex}</div>
+                </div>
+            </div>
+        </div>
+        <div class="am-u-sm-12">
+            <!-- 班级信息 -->
+            <!-- 班级，班主任 -->
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd">班级信息<a class="am-btn am-btn-primary am-radius am-btn-xs am-fr" href="javascript:void(0);" id="classInfoBtn" >详细</a></div>
+                <div class="am-panel-bd">
+                    <div class="user-name am-text-sm">班级：${classes.grade_name}年级${classes.class_name}班</div>
+                    <div class="studentId am-text-sm">班主任：${headMaster.name}</div>
+                </div>
+            </div>
+            <a href="/lay/chat" class="am-btn am-btn-primary am-btn-block">消息</a>
+            <button type="button" class="am-btn am-btn-primary am-btn-block" id="leaveBtn">请假</button>
+        </div>
+
+    </div>
+</div>
+    

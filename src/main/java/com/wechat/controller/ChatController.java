@@ -121,18 +121,7 @@ public class ChatController extends BaseController {
 
 	@RequestMapping("/sendMsg")
 	public CommonResult<Object> sendMsg(String type,String data){
-		JSONObject jsonObject = null;
-
-		try {
-			jsonObject = new JSONObject(data);
-		}catch (JSONException e){
-
-		}
-		if(jsonObject == null){
-			return new CommonResult<>(errorcode,errorMessage);
-		}
 		LayMessage msg = (LayMessage)JSON.parseObject(data,LayMessage.class);
-
 
 		ChatRecord chatRecord = new ChatRecord();
 		//chatrecord 使用双方的openId作为记录值
@@ -200,5 +189,9 @@ public class ChatController extends BaseController {
 
 		return result;
 	}
+
+
+
+
 
 }

@@ -77,37 +77,21 @@
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">作业内容</label>
     <div class="layui-input-block">
-      <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+      <textarea name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
     </div>
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">年级</label>
     <div class="layui-input-inline">
-      <select name="gradeName" lay-verify="required">
-        <option value="一年级">一年级</option>
-        <option value="二年级">二年级</option>
-        <option value="三年级">三年级</option>
-        <option value="四年级">四年级</option>
-        <option value="五年级">五年级</option>
-        <option value="六年级">六年级</option>
-      </select>
-    </div>
-        <label class="layui-form-label">班级</label>
-    <div class="layui-input-inline">
-      <select name="className" lay-verify="required">
-        <option value="1">1班</option>
-        <option value="2">2班</option>
-        <option value="3">3班</option>
-        <option value="4">4班</option>
-        <option value="5">5班</option>
-        <option value="6">6班</option>
+      <select name="claId" id="classes" lay-verify="required">
+
       </select>
     </div>
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">完成时间</label>
     <div class="layui-input-block">
-      <input type="text" name="endTime" id="endTime" required  lay-verify="required" placeholder="请选择完成时间" autocomplete="off" class="layui-input">
+      <input type="text" name="finshTime" id="endTime" required  lay-verify="required" placeholder="请选择完成时间" autocomplete="off" class="layui-input">
     </div>
   </div>
 
@@ -122,27 +106,60 @@
     <script src="/plugins/layui/layui.js"></script>
     <script>
 //Demo
-layui.use('layer', function(){
 
-}); 
-layui.use('form', function(){
+layui.use(['jquery','form','laydate','layer'], function(){
   var form = layui.form;
-  
-  //监听提交
-  form.on('submit(formDemo)', function(data){
+    var $ = layui.jquery;
     var layer = layui.layer;
-    layer.msg(JSON.stringify(data.field));
-    return false;
-  });
+
+    //监听提交
+    form.on('submit(formDemo)', function(data){
+
+        console.log(data.field);
+        $.post("/teacher/addHomework",{
+            claId:data.field.claId,
+            title:data.field.title,
+            content:data.field.content,
+            finshTime:data.field.finshTime
+        },function (data) {
+            if(data.status == 0){
+                layer.open({
+                    type: 5,
+                    content: data //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                });
+                form.render();
+            }else{
+
+            }
+        })
+        return false;
+    });
+
+    $.post("/teacher/getMyclassList",function (data) {
+        if(data.status == 0){
+            var str = "";
+            for(var i=0;i<data.data.length;i++){
+                var c = data.data[i];
+                str = str + "<option value=\""+c.id+"\">"+c.gradeName+"年级"+c.className+"班"+"</option>";
+            }
+            $("#classes").empty();
+            $("#classes").append(str);
+            form.render('select');
+        }
+    })
+
 });
 layui.use('laydate', function(){
-  var laydate = layui.laydate;
-  
-  //执行一个laydate实例
-  laydate.render({
-    elem: '#endTime' //指定元素
-  });
+    var laydate = layui.laydate;
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#endTime' //指定元素
+    });
 });
+
+window.onload = function () {
+
+}
 </script>
 </body>
 

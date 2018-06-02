@@ -50,7 +50,7 @@ layui.use(['mobile','jquery'], function(){
       ,$ = layui.jquery;
   //基础配置
 
-  $.post("/chat/teacherChat",function (data) {
+  $.post("/chat/studentChatInfo",function (data) {
       var res = data.data;
       layim.config({
           init:{"mine":res.mine,

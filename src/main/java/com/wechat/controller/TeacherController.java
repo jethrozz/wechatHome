@@ -46,6 +46,7 @@ public class TeacherController extends BaseController {
     private ClassesMapper classesMapper;
     @Autowired
     private TeacherClassMapper teacherClassMapper;
+
     @Autowired
     private ClassesDao classesDao;
     @Autowired
@@ -302,5 +303,40 @@ public class TeacherController extends BaseController {
     }
 
 
+    /**
+     * 修改作业接口
+     * @param id
+     * @param title
+     * @param content
+     * @return
+     */
+    @RequestMapping(value = "/updateHomeWork")
+    public CommonResult updateHomeWork(@RequestParam("id") Integer id,
+                                       @RequestParam ("title") String title,
+                                       @RequestParam("content") String content){
+        Homework homework = new Homework();
+        homework.setId(id);
+        homework.setTitle(title);
+        homework.setContent(content);
+        boolean flag = homework.updateById();
+        if (flag)
+            return new CommonResult(successcode,successMessage);
+        return new CommonResult(errorcode,errorMessage);
+    }
+
+    /**
+     * 删除接口
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/deleteHomeWork/{id}")
+    public CommonResult deleteHomeWork(@PathVariable("id") Integer id){
+        Homework homework = new Homework();
+        homework.setId(id);
+        boolean flag = homework.deleteById();
+        if (flag)
+            return new CommonResult(successcode,successMessage);
+        return new CommonResult(errorcode,errorMessage);
+    }
 
 }

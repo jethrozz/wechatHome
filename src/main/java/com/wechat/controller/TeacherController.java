@@ -89,9 +89,10 @@ public class TeacherController extends BaseController {
     @ApiImplicitParam(name = "id",
             value = "教师id",
             required = true, dataType = "Integer")
-    @GetMapping(value = "/getClassesInfo/{id}",produces = "application/json")
-    public CommonResult<Object> getClassesInfo(@PathVariable("id") Integer id){
+    @GetMapping(value = "/getClassesInfo",produces = "application/json")
+    public CommonResult<Object> getClassesInfo(HttpServletRequest request){
         //根据传入的教师id
+        Teacher tea = (Teacher)request.getSession().getAttribute("user");
         MyClass myClass = new MyClass();
 
         Classes classes = new Classes();
@@ -99,7 +100,7 @@ public class TeacherController extends BaseController {
         Student student = new Student();
         TeacherClass teacherClass = new TeacherClass();
         EntityWrapper<Classes> ew = new EntityWrapper<>();
-        ew.where("teacher = {0}",id);
+        ew.where("teacher = {0}",tea.getId());
         List<Classes> classesList = classes.selectList(ew);
         if(classesList.size()!= 0){
             //设置该教师的班级信息

@@ -23,6 +23,7 @@ import com.wechat.util.DateUtil;
 import com.wechat.util.OfficeUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.transaction.annotation.Transactional;
@@ -350,4 +351,18 @@ public class TeacherController extends BaseController {
         return new CommonResult(errorcode,errorMessage);
     }
 
+    /**
+     * 请假记录状态变更接口
+     * @return
+     */
+    @RequestMapping("/leaveRecordUpdate")
+    public CommonResult leaveRecordUpdate(@RequestParam("id") Integer id,@RequestParam("isAgree") Integer isAgree){
+        LeaveRecord leaveRecord = new LeaveRecord();
+        leaveRecord.setId(id);
+        leaveRecord.setIsAgree(isAgree);
+        boolean flag = leaveRecord.updateById();
+        if (flag)
+            return new CommonResult(successcode,successMessage);
+        return new CommonResult(errorcode,errorMessage);
+    }
 }

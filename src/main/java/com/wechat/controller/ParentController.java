@@ -5,7 +5,11 @@ import com.wechat.dao.ParentDao;
 import com.wechat.entity.*;
 import com.wechat.mapper.LeaveRecordMapper;
 import com.wechat.model.CommonResult;
+import com.wechat.model.Template;
+import com.wechat.service.TemplateService;
 import com.wechat.util.HttpUtil;
+import com.wechat.util.TemplateId;
+import com.wechat.util.WechatUtil;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -20,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +39,8 @@ public class ParentController extends BaseController{
 
 	@Autowired
 	private LeaveRecordMapper leaveRecordMapper;
-
+	@Autowired
+	TemplateService templateService;
 	@Autowired
 	private ParentDao parentDao;
 
@@ -65,28 +72,38 @@ public class ParentController extends BaseController{
 	 * @param leaveRecord
 	 * @return
 	 */
-	@RequestMapping(value = "/leave_record",method = RequestMethod.POST)
-	public CommonResult leave_record(@RequestBody(required = false) LeaveRecord leaveRecord){
+	@RequestMapping(value = "/leave_record",method = RequestMethod.GET)
+	public CommonResult leave_record(HttpServletRequest request,LeaveRecord leaveRecord){
 
-		int s = leaveRecordMapper.insertAllColumn(leaveRecord);
-		if (s==1){
 			//查询学生教师的openid
-			Parent parent = (Parent) request.getSession().getAttribute("user");
-			Map<String, Object> m = parentDao.getMyStudentTeacherOpenId(parent.getId());
-//			for (Map.Entry<String, Object> entry : m.entrySet()) {
-//				System.out.println(entry.getKey()+"---->"+entry.getValue());
-//			};
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("studentName",m.get("name"));
-			map.put("reason",leaveRecord.getReason());
-			map.put("dayNum",leaveRecord.getTime());
-			map.put("teacherOpenId",m.get("openId").toString());
+		Parent parent = (Parent) request.getSession().getAttribute("user");
+		Map<String, Object> m = parentDao.getMyStudentTeacherOpenId(parent.getId());
+		leaveRecord.setStuId((int)m.get("studentId"));
+		leaveRecord.setTeaId((int)m.get("teaherId"));
 
-			String url = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
-			url += "/chat/sendCheckMsg";
-			HttpUtil httpUtil = new HttpUtil();
-			String str = httpUtil.doPost(url,map);
-			System.out.println("-->"+str);
+		int s = leaveRecordMapper.insert(leaveRecord);
+		if (s==1){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String []val =  new String[5];
+			val[0] = TemplateId.LEAVE.getValue();
+			val[1] = (String) m.get("name");
+			val[2] = leaveRecord.getReason();
+			val[3] = sdf.format(leaveRecord.getStartTime());
+			val[4] = leaveRecord.getTime().toString();
+
+			Template template = WechatUtil.getTemplate(m.get("openId").toString(),TemplateId.LEAVE.getUrl(),"#ccc","",val);
+			templateService.sendTemplateMsg(template);
+//			Map<String,Object> map = new HashMap<String,Object>();
+//			map.put("studentName",);
+//			map.put("reason",leaveRecord.getReason());
+//			map.put("dayNum",leaveRecord.getTime());
+//			map.put("teacherOpenId",);
+//
+//			String url = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
+//			url += "/chat/sendCheckMsg";
+//			HttpUtil httpUtil = new HttpUtil();
+//			String str = httpUtil.doPost(url,map);
+//			System.out.println("-->"+str);
 			return new CommonResult(successcode,successMessage);
 		}
 		return new CommonResult(errorcode,errorMessage);

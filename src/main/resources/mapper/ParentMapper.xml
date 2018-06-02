@@ -73,7 +73,7 @@
   <!-- -->
 
   <select id="getMyStudentTeacherOpenId" resultType="java.util.Map" parameterType="java.lang.Integer">
-    SELECT teacher.openId,student.`name` FROM student,student_parent,parent,teacher_class,teacher
+    SELECT teacher.openId,student.`name`,teacher.id as teaherId,student.id as studentId FROM student,student_parent,parent,teacher_class,teacher
     WHERE parent.id = #{id,jdbcType=INTEGER}
     and parent.id = student_parent.par_id
     AND student.id= student_parent.stu_id

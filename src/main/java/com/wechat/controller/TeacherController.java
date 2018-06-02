@@ -13,6 +13,7 @@ import com.wechat.dao.LeaveRecordDao;
 import com.wechat.dao.NoticeBulletinDao;
 import com.wechat.entity.*;
 import com.wechat.mapper.ClassesMapper;
+import com.wechat.mapper.ExamResultMapper;
 import com.wechat.mapper.TeacherClassMapper;
 import com.wechat.model.CommonResult;
 import com.wechat.model.NoticeTemplateQueue;
@@ -53,6 +54,9 @@ public class TeacherController extends BaseController {
     StudentService studentService;
     @Autowired
     TeacherService teacherService;
+
+    @Autowired
+    private ExamResultMapper examResultMapper;
 
 
     @PostMapping("/userLogin")
@@ -279,5 +283,24 @@ public class TeacherController extends BaseController {
 
         return result;
     }
+
+    /**
+     * 修改成绩
+     * @param sid
+     * @param score
+     * @return
+     */
+    @RequestMapping(value = "/updateStudentScore")
+    public CommonResult updateStudentScore(@RequestParam("sid") Integer sid,@RequestParam ("score") Float score){
+        ExamResult examResult = new ExamResult();
+        examResult.setId(sid);
+        examResult.setScore(score);
+        boolean flag = examResult.updateById();
+        if (flag)
+            return new CommonResult(successcode,successMessage);
+        return new CommonResult(errorcode,errorMessage);
+    }
+
+
 
 }

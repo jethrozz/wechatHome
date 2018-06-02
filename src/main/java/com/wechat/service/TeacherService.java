@@ -15,6 +15,7 @@ import java.util.Map;
 public interface TeacherService {
     List<Student> getStudentByCid(Integer cid);
     Teacher isTeacher(Teacher teacher);
+
     Classes getClassByTeacherId(Teacher teacher);
     Page<Map<String,Object>> getNotice(int pageNo,int pageSize);
 

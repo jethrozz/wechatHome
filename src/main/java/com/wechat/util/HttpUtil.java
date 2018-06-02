@@ -158,6 +158,7 @@ public class HttpUtil {
         //装配post请求参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
         for (String key : paramsMap.keySet()) {
+            System.out.println("key"+key);
             list.add(new BasicNameValuePair(key, String.valueOf(paramsMap.get(key))));
         }
 

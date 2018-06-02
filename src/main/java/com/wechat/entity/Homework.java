@@ -5,6 +5,8 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 
 /**
@@ -24,14 +26,17 @@ public class Homework extends Model<Homework> {
 	private String title;
 	private String content;
 	@TableField("finsh_time")
+	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:sss")
 	private Date finshTime;
 	@TableField("tea_id")
 	private Integer teaId;
 	@TableField("cla_id")
 	private Integer claId;
 	@TableField("h_create_time")
+	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:sss")
 	private Date hCreateTime;
 	@TableField("update_time")
+	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:sss")
 	private Date updateTime;
 
 

@@ -3,6 +3,9 @@ package com.wechat.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by zxc on 2018/5/3.
  */
@@ -51,6 +54,5 @@ public class CommonResult<T> {
 	public void setData(T data) {
 		this.data = data;
 	}
-
 
 }

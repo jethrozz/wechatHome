@@ -2,7 +2,11 @@ package com.wechat.dao;
 
 import com.wechat.entity.Homework;
 import com.wechat.entity.HomeworkExample;
+
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface HomeworkDao {
@@ -33,4 +37,7 @@ public interface HomeworkDao {
     int updateByPrimaryKeyWithBLOBs(Homework record);
 
     int updateByPrimaryKey(Homework record);
+
+    List<Map<String,Object>> getNowDateHomeworkByClassId(@Param("classId") Integer classId);
+
 }

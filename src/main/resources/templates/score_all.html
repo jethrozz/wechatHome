@@ -74,8 +74,9 @@
 <script src="/plugins/layui/layui.js"></script>
 <script>
 //Demo
-layui.use('table', function(){
+layui.use(['table','jquery'], function(){
   var table = layui.table;
+  var $ = layui.jquery;
   //第一个实例
   table.render({
     elem: '#demo'
@@ -105,9 +106,32 @@ layui.use('table', function(){
 //监听工具条
 table.on('edit(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
     var value = obj.value //得到修改后的值
-    ,data = obj.data //得到所在行所有键值
-    ,field = obj.field; //得到字段
-    layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+        ,data = obj.data //得到所在行所有键值
+    console.log(data.id);
+    if(value> 0 && value <100||value ==0 && value ==100) {
+        $.ajax({
+            type: "POST",
+            url: "/teacher/updateStudentScore",
+            data: {
+                sid:data.id,
+                score:data.score
+            },
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+                if(data.status===0) {
+                    layer.msg('修改成功！');
+                } else {
+                    layer.msg('修改失败！');
+                }
+            },
+            error:function (e) {
+                layer.msg(e);
+            }
+        });
+    } else {
+        layer.msg('分数应大于等于0小于等于100！请重新修改！');
+    }
 });
 });
 

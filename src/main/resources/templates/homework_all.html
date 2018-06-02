@@ -92,17 +92,17 @@ layui.use(['table','jquery'], function(){
       {field: 'id', title: 'ID', width:100,  fixed: 'left',hide:true}
       ,{field: 'title', title: '标题', width:120,edit: 'text'}
       ,{field: 'content', title: '内容', width:180,edit: 'text'}
-      ,{field: 'teaId', title: '发布者', width:80}
-      ,{field: 'startTime', title: '发布时间', width:120}
-      ,{field: 'endTime', title: '完成时间', width:120}
-      ,{field: 'classId', title: '所属班级', width:120}
+      ,{field: 'teahcerName', title: '发布者', width:80}
+      ,{field: 'createTime', title: '发布时间', width:120}
+      ,{field: 'finishTime', title: '完成时间', width:120}
+      ,{field: 'className', title: '所属班级', width:120}
       ,{field: 'subject', title: '科目', width:120}
       ,{fixed: 'right', width:150, align:'center', toolbar: '#barDemo'}
     ]],
     done: function(res, curr, count) {
             //如果是异步请求数据方式，res即为你接口返回的信息。
             //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-            // console.log(res);
+             console.log(res);
             // //得到当前页码
             // console.log(curr);
             // //得到数据总量
@@ -112,11 +112,29 @@ layui.use(['table','jquery'], function(){
 
 //修改
 table.on('edit(test)', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
-    console.log("edit!");
     var value = obj.value //得到修改后的值
     ,data = obj.data //得到所在行所有键值
-    ,field = obj.field; //得到字段
-    layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+    $.ajax({
+        type: "POST",
+        url: "/teacher/updateHomeWork",
+        data: {
+            id:data.id,
+            content:data.content,
+            title:data.title
+        },
+        dataType: "json",
+        success: function(data){
+            console.log(data);
+            if(data.status===0) {
+                layer.msg('修改成功！');
+            } else {
+                layer.msg('修改失败！');
+            }
+        },
+        error:function (e) {
+            layer.msg(e);
+        }
+    });
 });
 
 //监听工具条
@@ -131,11 +149,14 @@ table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test�
         var id = data.id;
         $.ajax({
             type: "GET",
-            url: ""+id,
-            dataType: "json",
+            url: "/teacher/deleteHomeWork/"+id,
             success: function(data){
-                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                layer.close(index);//向服务端发送删除指令
+                console.log("data");
+                layer.msg('删除成功！');
+                setTimeout(function(){
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);//向服务端发送删除指令
+                },500);
             },
             error:function (e) {
                 layer.msg('删除失败！');

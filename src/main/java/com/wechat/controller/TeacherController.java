@@ -5,11 +5,8 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.Page;
 import com.wechat.bean.MyClass;
 import com.wechat.bean.TableResult;
-import com.wechat.bean.TeacherHomeworkResult;
 import com.wechat.common.controller.BaseController;
 import com.wechat.dao.ClassesDao;
-import com.wechat.dao.ExamResultDao;
-import com.wechat.dao.LeaveRecordDao;
 import com.wechat.dao.NoticeBulletinDao;
 import com.wechat.entity.*;
 import com.wechat.mapper.ClassesMapper;
@@ -24,7 +21,6 @@ import com.wechat.util.OfficeUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -76,10 +74,22 @@ public class TeacherController extends BaseController {
     @ApiImplicitParam(name = "classes",
                     value = "需要添加的班级实体Classes",
                     required = true, dataType = "Classes")
-    @RequestMapping(value = "/addClasses",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
-    public CommonResult<Object> addClasses(@RequestBody Classes classes){
-        if (classesMapper.insert(classes) == 1){
-            return new CommonResult<>(successcode,successMessage);
+    @PostMapping(value = "/addClasses")
+    public CommonResult<Object> addClasses(HttpServletRequest request,Classes classes){
+        Teacher teacher = (Teacher)request.getSession().getAttribute("user");
+        if(teacher.getIsHeadmaster() == 0){
+            return  new CommonResult<>(errorcode,"你已经是班主任了，不能再创建班级");
+        }else{
+            classes.setTeacher(teacher.getId());
+            teacher.setIsHeadmaster(0);
+            teacher.updateById();
+            if (classesMapper.insert(classes) == 1){
+                TeacherClass teacherClass = new TeacherClass();
+                teacherClass.setClaId(classes.getId());
+                teacherClass.setTeaId(teacher.getId());
+                teacherClass.insert();
+                return new CommonResult<>(successcode,successMessage);
+            }
         }
         return  new CommonResult<>(errorcode,errorMessage);
     }
@@ -150,18 +160,24 @@ public class TeacherController extends BaseController {
 
     //批量上传成绩接口
     @PostMapping("/uploadStudentScore")
-    public CommonResult<String> uploadStudentScore(MultipartFile file,HttpServletRequest request){
-        if(file == null && file.isEmpty()){
+    public CommonResult<String> uploadStudentScore(String file,HttpServletRequest request){
+        if(file == null ){
             return new CommonResult(errorcode,"the file is empty");
         }
         InputStream in = null;
-
         try {
-            in = file.getInputStream();
+            URL url = new URL(file);
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("GET");
+            //得到输入流
+            in = conn.getInputStream();
+
         } catch (IOException e) {
             return new CommonResult(errorcode,"get the InputStream is error");
         }
-        List<ExamResult> list = OfficeUtil.readStudentScore(in,1,studentService);
+        boolean isExcel2003 = false;
+
+        List<ExamResult> list = OfficeUtil.readStudentScore(in,1,studentService,false);
         for (ExamResult result:list){
             result.insert();
         }
@@ -340,4 +356,18 @@ public class TeacherController extends BaseController {
         return new CommonResult(errorcode,errorMessage);
     }
 
+    /**
+     * 请假记录状态变更接口
+     * @return
+     */
+    @RequestMapping("/leaveRecordUpdate")
+    public CommonResult leaveRecordUpdate(@RequestParam("id") Integer id,@RequestParam("isAgree") Integer isAgree){
+        LeaveRecord leaveRecord = new LeaveRecord();
+        leaveRecord.setId(id);
+        leaveRecord.setIsAgree(isAgree);
+        boolean flag = leaveRecord.updateById();
+        if (flag)
+            return new CommonResult(successcode,successMessage);
+        return new CommonResult(errorcode,errorMessage);
+    }
 }

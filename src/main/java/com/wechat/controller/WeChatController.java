@@ -1,6 +1,8 @@
 package com.wechat.controller;
 
+import com.google.gson.JsonObject;
 import com.wechat.service.WechatService;
+import com.wechat.util.QiniuUtil;
 import com.wechat.util.SignUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +30,8 @@ public class WeChatController {
 	private String appId;
 	@Value("${wechat.appsecret}")
 	private String appSecret;
-
+	@Autowired
+	QiniuUtil qiniuUtil;
 
 
 
@@ -90,5 +93,13 @@ public class WeChatController {
 		url = url + authUrl;
 		modelAndView.setViewName(url);
 		return modelAndView;
+	}
+
+	@RequestMapping(value = "/token")
+	@ResponseBody
+	public String getToken(){
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("uptoken",qiniuUtil.upToken());
+		return jsonObject.toString();
 	}
 }

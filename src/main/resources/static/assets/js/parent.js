@@ -101,7 +101,13 @@ $("#hw_btn").click(function () {
             success: function (data,stauts,result) {
                 console.log(data);
                 if(data.status == 0){
-                    // alert("提交成功");
+                    var data = res.data;
+                    var str = "";
+                    for(var i = 0;i<data.length;i++){
+                        str += "<li><a class=\"am-text-truncate\" href=\"javascript:void(0);\" onclick=\"showHomework(this)\" alt=\""+data[i].id+"\">"+data[i].title+"</a></li>"
+                    }
+                    $("#hwork").empty();
+                    $("#hwork").append(str);
                 }
             },
             error:function(data,status,result){

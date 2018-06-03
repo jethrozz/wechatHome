@@ -36,6 +36,13 @@ public class MainControlloer {
 	@Value("${wechat.authUrlCode}")
 	private String authUrlCode;
 
+	@RequestMapping("/quit")
+	public ModelAndView quit(HttpServletRequest request){
+		ModelAndView modelAndView = new ModelAndView("redirect:/index/login");
+		request.getSession().invalidate();
+		return modelAndView;
+	}
+
 	@RequestMapping("/student")
 	public ModelAndView student(HttpServletRequest request, HttpServletResponse response,@RequestParam("code") String code){
 		ModelAndView modelAndView = new ModelAndView();

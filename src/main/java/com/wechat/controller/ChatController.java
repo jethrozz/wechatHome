@@ -12,13 +12,14 @@ import com.wechat.service.TemplateService;
 import com.wechat.util.TemplateId;
 import com.wechat.util.WechatUtil;
 import io.goeasy.GoEasy;
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/chat")
+@PropertySource(value = {"classpath:wechat.properties"})
 public class ChatController extends BaseController {
 
 	@Autowired
@@ -46,6 +48,10 @@ public class ChatController extends BaseController {
 	private String studentImg;
 	@Value("${parentImg}")
 	private String parentImg;
+	@Value("${wechat.href}")
+	private String href;
+
+
 	@RequestMapping("/teacherChatInfo")
 	public LayuiBaseResult<Object> teacherChat(HttpServletRequest request){
 		Teacher teacher = (Teacher)request.getSession().getAttribute("user");
@@ -60,7 +66,7 @@ public class ChatController extends BaseController {
 		ChatUserGroup chatUserGroup = new ChatUserGroup();
 		ChatUser me = new ChatUser();
 		me.setStatus("online");
-		me.setId(teacher.getOpenId());
+		me.setId(teacher.getOpenid());
 		me.setUsername(teacher.getName());
 		me.setAvatar(teacherImg);
 		chatUserGroup.setMine(me);
@@ -91,8 +97,11 @@ public class ChatController extends BaseController {
 
 			for(Student s:students){
 				//该班学生
+				if(StringUtils.isEmpty(s.getOpenid())){
+					continue;
+				}
 				ChatUser chatUser = new ChatUser();
-				chatUser.setId(s.getOpenId());
+				chatUser.setId(s.getOpenid());
 				chatUser.setStatus("hide");
 				chatUser.setUsername(s.getName());
 				chatUser.setAvatar(studentImg);
@@ -128,7 +137,7 @@ public class ChatController extends BaseController {
 	 */
 	@RequestMapping("/sendMsg")
 	public CommonResult<Object> sendMsg(String type,String data){
-		LayMessage msg = (LayMessage)JSON.parseObject(data,LayMessage.class);
+		LayMessage msg = JSON.parseObject(data,LayMessage.class);
 
 		ChatRecord chatRecord = new ChatRecord();
 		//chatrecord 使用双方的openId作为记录值
@@ -138,7 +147,7 @@ public class ChatController extends BaseController {
 		//保存chatReocrd
 		chatRecord.insert();
 		//向前端推送
-		goEasy.publish("newMsg",data);
+		goEasy.publish("wechatMSG",data);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		//封装模板消息需要的数据
@@ -147,7 +156,18 @@ public class ChatController extends BaseController {
 		val[1] = msg.getMine().getUsername();
 		val[2] = msg.getMine().getContent();
 		val[3] = sdf.format(new Date());
-		Template template = WechatUtil.getTemplate(msg.getTo().getId(),TemplateId.MSG.getUrl(),"#ccc","",val);
+		String url = "";
+//		if(type.equals("teacher")){
+//			//表明是发送给教师的
+//			url = href+"chat/";
+//		}else if(type.equals("student")){
+//			//表示是发送给学生的
+//			url = href+"chat/toStudentChat?fromUser="+msg.getMine().getId()+"&toUser="+msg.getTo().getId();
+//		}else{
+//			//表示是发送给家长的
+//			url = href+"chat/toParentChat?fromUser="+msg.getMine().getId()+"&toUser="+msg.getTo().getId();
+//		}
+		Template template = WechatUtil.getTemplate(msg.getTo().getId(),TemplateId.MSG.getUrl(),"#ccc",url,val);
 		//发送模板消息
 		templateService.sendTemplateMsg(template);
 		//返回消息结果
@@ -156,8 +176,6 @@ public class ChatController extends BaseController {
 
 	/**
 	 *发送审核通知
-	 * @param type
-	 * @param data
 	 * @return
 	 */
 	@RequestMapping("/sendCheckMsg")
@@ -179,10 +197,83 @@ public class ChatController extends BaseController {
 	}
 
 
+	@GetMapping("/toParentChat")
+	public ModelAndView toParentChat(HttpServletRequest request,String fromUser,String toUser){
+		ModelAndView modelAndView = new ModelAndView("parentChat");
+		modelAndView.addObject("other",fromUser);
+		modelAndView.addObject("me",toUser);
+		return modelAndView;
+	}
+	//父母自己点击进入的聊天界面
+	@GetMapping("/parentChat/{openId}")
+	public ModelAndView parentChat(HttpServletRequest request,@PathVariable String openId){
+		ModelAndView modelAndView = new ModelAndView("parentChat");
+		modelAndView.addObject("me",openId);
+		return modelAndView;
+	}
 
-	//学生以及家长端的聊天群组数据接口
+	@GetMapping("/toStudentChat")
+	public ModelAndView toStudentChat(HttpServletRequest request,@RequestParam(required = false) String fromUser,@RequestParam(required = false)String toUser){
+		ModelAndView modelAndView = new ModelAndView("studentChat");
+		modelAndView.addObject("other",fromUser);
+		modelAndView.addObject("me",toUser);
+
+		return modelAndView;
+	}
+
+	//家长端的聊天群组数据接口
+	@RequestMapping("/parentChatInfo")
+	public LayuiBaseResult<Object> parentChatInfo(HttpServletRequest request,String toUser){
+		//两个参数都是OPENID
+		Parent parent = new Parent();
+		//查询接收方的消息,这里的接收方就是自己
+		parent = parent.selectOne("openId = {0}",toUser);
+		StudentParent sp = new StudentParent();
+		List<StudentParent> spList = sp.selectList("par_id = {0}",parent.getId());
+
+		Student student = new Student();
+		student = student.selectById(spList.get(0).getStuId());
+
+		List<Map<String,Object>> teachers = teacherDao.selectClassTeacher(student.getClaId());
+
+		LayuiBaseResult<Object> result = new LayuiBaseResult<>();
+		result.setCode(0);
+		result.setMsg("success");
+		ChatUserGroup chatUserGroup = new ChatUserGroup();
+		ChatUser me = new ChatUser();
+		me.setStatus("online");
+		me.setId(parent.getOpenid());
+		me.setUsername(parent.getName());
+		me.setAvatar(parentImg);
+		chatUserGroup.setMine(me);
+		List<Friend> list = new ArrayList<>();
+		List<ChatUser> teacherChat = new ArrayList<>();
+		Friend teacherFriend = new Friend();
+		teacherFriend.setGroupname("教师");
+		teacherFriend.setId(1);
+		for(Map<String,Object> map : teachers){
+			ChatUser chatUser = new ChatUser();
+			chatUser.setAvatar(teacherImg);
+			String id = (String)map.get("id");
+			chatUser.setId(id);
+			String username = map.get("subject")+"老师-"+(String)map.get("username");
+			chatUser.setUsername(username);
+			chatUser.setStatus("online");
+			teacherChat.add(chatUser);
+		}
+		teacherFriend.setList(teacherChat);
+
+		list.add(teacherFriend);
+		chatUserGroup.setFriend(list);
+		result.setData(chatUserGroup);
+
+		return result;
+	}
+
+
+	//学生端的聊天群组数据接口
 	@RequestMapping("/studentChatInfo")
-	public LayuiBaseResult<Object> studentChatInfo(HttpServletRequest request,String fromUser,String toUser){
+	public LayuiBaseResult<Object> studentChatInfo(HttpServletRequest request, String fromUser, String toUser){
 		//两个参数都是OPENID
 		Student student = new Student();
 		//查询接收方的消息
@@ -195,7 +286,7 @@ public class ChatController extends BaseController {
 		ChatUserGroup chatUserGroup = new ChatUserGroup();
 		ChatUser me = new ChatUser();
 		me.setStatus("online");
-		me.setId(student.getOpenId());
+		me.setId(student.getOpenid());
 		me.setUsername(student.getName());
 		me.setAvatar(studentImg);
 		chatUserGroup.setMine(me);

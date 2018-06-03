@@ -3,7 +3,7 @@
     <div class="am-g">
         <div class="am-u-sm-12">
             <!-- 个人资料 -->
-            <h3>${session.user.name}</h3>
+            <h3 class="am-text-center">${session.user.name}</h3>
             <!-- 姓名，性别，学号 -->
             <div class="am-panel am-panel-default ">
                 <div class="am-panel-hd">学生信息</div>
@@ -24,7 +24,7 @@
                     <div class="studentId am-text-sm">班主任：${headMaster.name}</div>
                 </div>
             </div>
-            <a href="/lay/chat" class="am-btn am-btn-primary am-btn-block">消息</a>
+            <a href="/chat/parentChat/${session.user.openid}" class="am-btn am-btn-primary am-btn-block">消息</a>
             <button type="button" class="am-btn am-btn-primary am-btn-block" id="leaveBtn">请假</button>
         </div>
 

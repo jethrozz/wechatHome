@@ -51,13 +51,13 @@ public class NoticeTemplatePush implements Runnable{
 				List<Teacher> listTeacher = tea.selectList(" openid is not null");
 
 				for(Student s:listStudent){
-					sendMsg(s.getOpenId(),notice);
+					sendMsg(s.getOpenid(),notice);
 				}
 				for(Parent p:listParent){
 					sendMsg(p.getOpenid(),notice);
 				}
 				for(Teacher t:listTeacher){
-					sendMsg(t.getOpenId(),notice);
+					sendMsg(t.getOpenid(),notice);
 				}
 
 				Thread.currentThread().yield();

@@ -8,6 +8,7 @@ import com.wechat.bean.TableResult;
 import com.wechat.common.controller.BaseController;
 import com.wechat.dao.ClassesDao;
 import com.wechat.dao.NoticeBulletinDao;
+import com.wechat.dao.TeacherDao;
 import com.wechat.entity.*;
 import com.wechat.mapper.ClassesMapper;
 import com.wechat.mapper.ExamResultMapper;
@@ -44,7 +45,8 @@ public class TeacherController extends BaseController {
     private ClassesMapper classesMapper;
     @Autowired
     private TeacherClassMapper teacherClassMapper;
-
+    @Autowired
+    private TeacherDao teacherDao;
     @Autowired
     private ClassesDao classesDao;
     @Autowired
@@ -135,6 +137,22 @@ public class TeacherController extends BaseController {
         return new CommonResult<>(errorcode,errorMessage);
     }
 
+    @GetMapping("/getTeacherByClaId")
+    public TableResult getTeacherByClaId(int  claId){
+        List<Map<String,Object>> map = teacherDao.selectClassTeacher(claId);
+        TableResult<Object> result = new TableResult<>();
+        if(map == null || map.size() == 0){
+            result.setCode(-1);
+            result.setMsg("该班目前没有教师");
+        }else{
+            result.setCode(0);
+            result.setData(map);
+        }
+
+        return result;
+    }
+
+
     //批量上传学生接口
     @PostMapping("uploadStudent")
     public CommonResult<String> uploadStudent(MultipartFile file, HttpServletRequest request){
@@ -192,6 +210,8 @@ public class TeacherController extends BaseController {
         teacher.selectById(id);
         return new CommonResult<Teacher>(0,teacher);
     }
+
+
     //发布作业接口
     @RequestMapping("/addHomework")
     public CommonResult<String> addHomework(HttpServletRequest request,int claId,String title,String content,String finshTime){

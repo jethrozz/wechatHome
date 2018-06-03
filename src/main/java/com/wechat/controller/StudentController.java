@@ -1,11 +1,10 @@
 package com.wechat.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.github.pagehelper.Page;
+import com.wechat.bean.TableResult;
 import com.wechat.common.controller.BaseController;
-import com.wechat.dao.ExamResultDao;
-import com.wechat.dao.HomeworkDao;
-import com.wechat.dao.StudentDao;
-import com.wechat.dao.TeacherDao;
+import com.wechat.dao.*;
 import com.wechat.entity.*;
 import com.wechat.exception.BizExceptionEnum;
 import com.wechat.exception.BussinessException;
@@ -36,6 +35,9 @@ import java.util.Map;
 public class StudentController extends BaseController{
 
     @Autowired
+    private NoticeBulletinDao noticeDao;
+
+    @Autowired
     private StudentService studentService;
 
     @Autowired
@@ -51,6 +53,9 @@ public class StudentController extends BaseController{
 
     @Autowired
     private HomeworkMapper homeworkMapper;
+
+    @Autowired
+    private LeaveRecordDao leaveRecordDao;
 
     @ApiOperation(value = "获取单个学生信息接口",notes = "",produces = "application/json")
     @ApiImplicitParam(paramType = "path",name = "id",
@@ -152,14 +157,13 @@ public class StudentController extends BaseController{
     }
 
     @RequestMapping("/index")
-    @ResponseBody
     public ModelAndView index(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("/student");
         Student student = (Student)request.getSession().getAttribute("user");
         Classes classes = new Classes();
         classes = classes.selectById(student.getClaId());
         //添加班级信息
-        modelAndView.addObject("classes",student);
+        modelAndView.addObject("classes",classes);
         Teacher headMaster = new Teacher();
         headMaster = headMaster.selectById(classes.getTeacher());
         //添加班主任信息
@@ -167,6 +171,33 @@ public class StudentController extends BaseController{
 
 
         return modelAndView;
+    }
+
+    @RequestMapping("/getLeaveRecord")
+    public TableResult getLeaveRecord(HttpServletRequest request, int stuId, @RequestParam(required = false) String date,@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int limit){
+        Page<Map<String,Object>> mapPage = studentService.getLeaveRecord(stuId,date,page,limit);
+        TableResult<Object> result = new TableResult<>();
+
+        result.setCode(0);
+        result.setCount((int)mapPage.getTotal());
+        result.setData(mapPage);
+        return result;
+    }
+
+    @RequestMapping("/getNotice")
+    public TableResult getNotice(int id){
+        Map<String,Object> map = noticeDao.getNotice(id);
+
+        TableResult<Object> result = new TableResult<>();
+        if(map != null){
+            result.setData(map);
+            result.setCode(0);
+
+        }else{
+            result.setCode(-1);
+            result.setMsg("没有找到该通知");
+        }
+        return result;
     }
 
 

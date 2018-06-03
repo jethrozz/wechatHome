@@ -35,9 +35,16 @@ public class Student extends Model<Student> {
 	private Date sCreateTime;
 	@TableField("update_time")
 	private Date updateTime;
+	@TableField("openId")
+	private String openid;
 
-	private String openId;
+	public String getOpenid() {
+		return openid;
+	}
 
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
 
 	public Integer getId() {
 		return id;
@@ -111,13 +118,6 @@ public class Student extends Model<Student> {
 		this.updateTime = updateTime;
 	}
 
-	public String getOpenId() {
-		return openId;
-	}
-
-	public void setOpenId(String openId) {
-		this.openId = openId;
-	}
 
 	@Override
 	protected Serializable pkVal() {

@@ -37,4 +37,5 @@ public interface NoticeBulletinDao {
     int updateByPrimaryKey(NoticeBulletin record);
     List<Map<String,Object>> getAllNotice();
     List<Map<String,Object>> getAllNoticeByTime(@Param("startTime") String startTime,@Param("endTime") String endTime);
+    Map<String,Object> getNotice(@Param("noticeId")int noticeId);
 }

@@ -17,3 +17,9 @@
 	height: 420px;
     width: 300px;
 }
+#notice-content{
+	border-top: 1px solid #ccc;
+}
+.am-article-lead.none{
+	border: none;
+}

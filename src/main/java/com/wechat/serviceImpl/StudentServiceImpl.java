@@ -1,5 +1,7 @@
 package com.wechat.serviceImpl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.wechat.bean.MyClass;
 import com.wechat.common.constat.tips.ErrorTip;
 import com.wechat.dao.*;
@@ -37,6 +39,9 @@ public class StudentServiceImpl implements StudentService {
     private TeacherClassDao teacherClassDao;
     @Autowired
     private TeacherDao teacherDao;
+    @Autowired
+    private LeaveRecordDao leaveRecordDao;
+
 
     @Override
     public boolean updateStudent(Student student) {
@@ -118,5 +123,13 @@ public class StudentServiceImpl implements StudentService {
             return null;
         }
         return null;
+    }
+
+    @Override
+    public Page<Map<String, Object>> getLeaveRecord(int stuId,String date, int pageNo, int pageSize) {
+        Page<Map<String,Object>> map = PageHelper.startPage(pageNo,pageSize);
+        Page<Map<String,Object>> result = leaveRecordDao.getStudentLeaveList(stuId,date);
+        result.setTotal(map.getTotal());
+        return result;
     }
 }

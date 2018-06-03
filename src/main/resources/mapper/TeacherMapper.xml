@@ -77,7 +77,29 @@
   </sql>
 
   <select id="selectClassTeacher" resultType="java.util.Map">
-      SELECT teacher.name as username ,teacher.openId as id,teacher.subject as subject FROM teacher inner join teacher_class on teacher_class.tea_id = teacher.id where teacher_class.cla_id = #{claId}
+      SELECT teacher.name as username ,teacher.openId as id,
+      ( CASE teacher.subject
+	WHEN 1 THEN
+		"语文"
+	WHEN 2 THEN
+		"数学"
+	WHEN 3 THEN
+		"英语"
+	WHEN 4 THEN
+		"政治"
+	WHEN 5 THEN
+		"历史"
+	WHEN 6 THEN
+		"地理"
+	WHEN 7 THEN
+		"化学"
+	WHEN 8 THEN
+		"物理"
+	WHEN 9 THEN
+		"生物"
+END) as
+subject
+      FROM teacher inner join teacher_class on teacher_class.tea_id = teacher.id where teacher_class.cla_id = #{claId}
   </select>
 
   <select id="selectNoticeByPage" resultType="java.util.Map">

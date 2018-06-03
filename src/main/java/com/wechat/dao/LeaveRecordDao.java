@@ -17,4 +17,5 @@ public interface LeaveRecordDao {
 
     Page<Map<String,Object>> getTeacherLeaveList(@Param("teaId")int teaId);
 
+    Page<Map<String,Object>> getStudentLeaveList(@Param("stuId")int stuId,@Param("date")String date);
 }

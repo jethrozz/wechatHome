@@ -130,7 +130,7 @@ ORDER BY exam_result.create_time desc
 	WHEN 9 THEN
 		"生物"
 END) as
-subject, score, DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%S') AS createTime, update_time
+subject, score, DATE_FORMAT(create_time,'%Y-%m-%d') AS createTime, update_time
 FROM  exam_result WHERE	stu_id =  #{stuId,jdbcType=INTEGER}
 ORDER BY create_time desc
   </select>
@@ -157,7 +157,7 @@ ORDER BY create_time desc
     WHEN 9 THEN
     "生物"
     END) as
-    subject, score, DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%S') AS createTime, update_time
+    subject, score, DATE_FORMAT(create_time,'%Y-%m-%d') AS createTime, update_time
     FROM  exam_result WHERE	stu_id =  #{stuId,jdbcType=INTEGER} and term = #{term,jdbcType=INTEGER}
     and date_format(create_time,"%Y-%m-%d") between #{startTime} and #{endTime}
     ORDER BY create_time desc

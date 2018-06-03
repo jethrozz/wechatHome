@@ -38,9 +38,9 @@
 <div class="am-tabs" data-am-tabs>
   <ul class="am-avg-sm-5 am-tabs-nav am-nav am-nav-tabs am-topbar am-topbar-fixed-bottom am-text-center am-text-sm" id="stuNav">
     <li ><a href="#tab1" onclick="showHomeIndex()">作业</a></li>
-    <li><a href="#tab2">通知</a></li>
-    <li><a href="#tab3">成绩</a></li>
-    <li><a href="#tab5">出勤</a></li>
+    <li><a href="#tab2" onclick="notice()">通知</a></li>
+    <li><a href="#tab3" onclick="score()">成绩</a></li>
+    <li><a href="#tab5" onclick="showLeave()">出勤</a></li>
     <li class="am-active"><a href="#tab4">我</a></li>
     
   </ul>
@@ -48,6 +48,7 @@
   <input type="hidden" id="parentId" name="parentId" value="${session.user.id}" />
   <input type="hidden" id="studentId" name="studentId" value="${student.id}" />
   <input type="hidden" id="calssesId" name="calssesId" value="${student.claId}" />
+  <input type="hidden" id="openid" name="openid" value="${session.user.openid}" />
 
   <div class="am-tabs-bd" id="stu_content_bd">
     @ include("/parent/homework.html"){};
@@ -62,7 +63,7 @@
 
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="classInfo">
   <div class="am-modal-dialog">
-    <div class="am-modal-hd am-text-lg"><span id="class-title">xx级xx班</span>
+    <div class="am-modal-hd am-text-lg"><span id="class-title">班级教师情况</span>
       <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
     </div>
     <div class="am-modal-bd">
@@ -71,6 +72,9 @@
           <th>姓名</th>
           <th>所教科目</th>
         </tr>
+        <tbody id="classTeacher">
+
+        </tbody>
       </table>
     </div>
   </div>
@@ -78,12 +82,17 @@
 
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="notice">
   <div class="am-modal-dialog">
-    <div class="am-modal-hd" ><span id="notice-title">通知</span>
-      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
-    </div>
-    <div class="am-modal-bd" id="notice-content">
-      通知内容
-    </div>
+    <article class="am-article">
+      <div class="am-article-hd">
+        <h2 id="notice-title"></h2>
+        <p class="am-article-meta" id="notice-teacher"></p>
+      </div>
+
+      <div class="am-article-bd">
+        <p class="am-article-lead none" id="notice-content"></p>
+      </div>
+    </article>
+
   </div>
 </div>
 
@@ -145,7 +154,7 @@
     </div>
   </div>
 </div>
-<script src="https://cdn-hangzhou.goeasy.io/goeasy.js​"></script>
+
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
 <script src="/assets/layui/layui.js"></script>

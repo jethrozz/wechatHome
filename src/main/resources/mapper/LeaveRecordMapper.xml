@@ -76,6 +76,20 @@
     id, tea_id, stu_id, reason, type, start_time, end_time, create_time, update_time, 
     is_agree, time
   </sql>
+  <select id="getStudentLeaveList" resultType="java.util.Map">
+    SELECT teacher.name as teacherName , leave_record.type as type , DATE_FORMAT(leave_record.create_time,'%Y-%m-%d') as time, leave_record.reason as reason,( CASE leave_record.is_agree
+      WHEN 1 THEN "拒绝"
+      WHEN 0 THEN "同意"
+      WHEN 2 THEN "待处理"
+    END
+    ) as status FROM wechatHome.leave_record inner join teacher on teacher.id = leave_record.tea_id
+    where leave_record.stu_id = #{stuId}
+    <if test="date != null">
+      AND DATE_FORMAT(leave_record.create_time,'%Y-%m-%d') = #{date}
+    </if>
+    order by leave_record.create_time DESC
+  </select>
+
 
   <select id="getTeacherLeaveList" resultType="java.util.Map">
     select ( CASE leave_record.is_agree

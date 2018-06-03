@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Created by zxc on 2018/6/1.
+ * 封装的初始化聊天群组消息
  */
 public class ChatUserGroup {
 	ChatUser mine;

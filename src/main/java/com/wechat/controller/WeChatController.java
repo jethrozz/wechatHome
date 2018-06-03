@@ -95,6 +95,36 @@ public class WeChatController {
 		return modelAndView;
 	}
 
+
+	@RequestMapping("/chat")
+	public ModelAndView chat(HttpServletRequest request , HttpServletResponse response, int type,String fromUser){
+		ModelAndView modelAndView = new ModelAndView();
+		String authUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+		String url = "redirect:";
+		authUrl = authUrl.replace("APPID",appId);
+		if(type == 0){
+			//学生
+			String backurl = "http://iwonderhow.s1.natapp.cc/chat/studentChatInfo";
+			authUrl = authUrl.replace("REDIRECT_URI",backurl);
+			authUrl = authUrl.replace("STATE",fromUser);
+		}else if(type == 1){
+			//家长
+			String backurl = "http://iwonderhow.s1.natapp.cc/chat/parentChatInfo";
+			authUrl = authUrl.replace("REDIRECT_URI",backurl);
+			authUrl = authUrl.replace("STATE",fromUser);
+		}else if(type == 2){
+			//教师
+			String backurl = "http://iwonderhow.s1.natapp.cc/chat/teacherChatInfo";
+			authUrl = authUrl.replace("REDIRECT_URI",backurl);
+			authUrl = authUrl.replace("STATE",fromUser);
+		}
+		url = url + authUrl;
+		modelAndView.setViewName(url);
+		return modelAndView;
+	}
+
+
+
 	@RequestMapping(value = "/token")
 	@ResponseBody
 	public String getToken(){

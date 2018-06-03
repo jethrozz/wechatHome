@@ -76,7 +76,10 @@
   <sql id="Blob_Column_List" >
     content
   </sql>
-  
+  <select id="getNotice" resultType="java.util.Map">
+    SELECT notice_bulletin.id as id,notice_bulletin.tea_id as teaId,title,content, DATE_FORMAT(nb_create_time,   '%Y-%m-%d %H:%i:%S') as createTime
+    ,teacher.name as teacherName FROM wechatHome.notice_bulletin inner join wechatHome.teacher on teacher.id = notice_bulletin.tea_id where notice_bulletin.id = #{noticeId}
+  </select>
   <!--以下为自定义的sql-->
   <select id="getAllNotice" resultType="java.util.Map">
         SELECT notice_bulletin.id as id,notice_bulletin.tea_id as teaId,title,content, DATE_FORMAT(nb_create_time,   '%Y-%m-%d %H:%i:%S') as createTime

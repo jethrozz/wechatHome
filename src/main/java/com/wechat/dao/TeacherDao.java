@@ -38,4 +38,5 @@ public interface TeacherDao {
     Page<Map<String,Object>> selectNoticeByPage();
 
     List<Map<String,Object>> selectClassTeacher(@Param("claId")int claId);
+
 }

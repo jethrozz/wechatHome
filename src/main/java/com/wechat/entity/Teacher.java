@@ -35,8 +35,16 @@ public class Teacher extends Model<Teacher> {
 	@TableField("teacher_id")
 	private String teacherId;
 	private String password;
-	private String openId;
+	@TableField("openId")
+	private String openid;
 
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
 
 	public Integer getId() {
 		return id;
@@ -110,13 +118,6 @@ public class Teacher extends Model<Teacher> {
 		this.password = password;
 	}
 
-	public String getOpenId() {
-		return openId;
-	}
-
-	public void setOpenId(String openId) {
-		this.openId = openId;
-	}
 
 	@Override
 	protected Serializable pkVal() {

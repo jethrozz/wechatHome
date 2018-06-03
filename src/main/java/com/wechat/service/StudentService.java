@@ -1,5 +1,6 @@
 package com.wechat.service;
 
+import com.github.pagehelper.Page;
 import com.wechat.bean.MyClass;
 import com.wechat.entity.ExamResult;
 import com.wechat.entity.Homework;
@@ -33,4 +34,7 @@ public interface StudentService {
     Student CheckLoginStudent(String studentNumber, String password);
 
     Student CheckLoginParent(String studentNumber, String identityNumber);
+
+    Page<Map<String,Object>> getLeaveRecord(int stuId,String date,int pageNo,int pageSize);
+
 }

@@ -66,8 +66,8 @@ public class LoginController  extends BaseController{
                 StudentLoginResult result = new StudentLoginResult();
                 Student user = student;
                 //判断他的openId是否为空，如果为空就将该openId更新到他的记录中去
-                if(StringUtils.isEmpty(user.getOpenId())){
-                    user.setOpenId(openId);
+                if(StringUtils.isEmpty(user.getOpenid())){
+                    user.setOpenid(openId);
                     studentService.updateStudent(user);
                 }
                 //封装返回结果

@@ -29,6 +29,7 @@ public class Parent extends Model<Parent> {
 	private Date createTime;
 	@TableField("update_time")
 	private Date updateTime;
+	@TableField("openId")
 	private String openid;
 
 

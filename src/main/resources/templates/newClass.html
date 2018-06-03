@@ -72,12 +72,12 @@
     <label class="layui-form-label">年级</label>
     <div class="layui-input-block">
       <select name="gradeName" lay-verify="required">
-        <option value="一年级">一年级</option>
-        <option value="二年级">二年级</option>
-        <option value="三年级">三年级</option>
-        <option value="四年级">四年级</option>
-        <option value="五年级">五年级</option>
-        <option value="六年级">六年级</option>
+        <option value="1">一年级</option>
+        <option value="2">二年级</option>
+        <option value="3">三年级</option>
+        <option value="4">四年级</option>
+        <option value="5">五年级</option>
+        <option value="6">六年级</option>
       </select>
     </div>
   </div>
@@ -99,17 +99,34 @@
     <script src="/plugins/layui/layui.js"></script>
     <script>
 //Demo
-layui.use('layer', function(){
-  
-}); 
-layui.use('form', function(){
+layui.use(['form','layer','jquery'], function(){
   var form = layui.form;
-  
+    var layer = layui.layer;
+    var $ = layui.jquery;
   //监听提交
   form.on('submit(formDemo)', function(data){
-    var layer = layui.layer;
-  
-    layer.msg(JSON.stringify(data.field));
+
+      $.ajax({
+          url:"/teacher/addClasses",
+          type:"post",
+          async:false,
+          contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+          data:{
+              gradeName:data.field.gradeName,
+              className:data.field.className
+          },
+          success: function (data,stauts,result) {
+              console.log(data);
+              if(data.status == 0){
+                  layer.msg("创建成功");
+              }else{
+                  layer.msg(data.msg);
+              }
+          },
+          error:function(data,status,result){
+              console.log(data);
+          }
+      });
     return false;
   });
 });

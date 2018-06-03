@@ -114,9 +114,10 @@
 var imageurl = "";
 // 初始化七牛上传的方法
 
-layui.use(['jquery','element'],function () {
+layui.use(['jquery','element','layer'],function () {
     var $ = layui.jquery;
     var element = layui.element;
+    var layer = layui.layer;
     // 初始化七牛上传
     uploadInit();
     function uploadInit() {
@@ -162,7 +163,9 @@ layui.use(['jquery','element'],function () {
                 },
                 'UploadProgress': function(up, file) {
                     // 显示进度
-                    element.progress('demo', file.percent+'%');
+                    if(file.percent <= 90){
+                        element.progress('demo', file.percent+'%');
+                    }
                 },
                 'FileUploaded': function(up, file, info) {
 
@@ -173,7 +176,15 @@ layui.use(['jquery','element'],function () {
                     $.post("/teacher/uploadStudentScore",{
                         file:sourceLink
                     },function (data) {
-                        console.log(data)
+                        console.log(data);
+                        if(data.status == 0){
+                            layer.msg("导入成功");
+                            element.progress('demo', '100%');
+                        }else{
+                            layer.msg("导入失败");
+                        }
+
+
                     })
                 },
                 'Error': function(up, err, errTip) {

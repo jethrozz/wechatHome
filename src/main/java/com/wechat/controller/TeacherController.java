@@ -74,10 +74,22 @@ public class TeacherController extends BaseController {
     @ApiImplicitParam(name = "classes",
                     value = "需要添加的班级实体Classes",
                     required = true, dataType = "Classes")
-    @RequestMapping(value = "/addClasses",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
-    public CommonResult<Object> addClasses(@RequestBody Classes classes){
-        if (classesMapper.insert(classes) == 1){
-            return new CommonResult<>(successcode,successMessage);
+    @PostMapping(value = "/addClasses")
+    public CommonResult<Object> addClasses(HttpServletRequest request,Classes classes){
+        Teacher teacher = (Teacher)request.getSession().getAttribute("user");
+        if(teacher.getIsHeadmaster() == 0){
+            return  new CommonResult<>(errorcode,"你已经是班主任了，不能再创建班级");
+        }else{
+            classes.setTeacher(teacher.getId());
+            teacher.setIsHeadmaster(0);
+            teacher.updateById();
+            if (classesMapper.insert(classes) == 1){
+                TeacherClass teacherClass = new TeacherClass();
+                teacherClass.setClaId(classes.getId());
+                teacherClass.setTeaId(teacher.getId());
+                teacherClass.insert();
+                return new CommonResult<>(successcode,successMessage);
+            }
         }
         return  new CommonResult<>(errorcode,errorMessage);
     }
@@ -149,8 +161,6 @@ public class TeacherController extends BaseController {
     //批量上传成绩接口
     @PostMapping("/uploadStudentScore")
     public CommonResult<String> uploadStudentScore(String file,HttpServletRequest request){
-
-        file = "http://p8jz8nm27.bkt.clouddn.com/o_1cf1scliv15k7158h1h53177f19hr7.xlsx";
         if(file == null ){
             return new CommonResult(errorcode,"the file is empty");
         }

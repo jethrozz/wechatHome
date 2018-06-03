@@ -19,7 +19,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
     var Tab = function() {
         this.config = {
             elem: undefined,
-            mainUrl: 'main.html',
+            mainUrl: '/lay/classInfo',
             renderType: 'iframe',
             openWait: false
         };

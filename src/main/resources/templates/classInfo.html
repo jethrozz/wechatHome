@@ -72,6 +72,7 @@
           <div class="layui-field-box">
             <p>班级名称：${myClass.myclass.gradeName}年级${myClass.myclass.className}班</p>
             <p>班主任：${myClass.headMaster.name}</p>
+              <button class="layui-btn" onclick="doAddStu()">录入学生</button>
           </div>
         </fieldset>
          @ var teacherNumber = 0;
@@ -107,12 +108,22 @@
     </div>
 <script src="/plugins/layui/layui.js"></script>
 <script>
+
+    function  doAddStu() {
+        var str = "/lay/addStuMore";
+        layer.open({
+            type: 2,
+            content: str //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+            ,area: ['500px', '268px']
+        });
+    }
 //Demo
-layui.use('layer', function(){
+layui.use(['layer','jquery'], function(){
  var layer = layui.layer;
+ var $ = layui.jquery;
     layer.open({
         title:'学生信息',
-        content: '姓名：<br /> 性别： <br />年龄：<br />学号： <br /> 身份证号：' //数组第二项即吸附元素选择器或者DOM
+        content: '：<br /> 性别： <br />年龄：姓名<br />学号： <br /> 身份证号：' //数组第二项即吸附元素选择器或者DOM
     });
 });
 

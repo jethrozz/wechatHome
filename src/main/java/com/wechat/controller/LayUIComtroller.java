@@ -25,6 +25,11 @@ public class LayUIComtroller {
 		ModelAndView modelAndView = new ModelAndView("/newClass");
 		return modelAndView;
 	}
+	@RequestMapping("/addStuMore")
+	public ModelAndView addStuMore(){
+		ModelAndView modelAndView = new ModelAndView("/addStuMore");
+		return modelAndView;
+	}
 	@RequestMapping("/chat")
 	public ModelAndView chat(){
 		ModelAndView modelAndView = new ModelAndView("/chat");

@@ -5,11 +5,8 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.Page;
 import com.wechat.bean.MyClass;
 import com.wechat.bean.TableResult;
-import com.wechat.bean.TeacherHomeworkResult;
 import com.wechat.common.controller.BaseController;
 import com.wechat.dao.ClassesDao;
-import com.wechat.dao.ExamResultDao;
-import com.wechat.dao.LeaveRecordDao;
 import com.wechat.dao.NoticeBulletinDao;
 import com.wechat.entity.*;
 import com.wechat.mapper.ClassesMapper;
@@ -23,19 +20,15 @@ import com.wechat.util.DateUtil;
 import com.wechat.util.OfficeUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -156,6 +149,8 @@ public class TeacherController extends BaseController {
     //批量上传成绩接口
     @PostMapping("/uploadStudentScore")
     public CommonResult<String> uploadStudentScore(String file,HttpServletRequest request){
+
+        file = "http://p8jz8nm27.bkt.clouddn.com/o_1cf1scliv15k7158h1h53177f19hr7.xlsx";
         if(file == null ){
             return new CommonResult(errorcode,"the file is empty");
         }

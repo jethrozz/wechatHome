@@ -31,4 +31,5 @@ public interface ClassesDao {
     Classes getClassesInfo(Integer id);
 
 
+    Classes selectByTeacherId(@Param("teacherId") Integer teacherId);
 }

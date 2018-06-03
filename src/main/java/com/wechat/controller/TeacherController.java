@@ -63,7 +63,6 @@ public class TeacherController extends BaseController {
         List<Teacher> list = teacher.selectList("teacher_id = {0} and password = {1}",teacher.getTeacherId(),teacher.getPassword());
         if(list.size() != 0){
             request.getSession().setAttribute("user",list.get(0));
-
             return new CommonResult<>(successcode,list.get(0));
         }
         return new CommonResult<>(errorcode,"用户名或者密码错误");
@@ -184,6 +183,36 @@ public class TeacherController extends BaseController {
 
         return new CommonResult(0,"batch add examscore is susccess");
     }
+
+    //批量上传学生信息接口
+    @PostMapping("/uploadStudentInfo")
+    public CommonResult uploadStudentInfo(String file,HttpServletRequest request){
+        if(file == null ){
+            return new CommonResult(errorcode,"the file is empty");
+        }
+        InputStream in = null;
+        try {
+            URL url = new URL(file);
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("GET");
+            //得到输入流
+            in = conn.getInputStream();
+        } catch (IOException e) {
+            return new CommonResult(errorcode,"get the InputStream is error");
+        }
+        Teacher teacher = (Teacher) session.getAttribute("user");
+
+        if (teacher == null){
+            return new CommonResult(errorcode,errorMessage);
+        }
+        Classes classes = classesDao.selectByTeacherId(teacher.getId());
+        List<Student> list = OfficeUtil.readStudent(in,1,classes.getId());
+        for (Student result:list){
+            result.insert();
+        }
+        return new CommonResult(0,"batch add examscore is susccess");
+    }
+
 
     //获取教师信息接口
     @GetMapping("getTeacher/{id}")

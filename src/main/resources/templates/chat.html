@@ -7,7 +7,7 @@
   <meta name="keywords" content="">
   <meta name="viewport"
         content="width=device-width, initial-scale=1">
-  <title>Hello Amaze UI</title>
+  <title></title>
 
   <!-- Set render engine for 360 browser -->
   <meta name="renderer" content="webkit">
@@ -36,7 +36,8 @@
   <link rel="stylesheet" href="/assets/layui/css/layui.mobile.css">
 </head>
 <body>
-
+<input type="hidden" id="meOpenId" name="meOpenId" value="${me}"/>
+<script src="https://cdn-hangzhou.goeasy.io/goeasy.js​"></script>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="/assets/layui/layui.js"></script>
@@ -44,20 +45,72 @@
 <script type="text/javascript" src="/assets/js/student.js"></script>
 
 <script>
-layui.use(['mobile','jquery'], function(){
-  var mobile = layui.mobile
-  ,layim = mobile.layim
-      ,$ = layui.jquery;
-  //基础配置
+    layui.use(['mobile','jquery'], function(){
+        var mobile = layui.mobile
+            ,layim = mobile.layim
+            ,$ = layui.jquery;
+        //基础配置
+        var me = $("#meOpenId").val();
+        var other = $("#other").val();
 
-  $.post("/chat/studentChatInfo",function (data) {
-      var res = data.data;
-      layim.config({
-          init:{"mine":res.mine,
-          "friend":res.friend}
-      });
-  })
-});
+        $.ajax({
+            url:"/chat/studentChatInfo",
+            type:"get",
+            async:false,
+            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+            data:{
+                toUser:me
+            },
+            success: function (data,stauts,result) {
+                var res = data.data;
+                console.log(res);
+                layim.config({
+                    init:{"mine":res.mine,
+                        "friend":res.friend},
+                    title:"家校互通"
+                });
+            },
+            error:function(data,status,result){
+                console.log(data);
+            }
+        });
+
+        layim.on('sendMessage', function(res){
+            type: 'teacher' //随便定义，用于在服务端区分消息类型
+            $.post("/chat/sendMsg",
+                {data:JSON.stringify(res),
+                    type:"teacher"}
+                ,function (data,result,status) {
+                })
+        });
+        goEasy = new GoEasy({
+            appkey: "BS-5dbbce5c671147d5a2ab9de9e977c31b"
+        });
+        var me = $("#meOpenId").val();
+
+//接收动态消息
+        goEasy.subscribe({
+            channel: "wechatMSG",
+            onMessage: function (message) {
+                var data = message.content;
+                var content = JSON.parse(data);
+                console.log(content);
+
+                if(me == content.to.id && me != content.mine.id) {
+                    var fromUser = new Object();
+                    fromUser["username"] = content.mine.username;
+                    fromUser["avatar"] =content.mine.avatar;
+                    fromUser["type"] ="friend";
+                    fromUser["content"] =content.mine.content;
+                    fromUser["mine"] =false;
+                    fromUser["id"] =content.mine.id;
+                    fromUser["timestamp"] =Date.parse(new Date());
+                    console.log(fromUser);
+                    layim.getMessage(fromUser);
+                }
+            }
+        })
+    });
 </script>
 </body>
 </html>

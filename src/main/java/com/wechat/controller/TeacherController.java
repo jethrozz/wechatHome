@@ -152,29 +152,6 @@ public class TeacherController extends BaseController {
     }
 
 
-    //批量上传学生接口
-    @PostMapping("uploadStudent")
-    public CommonResult<String> uploadStudent(MultipartFile file, HttpServletRequest request){
-        if(file == null && file.isEmpty()){
-            return new CommonResult(errorcode,"the file is empty");
-        }
-        InputStream in = null;
-
-        try {
-            in = file.getInputStream();
-        } catch (IOException e) {
-            return new CommonResult(errorcode,"get the InputStream is error");
-        }
-
-        Teacher teacher = (Teacher)request.getSession().getAttribute("user");
-        Classes classes = teacherService.getClassByTeacherId(teacher);
-        List<Student> list = OfficeUtil.readStudent(in,1,classes.getId());
-        for(Student student:list){
-            student.insert();
-        }
-        return new CommonResult(0,"batch regist is susccess");
-    }
-
     //批量上传成绩接口
     @PostMapping("/uploadStudentScore")
     public CommonResult<String> uploadStudentScore(String file,HttpServletRequest request){
@@ -228,7 +205,7 @@ public class TeacherController extends BaseController {
         for (Student result:list){
             result.insert();
         }
-        return new CommonResult(0,"batch add examscore is susccess");
+        return new CommonResult(0,"batch add student is susccess");
     }
 
 

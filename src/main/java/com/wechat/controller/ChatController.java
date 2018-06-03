@@ -174,6 +174,22 @@ public class ChatController extends BaseController {
 		return new CommonResult<>(successcode,successMessage);
 	}
 
+	//父母自己点击进入的聊天界面
+	@GetMapping("/parentChat/{openId}")
+	public ModelAndView parentChat(HttpServletRequest request,@PathVariable String openId){
+		ModelAndView modelAndView = new ModelAndView("parentChat");
+		modelAndView.addObject("me",openId);
+		return modelAndView;
+	}
+	//学生自己点击进入的聊天界面
+	@GetMapping("/studentChat/{openId}")
+	public ModelAndView studentChat(HttpServletRequest request,@PathVariable String openId){
+		ModelAndView modelAndView = new ModelAndView("chat");
+		modelAndView.addObject("me",openId);
+		return modelAndView;
+	}
+
+
 	/**
 	 *发送审核通知
 	 * @return
@@ -202,13 +218,6 @@ public class ChatController extends BaseController {
 		ModelAndView modelAndView = new ModelAndView("parentChat");
 		modelAndView.addObject("other",fromUser);
 		modelAndView.addObject("me",toUser);
-		return modelAndView;
-	}
-	//父母自己点击进入的聊天界面
-	@GetMapping("/parentChat/{openId}")
-	public ModelAndView parentChat(HttpServletRequest request,@PathVariable String openId){
-		ModelAndView modelAndView = new ModelAndView("parentChat");
-		modelAndView.addObject("me",openId);
 		return modelAndView;
 	}
 
@@ -300,7 +309,7 @@ public class ChatController extends BaseController {
 			chatUser.setAvatar(teacherImg);
 			String id = (String)map.get("id");
 			chatUser.setId(id);
-			String username = SubjectEnum.getNameByCode((int)map.get("subject"))+"老师-"+(String)map.get("username");
+			String username = map.get("subject")+"老师-"+(String)map.get("username");
 			chatUser.setUsername(username);
 			chatUser.setStatus("online");
 			teacherChat.add(chatUser);

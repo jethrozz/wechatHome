@@ -74,7 +74,8 @@ public class OfficeUtil {
 								student.setIdentityNumber(cell.getStringCellValue());
 								break;
 							case 3:
-								student.setStudentNumber(cell.getStringCellValue());
+								String studentNumber = new  DecimalFormat("0").format(cell.getNumericCellValue());
+								student.setStudentNumber(studentNumber);
 								break;
 							default:
 								break;
@@ -121,7 +122,8 @@ public class OfficeUtil {
 				if(cell == null){
 					continue;
 				}
-				Student student = studentService.getStudentInfoByStudentNumber(cell.getStringCellValue());
+				String studentNumber = new  DecimalFormat("0").format(cell.getNumericCellValue());
+				Student student = studentService.getStudentInfoByStudentNumber(studentNumber);
 				ExamResult result = new ExamResult();
 				result.setStuId(student.getId());
 
